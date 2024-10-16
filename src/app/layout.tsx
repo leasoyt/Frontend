@@ -32,7 +32,4 @@ export default function RootLayout({
       </body>
     </html>
   );
-  //solo es un cambio 
-  //otro test
-  //que onda
 }
