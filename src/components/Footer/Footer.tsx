@@ -1,11 +1,12 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 const Footer: React.FC = () => {
   return (
-    <footer className='py-12 lg:py-16 border-t border-neutral-100'>
+    <footer className='py-5 lg:py-8 border-t border-neutral-100'>
         <div className='w-[96%] max-w-7xl mx-auto'>
-            <div className='border-b border-neutral-100 pb-8 lg:pb-16 flex justify-between flex-col lg:flex-row items-center lg:items-start'>
+            <div className='border-b border-neutral-100 pb-8 lg:pb-12 flex justify-between flex-col lg:flex-row items-center lg:items-start'>
                 <div className='space-y-8 pb-8 border-b border-neutral-100 lg:pb-0 lg:border-none w-full flex flex-col lg:block items-center'>
                     <div className='flex items-center'>
                         <Image
@@ -20,22 +21,22 @@ const Footer: React.FC = () => {
                         </p>
                     </div>
                     <ul className='flex gap-x-8 text-xs text-gray-500 flex-col lg:flex-row gap-y-6 text-center lg:text-start'>
-                        <li><a href="#" className='hover:text-black'>Poductos & Servicios</a></li>
-                        <li><a href="#" className='hover:text-black'>Recursos</a></li>
-                        <li><a href="#" className='hover:text-black'>Contacto</a></li>
-                        <li><a href="#" className='hover:text-black'>Acerca de</a></li>
+                        <Link href="#" className='hover:text-black'>Poductos & Servicios</Link>
+                        <Link href="#" className='hover:text-black'>Recursos</Link>
+                        <Link href="/contacto" className='hover:text-black'>Contacto</Link>
+                        <Link href="#" className='hover:text-black'>Acerca de</Link>
                     </ul>
                     <div className='flex items-center gap-x-5'>
-                        <a href="#">
+                        <a href="https://www.facebook.com/">
                             <img className='w-[30px] transform transition-transform duration-500 hover:scale-125 mr-5' src="https://www.svgrepo.com/show/3885/facebook.svg" alt="" />
                         </a>
-                        <a href="#">
+                        <a href="https://x.com/i/flow/login?lang=es">
                             <img className='w-[30px] transform transition-transform duration-500 hover:scale-125 mr-5' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/X_icon.svg" alt="" />
                         </a>
-                        <a href="#">
+                        <a href="https://www.youtube.com/">
                             <img className='w-[30px] transform transition-transform duration-500 hover:scale-125 mr-5' src="https://www.svgrepo.com/show/13671/youtube.svg" alt="" />
                         </a>
-                        <a href="#">
+                        <a href="https://www.instagram.com/">
                             <img className='w-[30px] transform transition-transform duration-500 hover:scale-125 mr-5' src="https://www.svgrepo.com/show/365495/instagram-logo-thin.svg" alt="" />
                         </a>
                     </div>
@@ -55,7 +56,7 @@ const Footer: React.FC = () => {
                 </div>
             </div>
             <div className='pt-8 flex justify-between flex-col lg:flex-row gap-y-4 items-center'>
-                <ul className='flex gap-x-8 text-xs text-gray-500'>
+                <ul className='flex gap-x-9 text-xs text-gray-500'>
                     <li><a href='#' className='hover:text-black'>English</a></li>
                     <li><a href='#' className='hover:text-black'>Privacidad</a></li>
                     <li><a href='#' className='hover:text-black'>Legal</a></li>
