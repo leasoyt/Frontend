@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
                         <li><a href="#" className='hover:text-black'>Contacto</a></li>
                         <li><a href="#" className='hover:text-black'>Acerca de</a></li>
                     </ul>
-                    <div className='flex items-center gap-x-4'>
+                    <div className='flex items-center gap-x-5'>
                         <a href="#">
                             <img className='w-[30px] transform transition-transform duration-500 hover:scale-125 mr-5' src="https://www.svgrepo.com/show/3885/facebook.svg" alt="" />
                         </a>
@@ -39,6 +39,7 @@ const Footer: React.FC = () => {
                             <img className='w-[30px] transform transition-transform duration-500 hover:scale-125 mr-5' src="https://www.svgrepo.com/show/365495/instagram-logo-thin.svg" alt="" />
                         </a>
                     </div>
+                    
                 </div>
                 <div className='pt-8 lg:pt-0 max-w-[624px] w-full'>
                     <h4 className='mb-2 font-medium text-lg leading-7 text-gray-900 text-center lg:text-start'>
