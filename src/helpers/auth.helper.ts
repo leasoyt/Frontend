@@ -31,7 +31,7 @@ export async function login(userData: IloginProps) {
     if (res.ok) {
       return res.json();
     } else {
-      alert("failed to Log in");
+      alert ("failed to Log in");
     }
   } catch (error: any) {
     throw new Error(error);
