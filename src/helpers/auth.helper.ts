@@ -5,7 +5,7 @@ export async function register(userData: IRegisterProps) {
     const res = await fetch(`${API_URL}`, {
       method: "POST",
       headers: {
-        "contente-type": "application/json",
+        "content-type": "application/json",
       },
       body: JSON.stringify(userData),
     });
