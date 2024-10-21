@@ -133,29 +133,7 @@ const RegisterView: React.FC = () => {
             </span>
           )}
         </div>
-        {/* Imagen de Perfil (opcional) */}
-        <div className="mb-6">
-          <label
-            className="block text-gray-500 mb-2 text-center font-medium text-lg"
-            htmlFor="profileImage"
-          >
-            Imagen de Perfil (Opcional)
-          </label>
-          <input
-            type="text"
-            id="profileImage"
-            name="profileImage"
-            value={userData.profileImage}
-            placeholder="URL de la imagen"
-            onChange={handleChange}
-            className="w-full px-4 py-2 border-gray-300 rounded-lg bg-gray-200 focus:outline-none text-black font-sans"
-          />
-          {errors.profileImage && (
-            <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
-              {errors.profileImage}
-            </span>
-          )}
-        </div>
+      
 
         <button
           type="submit"
