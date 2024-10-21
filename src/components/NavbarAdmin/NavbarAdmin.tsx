@@ -42,7 +42,7 @@ const NavbarAdmin = () => {
                         <li>
                             <Link href="#" className='flex items-center mr-4'>
                             <Image
-                              title="correo@gmail.com"
+                              title="admin@gmail.com"
                               src="https://www.svgrepo.com/show/105517/user-icon.svg" 
                               alt="Logo de usuario"
                               width={30} 
