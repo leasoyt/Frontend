@@ -38,63 +38,64 @@ const LoginView: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-center">
-      <h1 className="text-5xl font-bold text-gray-900 mb-8 font-serif ">
-        Rest0
-      </h1>
-      <form onSubmit={handleSubmit} className="w-full max-w-sm">
-        <div className="mb-6">
-          <label
-            className="block text-gray-500  mb-2 text-center font-medium text-lg"
-            htmlFor="username"
-          >
-            Usuario
-          </label>
-          <input
-            type="text"
-            id="username"
-            name="email"
-            value={userData.email}
-            placeholder="Rest012"
-            onChange={handleChange}
-            className="w-full px-4 py-2  border-gray-300 rounded-lg bg-gray-200 focus:outline-none  text-black font-sans"
-          />
-          {errors.email && (
-            <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
-              {errors.email}
-            </span>
-          )}
-        </div>
-        <div className="mb-6">
-          <label
-            className="block text-gray-500 text-lg  mb-2 text-center font-medium"
-            htmlFor="password"
-          >
-            Contraseña
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={userData.password}
-            placeholder="******"
-            onChange={handleChange}
-            className="w-full px-4 py-2  border-gray-300 rounded-lg bg-gray-200 focus:outline-none text-black  font-sans"
-          />
-          {errors.password && (
-            <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
-              {errors.password}
-            </span>
-          )}
-        </div>
-        <button
-          type="submit"
-          disabled={!!errors.email}
-          className="w-44 bg-gray-600 text-white font-medium py-2 rounded-lg hover:bg-gray-800"
-        >
-          Ingresar
-        </button>
-      </form>
+  <h1 className="text-5xl font-bold text-gray-900 mb-8 font-serif ">
+    Rest0
+  </h1>
+  <form onSubmit={handleSubmit} className="w-full max-w-sm">
+    <div className="mb-6">
+      <label
+        className="block text-gray-500 mb-2 text-center font-medium text-lg"
+        htmlFor="username"
+      >
+        Usuario
+      </label>
+      <input
+        type="text"
+        id="username"
+        name="email"
+        value={userData.email}
+        placeholder="Rest012"
+        onChange={handleChange}
+        className="w-full px-4 py-2 border-gray-300 rounded-lg bg-gray-200 focus:outline-none text-black font-sans"
+      />
+      {userData.email && errors.email && (
+        <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
+          {errors.email}
+        </span>
+      )}
     </div>
+    <div className="mb-6">
+      <label
+        className="block text-gray-500 text-lg mb-2 text-center font-medium"
+        htmlFor="password"
+      >
+        Contraseña
+      </label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        value={userData.password}
+        placeholder="******"
+        onChange={handleChange}
+        className="w-full px-4 py-2 border-gray-300 rounded-lg bg-gray-200 focus:outline-none text-black font-sans"
+      />
+      {userData.password && errors.password && (
+        <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
+          {errors.password}
+        </span>
+      )}
+    </div>
+    <button
+      type="submit"
+      disabled={!!errors.email}
+      className="w-44 bg-gray-600 text-white font-medium py-2 rounded-lg hover:bg-gray-800"
+    >
+      Ingresar
+    </button>
+  </form>
+</div>
+
   );
 };
 

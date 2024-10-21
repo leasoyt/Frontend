@@ -42,51 +42,55 @@ const RegisterView: React.FC = () => {
         Regístrate
       </h1>
       <form onSubmit={handleSubmit} className="w-full max-w-sm">
-        <div className="mb-6">
-          <label
-            className="block text-gray-500 mb-2 text-center font-medium text-lg"
-            htmlFor="name"
-          >
-            Nombre
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={userData.name}
-            placeholder="John Doe"
-            onChange={handleChange}
-            className="w-full px-4 py-2 border-gray-300 rounded-lg bg-gray-200 focus:outline-none text-black font-sans"
-          />
-          {errors.name && (
-            <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
-              {errors.name}
-            </span>
-          )}
+      <div className="mb-6">
+  <label
+    className="block text-gray-500 mb-2 text-center font-medium text-lg"
+    htmlFor="name"
+  >
+    Nombre
+  </label>
+  <input
+    type="text"
+    id="name"
+    name="name"
+    value={userData.name}
+    placeholder="John Doe"
+    onChange={handleChange}
+    className="w-full px-4 py-2 border-gray-300 rounded-lg bg-gray-200 focus:outline-none text-black font-sans"
+  />
+  {/* Mostrar el error solo si hay texto en el input */}
+  {userData.name && errors.name && (
+    <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
+      {errors.name}
+    </span>
+  )}
+</div>
+
+
+              <div className="mb-6">
+        <label
+          className="block text-gray-500 mb-2 text-center font-medium text-lg"
+          htmlFor="email"
+        >
+          Email
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value={userData.email}
+          placeholder="agu@gmail.com"
+          onChange={handleChange}
+          className="w-full px-4 py-2 border-gray-300 rounded-lg bg-gray-200 focus:outline-none text-black font-sans"
+        />
+        {/* Mostrar el error solo si hay texto en el input */}
+        {userData.email && errors.email && (
+          <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
+            {errors.email}
+          </span>
+        )}
         </div>
 
-        <div className="mb-6">
-          <label
-            className="block text-gray-500 mb-2 text-center font-medium text-lg"
-            htmlFor="email"
-          >
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={userData.email}
-            placeholder="agu@gmail.com"
-            onChange={handleChange}
-            className="w-full px-4 py-2 border-gray-300 rounded-lg bg-gray-200 focus:outline-none text-black font-sans"
-          />
-          {errors.email && (
-            <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
-              {errors.email}
-            </span>
-          )}
-        </div>
 
         <div className="mb-6">
           <label
@@ -104,7 +108,7 @@ const RegisterView: React.FC = () => {
             onChange={handleChange}
             className="w-full px-4 py-2 border-gray-300 rounded-lg bg-gray-200 focus:outline-none text-black font-sans"
           />
-          {errors.password && (
+          {userData.password && errors.password && (
             <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
               {errors.password}
             </span>
@@ -112,27 +116,29 @@ const RegisterView: React.FC = () => {
         </div>
 
         <div className="mb-6">
-          <label
-            className="block text-gray-500 mb-2 text-center font-medium text-lg"
-            htmlFor="confirmPassword"
-          >
-            Confirmar Contraseña
-          </label>
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            value={userData.confirmPassword}
-            placeholder="******"
-            onChange={handleChange}
-            className="w-full px-4 py-2 border-gray-300 rounded-lg bg-gray-200 focus:outline-none text-black font-sans"
-          />
-          {errors.confirmPassword && (
-            <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
-              {errors.confirmPassword}
-            </span>
-          )}
-        </div>
+  <label
+    className="block text-gray-500 mb-2 text-center font-medium text-lg"
+    htmlFor="confirmPassword"
+  >
+    Confirmar Contraseña
+  </label>
+  <input
+    type="password"
+    id="confirmPassword"
+    name="confirmPassword"
+    value={userData.confirmPassword}
+    placeholder="******"
+    onChange={handleChange}
+    className="w-full px-4 py-2 border-gray-300 rounded-lg bg-gray-200 focus:outline-none text-black font-sans"
+  />
+  {/* Mostrar el error solo si hay texto en el input */}
+  {userData.confirmPassword && errors.confirmPassword && (
+    <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
+      {errors.confirmPassword}
+    </span>
+  )}
+</div>
+
       
 
         <button
