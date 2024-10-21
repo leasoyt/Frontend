@@ -1,3 +1,4 @@
+import { ButtonVerPrecios } from "@/components/ButtonVerPrecios/ButtonVerPrecios";
 import Link from "next/link";
 import React from "react";
 
@@ -38,7 +39,7 @@ const LandingView: React.FC = () => {
             Servicio Eficiente
           </h3>
           <h4 className="text-3xl font-semibold text-gray-900 font-serif">
-            Carga pedidos y visualiza comandas en segundos
+          Transformá la experiencia de tu restaurante: optimizá el control de comandas y acelerá los pedidos con nuestra solución inteligente
           </h4>
           <p className="mt-2 text-gray-600 font-serif">
             Reducí tiempos de espera al incorporar tu Monitor de Cocina (Kitchen
@@ -51,14 +52,12 @@ const LandingView: React.FC = () => {
 
         <div className="text-center">
           <h4 className="text-3xl font-semibold text-gray-900 font-serif">
-            Organización y control
+            Precio accesible para todo tipo de restaurante, bar o café
           </h4>
           <p className="mt-2 text-gray-600 font-serif">
             Convierte cada orden en una experiencia rápida y organizada.
           </p>
-          <button className="bg-black text-white py-2 px-4 rounded mt-4">
-            Más Información
-          </button>
+          <ButtonVerPrecios/>
         </div>
         <img
           src="https://i.pinimg.com/564x/de/4b/99/de4b99b20d0aae208c223c653ebe4474.jpg"
