@@ -1,5 +1,5 @@
 import { IloginProps, IRegisterProps } from "@/interfaces/Interfaces.types";
-import { API_URL } from "../config/config";
+// import { API_URL } from "../config/config";
 
 export async function register(userData: IRegisterProps) {
   try {
