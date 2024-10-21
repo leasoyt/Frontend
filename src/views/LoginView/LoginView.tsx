@@ -4,7 +4,7 @@ import { validateLoginForm } from "@/helpers/validate";
 import { IErrorsProps, IloginProps } from "@/interfaces/Interfaces.types";
 import React, { useEffect, useState } from "react";
 
-const LoginView = () => {
+const LoginView: React.FC = () => {
   const initialState = {
     email: "",
     password: "",
