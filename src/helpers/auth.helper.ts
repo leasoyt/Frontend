@@ -1,4 +1,5 @@
 import { IloginProps, IRegisterProps } from "@/interfaces/Interfaces.types";
+import { API_URL } from "../config/config";
 
 export async function register(userData: IRegisterProps) {
   try {
@@ -12,10 +13,14 @@ export async function register(userData: IRegisterProps) {
     if (res.ok) {
       return res.json();
     } else {
-      alert("failed to register")
+      alert("failed to register");
     }
-  } catch (error:any) {
-    throw new Error (error);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message); // Lanza un nuevo error con el mensaje del error original
+    } else {
+      throw new Error("Unknown error occurred during registration.");
+    }
   }
 }
 
@@ -31,9 +36,13 @@ export async function login(userData: IloginProps) {
     if (res.ok) {
       return res.json();
     } else {
-      alert ("failed to Log in");
+      alert("failed to Log in");
     }
-  } catch (error: any) {
-    throw new Error(error);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message); // Lanza un nuevo error con el mensaje del error original
+    } else {
+      throw new Error("Unknown error occurred during login.");
+    }
   }
 }
