@@ -3,7 +3,7 @@ import { API_URL } from "../config/config";
 
 export async function register(userData: IRegisterProps) {
   try {
-    const res = await fetch(`${API_URL}`, {
+    const res = await fetch(`http://localhost:4000/auth/register`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -26,7 +26,7 @@ export async function register(userData: IRegisterProps) {
 
 export async function login(userData: IloginProps) {
   try {
-    const res = await fetch(`${API_URL}/users/login`, {
+    const res = await fetch(`http://localhost:4000/auth/login`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
