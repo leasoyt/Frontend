@@ -29,6 +29,7 @@ const renderStars = (rating: number) => {
 
 const ClientResenas = () => {
   return (
+    <div className= "bg-white ">
     <>
       <Image
         src="/comiendoCelular.jpg"
@@ -37,7 +38,7 @@ const ClientResenas = () => {
         width={500}
         height={300}
       />
-      <p className="text-gray-600 text-lg mt-4 text-center font-serif">
+      <p className="text-2xl font-semibold text-center mt-4 text-black italic">
         Mirá lo que dicen nuestros clientes.
       </p>
 
@@ -93,6 +94,8 @@ const ClientResenas = () => {
         </div>
       </div>
     </>
+
+    </div>
   );
 };
 
