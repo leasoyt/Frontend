@@ -3,7 +3,8 @@ import Link from 'next/link';
 import React from 'react';
 const Footer: React.FC = () => {
   return (
-    <footer className='py-5 lg:py-8 border-t border-neutral-100'>
+
+    <footer className='py-5 lg:py-8 border-t border-neutral-100 bg-white'>
       <div className='w-[96%] max-w-7xl mx-auto'>
         <div className='border-b border-neutral-100 pb-8 lg:pb-12 flex justify-between flex-col lg:flex-row items-center lg:items-start'>
           <div className='space-y-8 pb-8 border-b border-neutral-100 lg:pb-0 lg:border-none w-full flex flex-col lg:block items-center'>
@@ -18,6 +19,7 @@ const Footer: React.FC = () => {
               <p className="font-extrabold text-[24px] text-black">
                 Rest0
               </p>
+
             </div>
             <ul className='flex gap-x-8 text-xs text-gray-500 flex-col lg:flex-row gap-y-6 text-center lg:text-start'>
               <Link href="#" className='hover:text-black'>Productos & Servicios</Link>
@@ -49,7 +51,7 @@ const Footer: React.FC = () => {
             </p>
             <form className='flex gap-x-3 w-full'>
               <input type="email" placeholder='Ingresa tu email' className='border rounded-lg p-3 text-sm focus:outline-cyan-600 flex-1' />
-              <input type="submit" value="Suscríbete" className='bg-cyan-600 rounded-lg py-3 px-5 text-white text-sm' />
+              <input type="submit" value="Suscríbete" className='bg-black rounded-lg py-3 px-5 text-white text-sm' />
             </form>
           </div>
         </div>
