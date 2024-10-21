@@ -3,6 +3,7 @@ import { login } from "@/helpers/auth.helper";
 import { validateLoginForm } from "@/helpers/validate";
 import { IErrorsProps, IloginProps } from "@/interfaces/Interfaces.types";
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const LoginView: React.FC = () => {
   const initialState = {
@@ -27,8 +28,21 @@ const LoginView: React.FC = () => {
     const { token, user } = response;
 
     localStorage.setItem("userSession", JSON.stringify({ token, user }));
-
-    alert("Logeo Satisfactorio");
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      },
+    });
+    Toast.fire({
+      icon: "success",
+      title: "Logeo Satisfactorio",
+    });
   };
 
   useEffect(() => {
