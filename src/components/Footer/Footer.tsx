@@ -61,7 +61,7 @@ const Footer: React.FC = () => {
                     <li><a href='#' className='hover:text-black'>Privacidad</a></li>
                     <li><a href='#' className='hover:text-black'>Legal</a></li>
                 </ul>
-                <p className='text-xs text-gray-400'> 2023 Cadet UI. All Rights Reserved.</p>
+                <p className='text-xs text-gray-400'>© 2023 Cadet UI. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
