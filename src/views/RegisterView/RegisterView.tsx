@@ -3,8 +3,11 @@ import { register } from "@/helpers/auth.helper";
 import { validateRegisterForm } from "@/helpers/validate";
 import { IRegisterErrors, IRegisterProps } from "@/interfaces/Interfaces.types";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 const RegisterView: React.FC = () => {
+  const router = useRouter();
   const initalState = {
     name: "",
     email: "",
@@ -28,7 +31,22 @@ const RegisterView: React.FC = () => {
     event.preventDefault();
     await register(userData);
 
-    alert("Registro Exitoso");
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "success",
+      title: "Registro Satisfactorio"
+    });
+    router.push("/login");
   };
 
   useEffect(() => {
