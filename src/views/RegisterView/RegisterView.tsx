@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import Navbar from "@/components/Navbar/Navbar";
 
 const RegisterView: React.FC = () => {
   const router = useRouter();
@@ -33,6 +32,20 @@ const RegisterView: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const currentErrors = validateRegisterForm(userData);
+    setErrors(currentErrors);
+
+    // Si hay errores, no proceder
+    if (Object.values(currentErrors).some(error => error)) {
+      Swal.fire({
+        icon: "error",
+        title: "Error en el registro",
+        text: "Por favor corrige los errores antes de continuar.",
+      });
+      return;
+    }
+
+    // Si no hay errores, continuar con el registro
     await register(userData);
 
     const Toast = Swal.mixin({
@@ -50,6 +63,8 @@ const RegisterView: React.FC = () => {
       icon: "success",
       title: "Registro Satisfactorio",
     });
+
+    // Redirigir al login después del registro
     router.push("/login");
   };
 
@@ -59,8 +74,6 @@ const RegisterView: React.FC = () => {
   }, [userData]);
 
   return (
-    <>
-    <Navbar/>
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-center">
       <h1 className="text-5xl font-bold text-gray-900 mb-8 font-serif ">
         Regístrate
@@ -184,17 +197,24 @@ const RegisterView: React.FC = () => {
             </span>
           )}
         </div>
-
         <button
-          type="submit"
-          disabled={Object.values(errors).some(error => error)}
-          className="w-44 bg-gray-600 text-white font-medium py-2 rounded-lg hover:bg-gray-800"
-        >
-          Registrarse
-        </button>
+  type="submit"
+  disabled={
+    !userData.name || 
+    !userData.email || 
+    !userData.password || 
+    !userData.confirmPassword || 
+    !!errors.name || 
+    !!errors.email || 
+    !!errors.password || 
+    !!errors.confirmPassword
+  }
+  className="w-44 bg-gray-600 text-white font-medium py-2 rounded-lg hover:bg-gray-800"
+>
+  Registrarse
+</button>
       </form>
     </div>
-    </>
   );
 };
 
