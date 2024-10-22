@@ -3,7 +3,6 @@ import Link from 'next/link';
 import React from 'react';
 const Footer: React.FC = () => {
   return (
-
     <footer className='py-5 lg:py-8 border-t border-neutral-100 bg-white'>
       <div className='w-[96%] max-w-7xl mx-auto'>
         <div className='border-b border-neutral-100 pb-8 lg:pb-12 flex justify-between flex-col lg:flex-row items-center lg:items-start'>
