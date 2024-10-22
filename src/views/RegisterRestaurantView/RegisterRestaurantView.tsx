@@ -1,8 +1,11 @@
 "use client";
+import NavbarUsuario from "@/components/NavbarUsuario/NavbarUsuario";
 import React from "react";
 
 const RegisterRestaurantView: React.FC = () => {
   return (
+    <>
+    <NavbarUsuario/>
     <div className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-gray-50 px-4 md:px-20">
       {/* Sección Izquierda */}
       <div className="md:w-1/2 space-y-6 mb-8 md:mb-0">
@@ -133,6 +136,7 @@ const RegisterRestaurantView: React.FC = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 

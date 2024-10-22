@@ -5,8 +5,12 @@ import { IErrorsProps, IloginProps } from "@/interfaces/Interfaces.types";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Importa los iconos
+import Navbar from "@/components/Navbar/Navbar";
+import { useRouter } from "next/navigation";
 
 const LoginView: React.FC = () => {
+  
+  const router = useRouter ();
   const initialState = {
     email: "",
     password: "",
@@ -26,25 +30,41 @@ const LoginView: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const response = await login(userData);
-    const { token, user } = response;
+    try {
+      const response = await login(userData);
+      const { token, user } = response;
 
-    localStorage.setItem("userSession", JSON.stringify({ token, user }));
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      },
-    });
-    Toast.fire({
-      icon: "success",
-      title: "Logeo Satisfactorio",
-    });
+      localStorage.setItem("userSession", JSON.stringify({ token, user }));
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
+      });
+
+      Toast.fire({
+        icon: "success",
+        title: "Logeo Satisfactorio",
+      });
+
+      setUserData(initialState); // Limpia los inputs después del login exitoso
+      router.push("/pageUser");
+
+    } catch (error:unknown) {
+      // Muestra un mensaje de error y limpia los inputs si el login falla
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Login fallido. Intenta nuevamente.",
+      });
+      setUserData(initialState); // Limpia los inputs después de un error
+    }
   };
 
   useEffect(() => {
@@ -53,6 +73,8 @@ const LoginView: React.FC = () => {
   }, [userData]);
 
   return (
+    <>
+    <Navbar/>
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-center">
       <h1 className="text-5xl font-bold text-gray-900 mb-8 font-serif ">
         Rest0
@@ -114,13 +136,14 @@ const LoginView: React.FC = () => {
         </div>
         <button
           type="submit"
-          disabled={!!errors.email}
+           disabled={Object.values(errors).some(error => error)}
           className="w-44 bg-gray-600 text-white font-medium py-2 rounded-lg hover:bg-gray-800"
         >
           Ingresar
         </button>
       </form>
     </div>
+    </>
   );
 };
 

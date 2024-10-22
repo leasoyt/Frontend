@@ -11,9 +11,14 @@ export async function register(userData: IRegisterProps) {
       },
       body: JSON.stringify(userData),
     });
+
     if (res.ok) {
-      return res.json();
+      return await res.json(); // Devuelve el resultado de la respuesta si es exitoso
     } else {
+      const errorData = await res.json(); // Intenta obtener el mensaje de error del servidor
+      const errorMessage = errorData.message || "Registro fallido, por favor intenta nuevamente."; // Mensaje por defecto si no hay uno específico
+
+      // Mostrar el Toast con el mensaje de error personalizado
       const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
@@ -23,21 +28,26 @@ export async function register(userData: IRegisterProps) {
         didOpen: (toast) => {
           toast.onmouseenter = Swal.stopTimer;
           toast.onmouseleave = Swal.resumeTimer;
-        }
+        },
       });
       Toast.fire({
         icon: "error",
-        title: "Registro Fallido!"
+        title: errorMessage,
       });
+
+      // Lanza un error con el mensaje personalizado
+      throw new Error(errorMessage);
     }
   } catch (error: unknown) {
     if (error instanceof Error) {
-      throw new Error(error.message); // Lanza un nuevo error con el mensaje del error original
+      console.error("Error during registration:", error.message); // Log del error
+      throw new Error(error.message); // Lanza el error
     } else {
       throw new Error("Unknown error occurred during registration.");
     }
   }
 }
+
 
 export async function login(userData: IloginProps) {
   try {

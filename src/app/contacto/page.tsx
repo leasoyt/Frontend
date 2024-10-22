@@ -1,7 +1,10 @@
+import Navbar from '@/components/Navbar/Navbar';
 import React from 'react';
 
 const Contacto = () => {
   return (
+    <>
+    <Navbar/>
     <div className="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-10">
       <h2 className="text-3xl font-semibold text-center mt-4 text-black italic">
         ¿Quiénes somos?
@@ -27,6 +30,7 @@ const Contacto = () => {
         </p>
       </div>
     </div>
+    </>
   );
 };
 
