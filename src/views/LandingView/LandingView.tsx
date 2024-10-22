@@ -2,9 +2,12 @@ import { ButtonVerPrecios } from "@/components/ButtonVerPrecios/ButtonVerPrecios
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
+import Navbar from "@/components/Navbar/Navbar";
 
 const LandingView: React.FC = () => {
   return (
+    <>
+    <Navbar/>
     <div className="bg-gray-100 min-h-screen flex flex-col items-center">
   <div className="flex justify-center p-10">
     <Image
@@ -13,7 +16,7 @@ const LandingView: React.FC = () => {
       className="rounded-2xl"
       width={500} // Ajusta los valores de ancho y alto según tus necesidades
       height={300}
-    />
+      />
   </div>
   <h2 className="text-2xl font-semibold text-center mt-4 text-black italic">
     Software para restaurantes, bares y cafés
@@ -38,7 +41,7 @@ const LandingView: React.FC = () => {
       className="rounded-3xl h-80 sm:h-96 mx-auto"
       width={500} 
       height={300} 
-    />
+      />
     <div className="text-center md:text-left">
       <h3 className="text-gray-500 uppercase text-sm text-gray-600 italic font-medium">
         Servicio Eficiente
@@ -69,9 +72,10 @@ const LandingView: React.FC = () => {
       className="rounded-3xl h-80 sm:h-96 mx-auto"
       width={500} 
       height={300} 
-    />
+      />
   </section>
 </div>
+      </>
   );
 };
 

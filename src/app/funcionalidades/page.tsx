@@ -2,9 +2,12 @@ import Image from 'next/image';
 import React from 'react';
 import { ButtonVerMas } from '../../components/ButtonVerMas/ButtonVerMas';
 import { ButtonVerPrecios } from '../../components/ButtonVerPrecios/ButtonVerPrecios';
+import Navbar from '@/components/Navbar/Navbar';
 
 const Funcionalidades = () => {
   return (
+    <>
+    <Navbar/>
     <div className="bg-gray-100 min-h-screen flex flex-col items-center p-10">
       <h2 className="text-3xl font-semibold text-center mt-4 text-black italic">
         Funcionalidades
@@ -134,6 +137,7 @@ const Funcionalidades = () => {
 
       <ButtonVerPrecios />
     </div>
+    </>
   );
 };
 

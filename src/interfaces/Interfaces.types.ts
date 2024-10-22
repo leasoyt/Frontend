@@ -23,3 +23,28 @@ export interface IRegisterErrors {
   confirmPassword?: string;
   profileImage?: string;
 }
+
+export interface CategoryButtonProps  {
+  name: string;
+  color: string;
+}
+
+export interface SuggestionCardProps {
+  name: string;
+  discount: string;
+  shipping: string;
+  img: string; // URL de la imagen
+}
+
+export interface PromoCardProps {
+  title: string;
+  description: string;
+  color: string; // Clase de color para el fondo
+}
+
+export interface OptionCardProps {
+  name: string;
+  discount: string;
+  shipping: string;
+  img: string; // URL de la imagen
+}

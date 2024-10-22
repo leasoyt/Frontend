@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Navbar from "@/components/Navbar/Navbar";
 
 const RegisterView: React.FC = () => {
   const router = useRouter();
@@ -58,6 +59,8 @@ const RegisterView: React.FC = () => {
   }, [userData]);
 
   return (
+    <>
+    <Navbar/>
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-center">
       <h1 className="text-5xl font-bold text-gray-900 mb-8 font-serif ">
         Regístrate
@@ -184,13 +187,14 @@ const RegisterView: React.FC = () => {
 
         <button
           type="submit"
-          disabled={!!errors.email}
+          disabled={Object.values(errors).some(error => error)}
           className="w-44 bg-gray-600 text-white font-medium py-2 rounded-lg hover:bg-gray-800"
         >
           Registrarse
         </button>
       </form>
     </div>
+    </>
   );
 };
 
