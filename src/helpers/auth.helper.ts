@@ -1,4 +1,5 @@
 import { IloginProps, IRegisterProps } from "@/interfaces/Interfaces.types";
+import Swal from "sweetalert2";
 // import { API_URL } from "../config/config";
 
 export async function register(userData: IRegisterProps) {
@@ -13,7 +14,21 @@ export async function register(userData: IRegisterProps) {
     if (res.ok) {
       return res.json();
     } else {
-      alert("failed to register");
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "error",
+        title: "Registro Fallido!"
+      });
     }
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -36,7 +51,21 @@ export async function login(userData: IloginProps) {
     if (res.ok) {
       return res.json();
     } else {
-      alert("failed to Log in");
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "error",
+        title: "Logeo Fallido!"
+      });
     }
   } catch (error: unknown) {
     if (error instanceof Error) {
