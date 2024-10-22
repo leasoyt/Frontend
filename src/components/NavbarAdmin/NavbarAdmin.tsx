@@ -21,19 +21,19 @@ const NavbarAdmin = () => {
                     </Link>
                     <ul className='flex items-center pr-9'>
                         <li>
-                            <Link href="#" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Restaurante</Link>
+                            <Link href="#" className='ml-5 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Restaurante</Link>
                         </li>
                         <li>
-                            <Link href="#" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Ventas</Link>
+                            <Link href="#" className='ml-5 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Ventas</Link>
                         </li>
                         <li>
-                            <Link href="#" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Productos</Link>
+                            <Link href="#" className='ml-5 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Productos</Link>
                         </li>
                         <li>
-                           <Link href="#" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Clientes</Link>
+                            <Link href="#" className='ml-5 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Clientes</Link>
                         </li>
                         <li>
-                           <Link href="#" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Administracion</Link>
+                            <Link href="#" className='ml-5 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Administracion</Link>
                         </li>
                     </ul>
                 </div>
@@ -42,7 +42,7 @@ const NavbarAdmin = () => {
                         <li>
                             <Link href="#" className='flex items-center mr-4'>
                             <Image
-                              title="corre0@gmail.com"
+                              title="admin@gmail.com"
                               src="https://www.svgrepo.com/show/105517/user-icon.svg" 
                               alt="Logo de usuario"
                               width={30} 
