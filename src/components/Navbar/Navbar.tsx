@@ -1,8 +1,12 @@
-import React from 'react';
+"use client"
+
+import React, { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image'; 
+import Image from 'next/image';
 
 const Navbar: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false); // Estado para controlar el menú móvil
+
   return (
     <nav className="bg-white p-4">
       <div className="container mx-auto flex justify-between items-center mt-6 max-w-5xl">
@@ -20,9 +24,16 @@ const Navbar: React.FC = () => {
           </p>
         </Link>
 
+        {/* Botón de menú móvil */}
+        <div className="md:hidden">
+          <button onClick={() => setIsOpen(!isOpen)} className="text-black focus:outline-none">
+            {isOpen ? '✖️' : '☰'} {/* Ícono del menú */}
+          </button>
+        </div>
+
         {/* Links */}
-        <ul className="flex space-x-4">
-          <li>
+        <ul className={`flex flex-col md:flex-row md:space-x-6 ${isOpen ? 'block' : 'hidden'} md:flex`}>
+          <li className="mt-2 md:mt-0">
             <Link
               href="/contacto"
               className="italic text-black text-[24px] hover:underline active:scale-110 transition-transform duration-200"
@@ -30,7 +41,7 @@ const Navbar: React.FC = () => {
               Contacto
             </Link>
           </li>
-          <li>
+          <li className="mt-2 md:mt-0">
             <Link
               href="/resenas"
               className="italic text-black text-[24px] hover:underline active:scale-110 transition-transform duration-200"
@@ -38,7 +49,7 @@ const Navbar: React.FC = () => {
               Reseñas
             </Link>
           </li>
-          <li>
+          <li className="mt-2 md:mt-0">
             <Link
               href="/funcionalidades"
               className="italic text-black text-[24px] hover:underline active:scale-110 transition-transform duration-200"
@@ -46,7 +57,7 @@ const Navbar: React.FC = () => {
               Funcionalidades
             </Link>
           </li>
-          <li>
+          <li className="mt-2 md:mt-0">
             <Link
               href="/precios"
               className="italic text-black text-[24px] hover:underline active:scale-110 transition-transform duration-200"
@@ -63,4 +74,3 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
-

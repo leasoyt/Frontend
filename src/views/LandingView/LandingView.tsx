@@ -27,7 +27,7 @@ const LandingView: React.FC = () => {
         Iniciar Sesión
       </button>
     </Link>
-    <Link href="/register">
+    <Link href="/auth/register">
       <button className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto">
         Registrarse
       </button>
