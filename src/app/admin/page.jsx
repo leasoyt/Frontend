@@ -2,7 +2,7 @@ import React from 'react'
 
 const adminDashoard = () => {
   return (
-    <div>adminDashoard</div>
+    <div>Vista del administrador</div>
   )
 }
 

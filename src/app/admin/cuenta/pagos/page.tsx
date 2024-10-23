@@ -1,10 +1,10 @@
 import AdminCuentaPagosView from '@/views/AdminCuentaPagosView/AdminCuentaPagosView'
 import React from 'react'
 
-const page = () => {
+const pagos = () => {
   return (
     <AdminCuentaPagosView/>
   )
 }
 
-export default page
+export default pagos
