@@ -32,16 +32,16 @@ const NavbarAdmin = () => {
                     </Link>
                     <ul className='flex items-center pr-9'>
                         <li>
-                            <Link href="#" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Restaurante</Link>
+                            <Link href="#" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Reservas</Link>
                         </li>
                         <li>
-                            <Link href="#" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Ventas</Link>
+                            <Link href="#" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Ordenes</Link>
                         </li>
                         <li>
-                            <Link href="#" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Productos</Link>
+                            <Link href="/admin/productos" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Menu</Link>
                         </li>
                         <li>
-                            <Link href="#" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Clientes</Link>
+                            <Link href="#" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Mesas</Link>
                         </li>
                         <li>
                             <Link href="#" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Administracion</Link>
