@@ -1,6 +1,6 @@
 "use client";
-import { register } from "@/helpers/auth.helper";
-import { validateRegisterForm } from "@/helpers/validate";
+import { register } from "@/helpers/auth-helpers/auth.helper";
+import { validateRegisterForm } from "@/helpers/auth-helpers/validate";
 import { IRegisterErrors, IRegisterProps } from "@/interfaces/Interfaces.types";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";

@@ -1,10 +1,10 @@
 import { IloginProps, IRegisterProps } from "@/interfaces/Interfaces.types";
 import Swal from "sweetalert2";
-// import { API_URL } from "../config/config";
+import { API_URL } from "../../config/config";
 
 export async function register(userData: IRegisterProps) {
   try {
-    const res = await fetch(`http://localhost:4000/auth/register`, {
+    const res = await fetch(`${API_URL}/auth/register`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -16,7 +16,8 @@ export async function register(userData: IRegisterProps) {
       return await res.json(); // Devuelve el resultado de la respuesta si es exitoso
     } else {
       const errorData = await res.json(); // Intenta obtener el mensaje de error del servidor
-      const errorMessage = errorData.message || "Registro fallido, por favor intenta nuevamente."; // Mensaje por defecto si no hay uno específico
+      const errorMessage =
+        errorData.message || "Registro fallido, por favor intenta nuevamente."; // Mensaje por defecto si no hay uno específico
 
       // Mostrar el Toast con el mensaje de error personalizado
       const Toast = Swal.mixin({
@@ -48,10 +49,9 @@ export async function register(userData: IRegisterProps) {
   }
 }
 
-
 export async function login(userData: IloginProps) {
   try {
-    const res = await fetch(`http://localhost:4000/auth/login`, {
+    const res = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -75,7 +75,11 @@ export async function login(userData: IloginProps) {
 
       Toast.fire({
         icon: "error",
+<<<<<<< HEAD:src/helpers/auth-helpers/auth.helper.ts
+        title: "Logeo Fallido!",
+=======
         title: "Login Fallido!",
+>>>>>>> 3e18b8cf0cbf40e06f7b58b75446def6651db5e3:src/helpers/auth.helper.ts
       });
     }
   } catch (error: unknown) {
