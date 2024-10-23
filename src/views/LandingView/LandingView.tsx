@@ -22,12 +22,12 @@ const LandingView: React.FC = () => {
     Software para restaurantes, bares y cafés
   </h2>
   <div className="mt-4 flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
-    <Link href="/auth/login">
+    <Link href="/login">
       <button className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto">
         Iniciar Sesión
       </button>
     </Link>
-    <Link href="/auth/register">
+    <Link href="/register">
       <button className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto">
         Registrarse
       </button>
