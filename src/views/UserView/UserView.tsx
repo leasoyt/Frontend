@@ -7,7 +7,7 @@ const UserView = () => {
     <>
       <NavbarUsuario />
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-center pb-24 pt-24">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8 font-serif">
+        <h1 className="text-3xl font-bold text-gray-900 mb-8 italic">
           Hola, ¿Qué vas a pedir hoy?
         </h1>
         <div className="max-w-7xl mx-auto p-4 bg-white w-full">
@@ -24,7 +24,7 @@ const UserView = () => {
 
           {/* Sección de sugerencias */}
           <section className="mb-8 items-center">
-            <h2 className="text-xl font-semibold mb-4 text-black">Te sugerimos</h2>
+            <h2 className="text-xl font-semibold mb-4 text-black font-serif">Te sugerimos</h2>
             <div className="flex space-x-4 overflow-x-auto">
               <SuggestionCard name="KFC" discount="50%" shipping="359" img="https://media-cdn.tripadvisor.com/media/photo-s/26/c8/30/69/kfc-logo.jpg"  />
             
@@ -33,7 +33,7 @@ const UserView = () => {
 
           {/* Sección de promociones */}
           <section className="mb-8">
-            <h2 className="text-xl font-semibold mb-4  text-black">No te pierdas estas promociones</h2>
+            <h2 className="text-xl font-semibold mb-4  text-black font-serif">No te pierdas estas promociones</h2>
             <div className="grid grid-cols-2 gap-4">
               <PromoCard title="Restaurantes" description="¡Disfrutá estas promociones!" color=" bg-gray-500" />
               <PromoCard title="Medios de pago" description="Conocé todas las opciones de ahorro!" color=" bg-gray-500" />
@@ -42,7 +42,7 @@ const UserView = () => {
 
           {/* Sección de opciones destacadas */}
           <section className=''>
-            <h2 className="text-xl font-semibold mb-4  text-black">Descubrí estas opciones</h2>
+            <h2 className="text-xl font-semibold mb-4  text-black font-serif">Descubrí estas opciones</h2>
             <div className="flex space-x-4 overflow-x-auto">
               <OptionCard name="Mi Barrio Hamburguesería" discount="32%" shipping="1869" img="https://img.freepik.com/vector-gratis/queso-hamburguesa-ilustracion-icono-vector-dibujos-animados-fuego-alimentos-objeto-icono-concepto-aislado-premium_138676-5539.jpg" />
               {/* Agrega más opciones destacadas según sea necesario */}
