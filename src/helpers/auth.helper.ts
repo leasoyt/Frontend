@@ -32,7 +32,7 @@ export async function register(userData: IRegisterProps) {
       });
       Toast.fire({
         icon: "error",
-        title: errorMessage,
+        title: "Registro Fallido!",
       });
 
       // Lanza un error con el mensaje personalizado
@@ -70,11 +70,12 @@ export async function login(userData: IloginProps) {
         didOpen: (toast) => {
           toast.onmouseenter = Swal.stopTimer;
           toast.onmouseleave = Swal.resumeTimer;
-        }
+        },
       });
+
       Toast.fire({
         icon: "error",
-        title: "Logeo Fallido!"
+        title: "Login Fallido!",
       });
     }
   } catch (error: unknown) {
