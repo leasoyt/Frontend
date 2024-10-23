@@ -3,7 +3,7 @@
 export interface IRestaurant {
   id: string;
   name: string;
-  address: string;
+  address?: string;
   description?: string;
   phone?: string;
   email?: string;

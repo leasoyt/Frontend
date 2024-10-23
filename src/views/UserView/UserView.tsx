@@ -1,4 +1,5 @@
 import NavbarUsuario from '@/components/NavbarUsuario/NavbarUsuario';
+import Suggestions from '@/components/Suggestions/Suggestion';
 import { CategoryButtonProps, OptionCardProps, PromoCardProps, SuggestionCardProps } from '@/interfaces/Interfaces.types';
 import React from 'react';
 
@@ -25,10 +26,7 @@ const UserView = () => {
           {/* Sección de sugerencias */}
           <section className="mb-8 items-center">
             <h2 className="text-xl font-semibold mb-4 text-black font-serif">Te sugerimos</h2>
-            <div className="flex space-x-4 overflow-x-auto">
-              <SuggestionCard name="KFC" discount="50%" shipping="359" img="https://media-cdn.tripadvisor.com/media/photo-s/26/c8/30/69/kfc-logo.jpg"  />
-            
-            </div>
+            <Suggestions/>
           </section>
 
           {/* Sección de promociones */}

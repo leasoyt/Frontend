@@ -75,11 +75,7 @@ export async function login(userData: IloginProps) {
 
       Toast.fire({
         icon: "error",
-<<<<<<< HEAD:src/helpers/auth-helpers/auth.helper.ts
-        title: "Logeo Fallido!",
-=======
         title: "Login Fallido!",
->>>>>>> 3e18b8cf0cbf40e06f7b58b75446def6651db5e3:src/helpers/auth.helper.ts
       });
     }
   } catch (error: unknown) {
