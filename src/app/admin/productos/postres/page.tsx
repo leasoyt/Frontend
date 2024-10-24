@@ -7,4 +7,4 @@ const Postres = () => {
   )
 }
 
-export default Postres
+export default Postres;
