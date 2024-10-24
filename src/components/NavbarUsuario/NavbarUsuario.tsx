@@ -159,10 +159,10 @@ const NavbarUsuario = () => {
                 </li>
                 <li>
                   <Link
-                    href="/favoritos"
+                    href="/atencionAlCliente"
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
                   >
-                    Favoritos
+                    Atencion Al Cliente
                   </Link>
                 </li>
                 <li>
