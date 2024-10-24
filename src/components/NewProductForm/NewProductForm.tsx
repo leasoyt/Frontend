@@ -35,30 +35,24 @@ const NewProductForm = () => {
                 //   onChange={}
                 />
             </div>
-            <div className='p-1 flex items-center'>
-                <label htmlFor="">Imagen:</label>
+            <div className='p-1'>
+                <label htmlFor="">Stock:</label>
                 <input
-                  name='image' 
-                  type="string"
-                  placeholder='Url'
-                  className="border border-gray-300 p-1 italic ml-8" 
+                  name='stock' 
+                  type="number"
+                  className="border border-gray-300 p-1 italic ml-12" 
                 //   value={}
                 //   onChange={}
                 />
-                <p className='ml-2 text-lg'>o</p>
-                <input
-              type="file"
-              accept="image/*"
-              className="w-full border-gray-300 rounded-r-md shadow-sm p-2 "
-            />
             </div>
             <div className='p-1 flex items-center'>
                 <label htmlFor="">Descripción:</label>
                 <textarea
-                  placeholder="Descripción del producto"
-                  maxLength={500}
-                  className="w-[80%] border-gray-300 rounded-md shadow-sm p-2  text-black"
-                />
+                name="description"
+                placeholder="Descripción del producto"
+                maxLength={500}
+                className="w-[75%] border-gray-300 rounded-md shadow-sm p-2 text-black"
+              />
             </div>
             <div className='flex justify-items-start p-2'>
                 <button type="button" className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-1.5 me-2 mb-2 ml-3 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Agregar Producto</button>

@@ -1,6 +1,6 @@
 "use client";
-import { login } from "@/helpers/auth.helper";
-import { validateLoginForm } from "@/helpers/validate";
+import { login } from "@/helpers/auth-helpers/auth.helper";
+import { validateLoginForm } from "@/helpers/auth-helpers/validate";
 import { IErrorsProps, IloginProps } from "@/interfaces/Interfaces.types";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
@@ -27,6 +27,8 @@ const LoginView: React.FC = () => {
       [name]: value,
     });
   };
+
+  
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

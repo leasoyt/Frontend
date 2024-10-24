@@ -1,11 +1,12 @@
 "use client";
-import { register } from "@/helpers/auth.helper";
-import { validateRegisterForm } from "@/helpers/validate";
+import { register } from "@/helpers/auth-helpers/auth.helper";
+import { validateRegisterForm } from "@/helpers/auth-helpers/validate";
 import { IRegisterErrors, IRegisterProps } from "@/interfaces/Interfaces.types";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Navbar from "@/components/Navbar/Navbar";
 
 const RegisterView: React.FC = () => {
   const router = useRouter();
@@ -74,6 +75,8 @@ const RegisterView: React.FC = () => {
   }, [userData]);
 
   return (
+    <>
+    <Navbar/>
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-center">
       <h1 className="text-5xl font-bold text-gray-900 mb-8 font-serif ">
         Regístrate
@@ -215,6 +218,7 @@ const RegisterView: React.FC = () => {
 </button>
       </form>
     </div>
+    </>
   );
 };
 
