@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/Footer/Footer";
 
 const RegisterView: React.FC = () => {
   const router = useRouter();
@@ -218,6 +219,7 @@ const RegisterView: React.FC = () => {
 </button>
       </form>
     </div>
+    <Footer/>
     </>
   );
 };
