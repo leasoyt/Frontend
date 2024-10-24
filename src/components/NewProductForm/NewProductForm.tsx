@@ -35,24 +35,29 @@ const NewProductForm = () => {
                 //   onChange={}
                 />
             </div>
-            <div className='p-1'>
+            <div className='p-1 flex items-center'>
                 <label htmlFor="">Imagen:</label>
                 <input
                   name='image' 
                   type="string"
+                  placeholder='Url'
                   className="border border-gray-300 p-1 italic ml-8" 
                 //   value={}
                 //   onChange={}
                 />
-            </div>
-            <div className='p-1'>
-                <label htmlFor="">Descripción:</label>
+                <p className='ml-2 text-lg'>o</p>
                 <input
-                  name='name' 
-                  type="description"
-                  className="border border-gray-300 p-1 italic ml-1" 
-                //   value={}
-                //   onChange={}
+              type="file"
+              accept="image/*"
+              className="w-full border-gray-300 rounded-r-md shadow-sm p-2 "
+            />
+            </div>
+            <div className='p-1 flex items-center'>
+                <label htmlFor="">Descripción:</label>
+                <textarea
+                  placeholder="Descripción del producto"
+                  maxLength={500}
+                  className="w-[80%] border-gray-300 rounded-md shadow-sm p-2  text-black"
                 />
             </div>
             <div className='flex justify-items-start p-2'>
