@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer/Footer"
 import NavbarAdmin from "@/components/NavbarAdmin/NavbarAdmin"
 
 export default function DashboardLayout({
@@ -7,9 +8,10 @@ export default function DashboardLayout({
   }) {
   
     return (
-      <section className="sticky top-0">
+      <section className="sticky top-0 flex flex-col min-h-screen">
         <NavbarAdmin/>
           {children}
+        <Footer/>
       </section>
     )
   }

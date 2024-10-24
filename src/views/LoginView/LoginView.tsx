@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Importa los iconos
 import Navbar from "@/components/Navbar/Navbar";
 import { useRouter } from "next/navigation";
+import Footer from "@/components/Footer/Footer";
 
 const LoginView: React.FC = () => {
   
@@ -145,6 +146,7 @@ const LoginView: React.FC = () => {
         </button>
       </form>
     </div>
+    <Footer/>
     </>
   );
 };
