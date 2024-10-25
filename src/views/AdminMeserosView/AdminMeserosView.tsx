@@ -1,11 +1,11 @@
-import Image from 'next/image'
+import NewMeseroForm from '@/components/NewMeseroForm/NewMeseroForm'
 import React from 'react'
 
-const AdminReservasView = () => {
+const AdminMeserosView = () => {
   return (
     <div className="mr-5 mt-1 w-[80%] bg-white border border-gray-300 rounded-lg shadow-lg z-10">
         <div className='bg-slate-700 flex justify-center'>
-            <h1 className='text-white italic font-semibold mt-2 mb-2'>Lista de reservas</h1>
+            <h1 className='text-white italic font-semibold mt-2 mb-2'>Lista de meseros</h1>
         </div>
         <div className="relative overflow-x-auto">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -15,19 +15,16 @@ const AdminReservasView = () => {
                     Id
                 </th>
                 <th scope="col" className="px-6 py-3">
-                    Fecha
+                    NOMBRE
                 </th>
                 <th scope="col" className="px-6 py-3">
-                    HORA
+                    MAIL
                 </th>
                 <th scope="col" className="px-6 py-3">
-                    Status
+                    TELEFONO
                 </th>
                 <th scope="col" className="px-6 py-3">
-                    Id Mesa
-                </th>
-                <th scope="col" className="px-6 py-3">
-                    
+                    CREDENCIALES
                 </th>
               </tr>
             </thead>
@@ -37,26 +34,24 @@ const AdminReservasView = () => {
                     1
                 </th>
                 <td className="px-6 py-4">
-                    24/10/2024
+                    Carlos Gonzales
                 </td>
                 <td className="px-6 py-4">
-                    14:00
+                    carlos@gmail.com
                 </td>
                 <td className="px-6 py-4">
-                    Activo
+                    +57 300 256 3456
                 </td>
                 <td className="px-6 py-4">
-                    6
+                    password
                 </td>
-                <th scope="col" className="px-6 py-3">
-                  <button className='bg-slate-500 text-white font-light p-1 rounded-md'>Cancelar reserva</button>
-                </th>
               </tr>
             </tbody>
           </table>
         </div>
+        <NewMeseroForm/>
     </div>
   )
 }
 
-export default AdminReservasView
+export default AdminMeserosView
