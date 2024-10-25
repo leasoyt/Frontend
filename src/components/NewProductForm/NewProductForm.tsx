@@ -45,6 +45,16 @@ const NewProductForm = () => {
                 //   onChange={}
                 />
             </div>
+            <div className='p-1'>
+                <label htmlFor="">Imagen:</label>
+                <input
+                id="image"
+                name="image"
+                type="file"
+                accept="image/*"
+                className="w-full border-gray-300 rounded-md p-2"
+              />
+            </div>
             <div className='p-1 flex items-center'>
                 <label htmlFor="">Descripción:</label>
                 <textarea
