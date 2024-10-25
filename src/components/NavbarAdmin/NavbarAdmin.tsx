@@ -32,13 +32,13 @@ const NavbarAdmin = () => {
                     </Link>
                     <ul className='flex items-center pr-9'>
                         <li>
-                            <Link href="#" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Reservas</Link>
+                            <Link href="/admin/reservas/reservas" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Reservas</Link>
                         </li>
                         <li>
-                            <Link href="#" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Ordenes</Link>
+                            <Link href="/admin/ordenes/ordenes" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Ordenes</Link>
                         </li>
                         <li>
-                            <Link href="/admin/productos" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Menu</Link>
+                            <Link href="/admin/productos/platos" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Menu</Link>
                         </li>
                         <li>
                             <Link href="#" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Mesas</Link>
@@ -72,7 +72,7 @@ const NavbarAdmin = () => {
                                 <div className="absolute mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
                                 <ul className="py-2">
                                   <li>
-                                    <Link href="/admin/cuenta" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                                    <Link href="/admin/cuenta/pagos" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
                                       Mi cuenta
                                     </Link>
                                   </li>

@@ -3,6 +3,7 @@ import React from 'react';
 import { ButtonVerMas } from '../../components/ButtonVerMas/ButtonVerMas';
 import { ButtonVerPrecios } from '../../components/ButtonVerPrecios/ButtonVerPrecios';
 import Navbar from '@/components/Navbar/Navbar';
+import Footer from '@/components/Footer/Footer';
 
 const Funcionalidades = () => {
   return (
@@ -137,6 +138,7 @@ const Funcionalidades = () => {
 
         <ButtonVerPrecios />
       </div>
+      <Footer/>
     </>
   );
 };
