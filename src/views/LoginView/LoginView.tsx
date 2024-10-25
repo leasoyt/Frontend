@@ -111,6 +111,7 @@ const LoginView: React.FC = () => {
           >
             Contraseña
           </label>
+          <div className="relative">
           <input
             type={showPassword ? "text" : "password"} // Cambia entre texto y password
             id="password"
@@ -121,7 +122,7 @@ const LoginView: React.FC = () => {
             className="w-full px-4 py-2 border-gray-300 rounded-lg bg-gray-200 focus:outline-none text-black font-sans"
           />
           <div
-            className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer pt-9"
+            className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
             onClick={() => setShowPassword(!showPassword)} // Toggle mostrar/ocultar
           >
             {showPassword ? (
@@ -130,6 +131,8 @@ const LoginView: React.FC = () => {
               <FaEye style={{ color: "black" }} />
             )}
           </div>
+          </div>
+          
           {userData.password && errors.password && (
             <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
               {errors.password}

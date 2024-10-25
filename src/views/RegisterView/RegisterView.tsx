@@ -136,6 +136,7 @@ const RegisterView: React.FC = () => {
           >
             Contraseña
           </label>
+          <div  className="relative">
           <input
             type={showPassword ? "text" : "password"}
             id="password"
@@ -146,7 +147,7 @@ const RegisterView: React.FC = () => {
             className="w-full px-4 py-2 border-gray-300 rounded-lg bg-gray-200 focus:outline-none text-black font-sans"
           />
           <div
-            className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+            className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? (
@@ -155,6 +156,8 @@ const RegisterView: React.FC = () => {
               <FaEye style={{ color: "black" }} />
             )}
           </div>
+          </div>
+          
           {userData.password && errors.password && (
             <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
               {errors.password}
@@ -163,7 +166,7 @@ const RegisterView: React.FC = () => {
         </div>
 
         {/* Confirmar Contraseña */}
-        <div className="mb-6 relative">
+        <div >
           <div>
             <label
               className="block text-gray-500 mb-2 text-center font-medium text-lg"
@@ -173,7 +176,7 @@ const RegisterView: React.FC = () => {
             </label>
           </div>
 
-          <div className="">
+          <div className="relative">
             <input
               type={showConfirmPassword ? "text" : "password"}
               id="confirmPassword"
