@@ -1,14 +1,12 @@
 "use client";
-import { register } from "@/helpers/auth-helpers/auth.helper";
-import { validateRegisterForm } from "@/helpers/auth-helpers/validate";
-import { IRegisterErrors, IRegisterProps } from "@/interfaces/Interfaces.types";
+import { register } from "../../helpers/auth-helpers/auth.helper";
+import { validateRegisterForm } from "../../helpers/auth-helpers/validate"//"@/helpers/auth-helpers/validate";
+import { IRegisterErrors, IRegisterProps } from "../../interfaces/Interfaces.types"//"@/interfaces/Interfaces.types";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import Navbar from "@/components/Navbar/Navbar";
-import Footer from "@/components/Footer/Footer";
-import Link from "next/link";
+import Navbar from "../../components/Navbar/Navbar";
 
 const RegisterView: React.FC = () => {
   const router = useRouter();
@@ -221,18 +219,8 @@ const RegisterView: React.FC = () => {
 >
   Registrarse
 </button>
-<Link href="/api/auth/login">
-            <button
-              type="button"
-              className="w-44 bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-800 ml-4"
-            >
-              Registrarse con Auth0
-            </button>
-          </Link>
       </form>
-
     </div>
-    <Footer/>
     </>
   );
 };
