@@ -218,14 +218,14 @@ const RegisterView: React.FC = () => {
 >
   Registrarse
 </button>
-<Link href="/api/auth/login">
+<a href="/api/auth/login">
             <button
               type="button"
               className="w-44 bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-800 ml-4"
             >
               Registrarse con Auth0
             </button>
-          </Link>
+          </a>
       </form>
 
     </div>

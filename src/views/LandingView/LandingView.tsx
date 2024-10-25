@@ -1,12 +1,20 @@
+"use client"
+
 import { ButtonVerPrecios } from "@/components/ButtonVerPrecios/ButtonVerPrecios";
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 const LandingView: React.FC = () => {
+  const { user, error, isLoading } = useUser();
 
+
+
+  console.log('usuario',user);
+  
   return (
     <>
     <Navbar/>
