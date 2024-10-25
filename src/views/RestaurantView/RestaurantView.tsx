@@ -1,4 +1,5 @@
 // pages/RestaurantPage.tsx
+import Footer from '@/components/Footer/Footer';
 import NavbarUsuario from '@/components/NavbarUsuario/NavbarUsuario';
 import React from 'react';
 
@@ -91,6 +92,7 @@ const RestaurantView: React.FC = () => {
         </div>
       </div>
     </div>
+    <Footer/>
     </>
   );
 };

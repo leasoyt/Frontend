@@ -3,8 +3,10 @@ import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/Footer/Footer";
 
 const LandingView: React.FC = () => {
+
   return (
     <>
     <Navbar/>
@@ -75,6 +77,7 @@ const LandingView: React.FC = () => {
       />
   </section>
 </div>
+<Footer/>
       </>
   );
 };

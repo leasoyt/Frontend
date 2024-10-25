@@ -7,6 +7,7 @@ export interface IDish{
     description:string,
     stock:boolean,
     price:number,
-    imgUrl?:string,categoryId:IMenu_Category,
+    imgUrl?:string,
+    categoryId:IMenu_Category,
     orderdetails:IOrder_Detail[]
 }

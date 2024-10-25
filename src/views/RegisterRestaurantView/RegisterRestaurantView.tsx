@@ -1,4 +1,5 @@
 "use client";
+import Footer from "@/components/Footer/Footer";
 import NavbarUsuario from "@/components/NavbarUsuario/NavbarUsuario";
 import { createRestaurant } from "@/helpers/restaurant-helpers/register-restaurant";
 import React, { useState } from "react";
@@ -121,6 +122,7 @@ const RegisterRestaurantView: React.FC = () => {
           </form>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };
