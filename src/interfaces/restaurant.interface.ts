@@ -7,7 +7,7 @@ export interface IRestaurant {
   description?: string;
   phone?: string;
   email?: string;
-  imageUrl?: string;
+  imgUrl?: string;
   rating?: number;
   createdAt?: string;
   updatedAt?: string;
