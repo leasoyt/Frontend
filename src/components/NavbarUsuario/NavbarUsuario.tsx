@@ -28,7 +28,7 @@ const NavbarUsuario = () => {
 
     Toast.fire({
       icon: "success",
-      title: "Logout successfuly",
+      title: "Seccion Cerrada!",
     });
 
     router.push("/");

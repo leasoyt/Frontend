@@ -217,14 +217,14 @@ const RegisterView: React.FC = () => {
     !!errors.password || 
     !!errors.confirmPassword
   }
-  className="w-44 bg-gray-600 text-white font-medium py-2 rounded-lg hover:bg-gray-800"
+  className="w-44 bg-gray-600 text-white font-medium py-2 rounded-lg hover:bg-gray-800 mt-5"
 >
   Registrarse
 </button>
 <a href="/api/auth/login">
             <button
               type="button"
-              className="w-44 bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-800 ml-4"
+              className="w-44 bg-gray-700 text-white font-medium py-2 rounded-lg hover:bg-gray-800 ml-4"
             >
               Registrarse con Auth0
             </button>

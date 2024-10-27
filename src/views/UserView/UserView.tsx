@@ -1,10 +1,33 @@
+'use client'
 import Footer from '@/components/Footer/Footer';
 import NavbarUsuario from '@/components/NavbarUsuario/NavbarUsuario';
 import Suggestions from '@/components/Suggestions/Suggestion';
-import { CategoryButtonProps, OptionCardProps, PromoCardProps, SuggestionCardProps } from '@/interfaces/Interfaces.types';
-import React from 'react';
+import { CategoryButtonProps, IUserSession, OptionCardProps, PromoCardProps, SuggestionCardProps } from '@/interfaces/Interfaces.types';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
 const UserView = () => {
+  const router = useRouter();
+  const [userData, setUserData] = useState<IUserSession | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.localStorage) {
+      const aux = JSON.parse(localStorage.getItem("userSession")!);
+      setUserData(aux);
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      if (!userData?.token) {
+        router.push("/login");
+      }
+    }
+  }, [loading, userData, router]);
+
+  if (loading) return <div>Loading...</div>;
   return (
     <>
       <NavbarUsuario />
