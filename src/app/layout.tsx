@@ -40,7 +40,7 @@ export default function RootLayout({
         <title>RestO - Gestión de restaurantes</title>
         <link rel="icon" href="/Rest0Icon.png" type="image/png" />
       </head>
-      <UserProvider loginUrl="/foo/api/auth/login" profileUrl="/foo/api/auth/me">
+      <UserProvider >
       <body
         className={`${inter.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >

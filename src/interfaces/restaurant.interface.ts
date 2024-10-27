@@ -12,3 +12,9 @@ export interface IRestaurant {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export interface RestaurantProps {
+  params: {
+    restaurantID: string;
+  }
+}

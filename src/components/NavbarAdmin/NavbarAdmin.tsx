@@ -41,10 +41,10 @@ const NavbarAdmin = () => {
                             <Link href="/admin/productos/platos" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Menu</Link>
                         </li>
                         <li>
-                            <Link href="#" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Mesas</Link>
+                            <Link href="/admin/mesas" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Mesas</Link>
                         </li>
                         <li>
-                            <Link href="#" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Administracion</Link>
+                            <Link href="/admin/administracion/meseros" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Administracion</Link>
                         </li>
                     </ul>
                 </div>
