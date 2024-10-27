@@ -22,8 +22,9 @@ const Suggestions: React.FC = () => {
           throw new Error('Error al obtener los restaurantes');
         }
         const data = await response.json();
-        console.log(data)
-        setRestaurants(data.restaurants || []); // Asegúrate de que 'data' contenga la estructura correcta
+        console.log(data); // Verifica que la respuesta de la API incluya `imageUrl`
+        setRestaurants(data.restaurants || []);
+  
       } catch (error) {
         if (error instanceof Error) {
           setError(error.message); // Almacena el mensaje de error
@@ -43,7 +44,7 @@ const Suggestions: React.FC = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="flex space-x-4 overflow-x-auto">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {restaurants.map((restaurant) => (
         <Link href={`/restaurant/${restaurant.id}`} key={restaurant.id}>
           
