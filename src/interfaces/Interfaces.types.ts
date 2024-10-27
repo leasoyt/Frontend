@@ -48,3 +48,12 @@ export interface OptionCardProps {
   shipping: string;
   img: string; // URL de la imagen
 }
+
+export interface IUserSession {
+  token: string;
+  user: {
+    name: string;
+    email: string;
+    password: string;
+  };
+}

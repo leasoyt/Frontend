@@ -14,7 +14,7 @@ const Contacto = () => {
           Somos una empresa dedicada a ofrecer soluciones tecnológicas para restaurantes, bares y cafés. Nuestro objetivo es optimizar el trabajo de los meseros y el control de las órdenes, brindando herramientas simples y eficaces.
         </p>
         <div className="bg-neutral-200 p-8 rounded-xl mt-8 shadow-lg w-full max-w-lg text-center">
-          <h3 className="text-2xl font-semibold text-gray-900">
+          <h3 className="text-2xl font-semibold text-gray-900" >
             Datos de Contacto
           </h3>
           <p className="text-gray-600 mt-4">

@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { IRestaurant } from "../../interfaces/restaurant.interface";
 
 export async function createRestaurant(restaurant: Partial<IRestaurant>) {
+  
   try {
     // Recuperar el token del localStorage
     console.log(restaurant);
@@ -30,12 +31,22 @@ export async function createRestaurant(restaurant: Partial<IRestaurant>) {
     const data = await response.json();
 
     // Muestra un mensaje de éxito usando SweetAlert
-    Swal.fire({
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      },
+    });
+    Toast.fire({
       icon: "success",
       title: "Restaurante creado exitosamente",
       text: `El restaurante ${data.name} ha sido creado.`,
     });
-
     return data; // Retornas el restaurante creado para futuras manipulaciones
   } catch (error) {
     Swal.fire({

@@ -2,9 +2,12 @@
 import Footer from "@/components/Footer/Footer";
 import NavbarUsuario from "@/components/NavbarUsuario/NavbarUsuario";
 import { createRestaurant } from "@/helpers/restaurant-helpers/register-restaurant";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const RegisterRestaurantView: React.FC = () => {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     name: "",
     address: "",
@@ -27,9 +30,10 @@ const RegisterRestaurantView: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+
     try {
       await createRestaurant(formData); // Llama al helper con formData
-
+      router.push("/admin/administracion/meseros");
       // Opcional: Reiniciar el formulario
       setFormData({
         name: "",
@@ -37,6 +41,7 @@ const RegisterRestaurantView: React.FC = () => {
         description: "",
         image: null,
       });
+
     } catch (error) {
       console.error('Error al crear el restaurante:', error);
       alert('Error al crear el restaurante: ' + (error as Error).message);
@@ -106,10 +111,10 @@ const RegisterRestaurantView: React.FC = () => {
               <input
                 id="image"
                 name="image"
-                type="file"
+                type="url"
                 accept="image/*"
                 onChange={handleChange}
-                className="w-full border-gray-300 rounded-md shadow-sm p-2"
+                className="w-full border-gray-300 rounded-md shadow-sm p-2 text-black"
               />
             </div>
 
