@@ -63,6 +63,11 @@ export type ViewTableProps = Pick<AddTableProps, "showPopup"> & {
   id: string;
 }
 
+export interface TablesBoardTriggerData {
+  id: string;
+  table_id: number;
+}
+
 export interface VoidCallbackProps {
   updateBoard: () => void;
 }
