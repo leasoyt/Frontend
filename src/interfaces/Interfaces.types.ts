@@ -6,7 +6,7 @@ export interface IloginProps {
   password: string;
 }
 
-export type IErrorsProps = Partial<IRegisterProps>;
+export type IErrorsProps = Partial<IloginProps>;
 // {
 //   email?: string;
 //   password?: string;
