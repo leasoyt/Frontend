@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Swal from 'sweetalert2';
+
 const NavbarUsuario = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const router = useRouter();
@@ -50,32 +51,7 @@ const NavbarUsuario = () => {
           <p className="font-extrabold text-[24px] text-black">Rest0</p>
         </Link>
 
-        {/* Search Bar */}
-        <div className="flex-grow flex justify-center">
-          <div className="flex items-center bg-gray-100 border border-gray-300 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300">
-            <input
-              type="text"
-              placeholder="Buscar locales"
-              className="px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent rounded-l-full bg-transparent text-black"
-            />
-            <button className="bg-gray-600 p-3 text-white rounded-r-full hover:bg-gray-700 transition-colors duration-300">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M10 18l6-6m0 0l-6-6m6 6H3"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
+     
 
         {/* Profile Dropdown */}
         <div className="relative">
@@ -143,10 +119,10 @@ const NavbarUsuario = () => {
                 </li>
                 <li>
                   <Link
-                    href="/configuracion"
+                    href="/pageUser"
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
                   >
-                    Configuraciones
+                   Restaurantes
                   </Link>
                 </li>
                 <li>
