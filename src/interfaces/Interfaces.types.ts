@@ -78,3 +78,13 @@ export type TableWithSetState = ITable & ViewTableProps &  {
 export type TableOrderViewProps = IOrder & VoidCallbackProps & {}
 
 export type ClickEvent = React.MouseEvent<HTMLDivElement | HTMLButtonElement>;
+
+export interface IUserSession {
+  token: string;
+  user: {
+    name: string;
+    email: string;
+    password: string;
+  };
+}
+
