@@ -1,5 +1,8 @@
 // interfaces/Restaurant.interface.ts
 
+import { IMenu } from "./menu.interface";
+import { ITable } from "./table.interface";
+
 export interface IRestaurant {
   id: string;
   name: string;
@@ -11,10 +14,12 @@ export interface IRestaurant {
   rating?: number;
   createdAt?: string;
   updatedAt?: string;
+  Menu?: IMenu[];
+  Table?: ITable[];
 }
 
 export interface RestaurantProps {
   params: {
     restaurantID: string;
-  }
+  };
 }

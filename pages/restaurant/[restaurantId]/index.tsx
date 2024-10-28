@@ -58,11 +58,6 @@ const RestaurantPage = () => {
         <div className="w-1/4 bg-white p-4 rounded shadow-lg">
           <h2 className="font-bold mb-4 text-black">Categorías</h2>
           <ul className="space-y-2 text-black">
-            <li>categoria</li>
-            <li>Almuerza con grandes marcas</li>
-            <li>Cena con grandes marcas</li>
-            <li>Promos para compartir</li>
-            {/* Añade más categorías según sea necesario */}
           </ul>
         </div>
 
@@ -95,11 +90,6 @@ const RestaurantPage = () => {
                 <p className="text-gray-500 line-through">$7,200</p>
                 <p className="text-red-500 font-bold">$5,000</p>
               </div>
-              <img
-                src="" // Reemplaza con la imagen correcta
-                alt="Ruster"
-                className="w-16 h-16 object-cover"
-              />
             </div>
             {/* Repite para más productos */}
           </div>
