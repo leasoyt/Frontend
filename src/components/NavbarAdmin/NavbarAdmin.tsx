@@ -37,9 +37,9 @@ const NavbarAdmin = () => {
   
   return (
         <nav className="bg-white p-4">
-            <div className='flex justify-between w-[80%] m-auto mt-6'>
+            <div className='flex justify-center w-[80%] m-auto mt-6'>
                 <div className='flex'>
-                    <Link href="/" className="flex items-center">
+                    <Link href="/" className="flex items-center pr-24">
                     <Image
                       src="/Rest0logo.png" 
                       alt="Logo"
@@ -51,7 +51,8 @@ const NavbarAdmin = () => {
                       Rest0
                     </p>
                     </Link>
-                    <ul className='flex items-center pr-9'>
+                    
+                    <ul className='flex items-center'>
                         <li>
                             <Link href="/admin/reservas/reservas" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Reservas</Link>
                         </li>
@@ -69,7 +70,7 @@ const NavbarAdmin = () => {
                         </li>
                     </ul>
                 </div>
-                <div className="relative">
+                <div className="relative pl-24">
   <button 
     className="flex items-center border border-gray-300 px-4 py-2 rounded-full text-black bg-white shadow-md hover:shadow-lg transition-shadow duration-300"
     onClick={toggleDropdown}
