@@ -1,11 +1,14 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false); // Estado para controlar el menú móvil
+
+
+
 
   return (
     <nav className="bg-white p-4">
