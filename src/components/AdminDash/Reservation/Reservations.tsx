@@ -16,7 +16,7 @@ const ReservationsColumns: React.FC = () => {
             setError(null);
 
             try {
-                const response: Response = await fetch(`${API_URL}/reservation/restaurant/aefa8479-7091-4f72-8fef-e0f59e8457f5`);
+                const response: Response = await fetch(`${API_URL}/reservation/restaurant/aefa8479-7091-4f72-8fef-e0f59e8457f5`, {method: "GET"});
 
                 if (!response.ok) {
                     const error = await response.json();

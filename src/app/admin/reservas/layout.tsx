@@ -7,7 +7,7 @@ export default function DashboardLayout({
   }) {
   
     return (
-      <section className="sticky top-0 flex">
+      <section className="top-0 flex">
         <NavbarAdminReservas/>
           {children}
       </section>

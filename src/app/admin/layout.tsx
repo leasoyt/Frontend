@@ -8,7 +8,7 @@ export default function DashboardLayout({
   }) {
   
     return (
-      <section className="sticky top-0 flex flex-col min-h-screen">
+      <section className="top-0 flex flex-col min-h-screen">
         <NavbarAdmin/>
           {children}
         <Footer/>
