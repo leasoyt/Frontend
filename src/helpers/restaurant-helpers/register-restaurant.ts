@@ -23,7 +23,8 @@ export async function createRestaurant(restaurant: Partial<IRestaurant>) {
       },
       body: JSON.stringify(restaurant),
     });
-
+      console.log(response);
+      
     if (!response.ok) {
       throw new Error("Error al crear el restaurante");
     }

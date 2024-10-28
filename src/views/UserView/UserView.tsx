@@ -37,7 +37,6 @@ const UserView = () => {
 
           {/* Sección de sugerencias */}
           <section className="mb-8 items-center">
-            <h1 className="text-4x1 font-semibold mb-4 text-black font-serif">Te sugerimos</h1>
             <Suggestions/>
           </section>
         </div>
