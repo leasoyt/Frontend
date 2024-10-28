@@ -19,7 +19,8 @@ const TablesBoard: React.FC<{
     const [showPopup, setShowPopup] = useState<boolean>(false);
     const togglePopup = () => setShowPopup(!showPopup);
 
-    const [uuid, setUuid] = useState("");
+    const [triggererId, setTriggererId] = useState("");
+    const [triggererNumber, setTriggererNumber] = useState<number>(0);
 
 
     useEffect(() => {
@@ -68,9 +69,9 @@ const TablesBoard: React.FC<{
     return (
         <>
             {tables.map((table) => (
-                <TableObject {...table} key={table.id} showPopup={togglePopup} setParentState={setUuid} />
+                <TableObject {...table} key={table.id} showPopup={togglePopup} setParentState={setTriggererId} setNumberParentState={setTriggererNumber}/>
             ))}
-            {showPopup && <ViewTablePopUp showPopup={togglePopup} id={uuid} />}
+            {showPopup && <ViewTablePopUp showPopup={togglePopup} id={triggererId} table_number={triggererNumber}/>}
         </>
     );
 };

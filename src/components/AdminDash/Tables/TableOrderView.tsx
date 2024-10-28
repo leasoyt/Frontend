@@ -5,16 +5,11 @@ const TableOrderView: React.FC<{order: IOrder, exitPopup: (event: ClickEvent) =>
     return (
         <div className="bg-gray-100 min-h-screen flex flex-col items-center p-10">
             <h2 className="text-3xl font-semibold text-center mt-4 text-black italic">
-                Orden de mesa #{order.table_id}
+                Mesa #{order.table_id}
             </h2>
-            {/* <p className="text-gray-600 text-lg mt-4 text-center font-serif">
-                Información sobre tu orden.
-            </p> */}
 
             <div className="bg-white p-6 rounded-xl shadow-md flex flex-col items-center justify-center mt-6 w-full">
-                {/* <h3 className="text-2xl font-semibold text-gray-900 font-serif text-center">
-                    Orden ID: {order.id}
-                </h3> */}
+
                 <p className="mt-2 text-gray-600 font-serif text-center">
                     Fecha: {new Date(order.date).toLocaleString()}
                 </p>
