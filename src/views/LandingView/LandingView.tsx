@@ -33,6 +33,7 @@ const LandingView: React.FC = () => {
 
 
 
+
   return (
     <>
       <Navbar />
@@ -49,18 +50,20 @@ const LandingView: React.FC = () => {
         <h2 className="text-2xl font-semibold text-center mt-4 text-black italic">
           Software para restaurantes, bares y cafés
         </h2>
-        <div className="mt-4 flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
-          <Link href="/login">
-            <button className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto">
-              Iniciar Sesión
-            </button>
-          </Link>
-          <Link href="/register">
-            <button className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto">
-              Registrarse
-            </button>
-          </Link>
-        </div>
+        {!user && (
+          <div className="mt-4 flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
+            <Link href="/login">
+              <button className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto">
+                Iniciar Sesión
+              </button>
+            </Link>
+            <Link href="/register">
+              <button className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto">
+                Registrarse
+              </button>
+            </Link>
+          </div>
+        )}
 
         <section className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16 bg-neutral-200 p-10 w-full">
           <Image
