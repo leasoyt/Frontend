@@ -1,10 +1,9 @@
 import React from 'react';
 import { IReservation } from '@/interfaces/reservation.interface';
+import { getDividedDate } from '@/utils/getDividedDate';
 
 const ReserveColumn: React.FC<IReservation> = ({ id, date, status, user, table, seats }) => {
-    const date_instance = new Date(date);
-    const date_only = date_instance.toISOString().split("T")[0];
-    const time_only = date_instance.toTimeString().split(" ")[0].slice(0, 5);
+    const [date_only, time_only] = getDividedDate(new Date(date));
 
     return [
         <td key="user" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{user}</td>,
