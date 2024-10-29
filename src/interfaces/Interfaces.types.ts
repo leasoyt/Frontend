@@ -6,7 +6,7 @@ export interface IloginProps {
   password: string;
 }
 
-export type IErrorsProps = Partial<IRegisterProps>;
+export type IErrorsProps = Partial<IloginProps>;
 // {
 //   email?: string;
 //   password?: string;
@@ -61,6 +61,11 @@ export interface AddTableProps {
 
 export type ViewTableProps = Pick<AddTableProps, "showPopup"> & {
   id: string;
+}
+
+export interface TablesBoardTriggerData {
+  id: string;
+  table_id: number;
 }
 
 export interface VoidCallbackProps {

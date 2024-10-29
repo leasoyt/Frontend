@@ -15,6 +15,7 @@ export async function getRestaurantById(
 
     if (res.ok) {
       const data: IRestaurant = await res.json();
+      console.log(data);
       return data;
     } else {
       // Mostrar notificación de error
