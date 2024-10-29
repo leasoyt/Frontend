@@ -5,22 +5,23 @@ import { IRestaurant } from '@/interfaces/restaurant.interface';
 import NavbarUsuario from '../../../src/components/NavbarUsuario/NavbarUsuario';
 import Footer from '@/components/Footer/Footer';
 import { getRestaurantById } from "../../../src/helpers/restaurant-helpers/get-restaurant"//'@/helpers/restaurant.helper'; // Importar tu función helper
-
 import '../../../src/app/globals.css'; // Asegúrate de que este archivo contenga Tailwind CSS
-import { AppProps } from 'next/app';
 import { IMenu, IMenu_Category } from '@/interfaces/menu.interface';
 import { IDish } from '@/interfaces/dishes.interface';
+import { createReservation } from '@/helpers/reservation/reservation';
+import { IReservation } from '@/interfaces/reservation.interface';
+import Swal from 'sweetalert2';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
-}
+
+
+
 
 const RestaurantPage = () => {
   const router = useRouter();
   const { restaurantId } = router.query; // Acceder al parámetro dinámico desde la URL
 
   const [restaurant, setRestaurant] = useState<IRestaurant | null>(null);
-
+  const [reservationDate, setReservationDate] = useState<string>(''); 
 
   useEffect(() => {
     if (restaurantId && typeof restaurantId === 'string') { // Asegúrate de que sea un string
@@ -34,6 +35,38 @@ const RestaurantPage = () => {
     }
   }, [restaurantId]);
 
+  const handleCreateReservation = async () => {
+    const userSession = localStorage.getItem("userSession");
+    const token = userSession ? JSON.parse(userSession).token : null;
+    const userId = localStorage.getItem('userId')
+  
+    // Validaciones para asegurarte de que el token y la fecha están presentes
+    if (!token || !reservationDate) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Debe estar loggeado y la fecha debe ser seleccionada.",
+      });
+      return; // Sal de la función si hay errores
+    }
+  
+    const reservationData = {
+      user_id: userId, // Asegúrate de enviar el ID correcto
+      restaurant_id: Array.isArray(restaurantId) ? restaurantId[0] : restaurantId, // Asegúrate de que sea un string
+      date: reservationDate,
+      seats: 3, // Asegúrate de obtener esto de un input o estado si es dinámico
+    };
+  
+    console.log('Datos de reserva a enviar:', reservationData); // Para depuración
+  
+    try {
+      const response = await createReservation(reservationData);
+      console.log('Reserva creada:', response);
+    } catch (error) {
+      console.error('Error al crear reserva:', error);
+    }
+  };
+  
   if (!restaurant) return <p>Cargando...</p>;
 
   return (
@@ -42,15 +75,20 @@ const RestaurantPage = () => {
     <div className="min-h-screen bg-gray-100">
       {/* Header */}
       <div className="bg-gradient-to-r from-gray-700 to-gray-900 p-6 text-white">
-        <h1 className="text-4xl font-bold">{restaurant.name}</h1>
-        <p className="text-sm">{restaurant.address}</p>
-        <div className="mt-4 flex items-center space-x-4">
+            <h1 className="text-4xl font-bold">{restaurant.name}</h1>
+              <p className="text-sm">{restaurant.address}</p>
+          <div className="mt-4 flex items-center space-x-4">
           <input
-            type="text"
-            placeholder="Buscar productos..."
+            type="date"
             className="w-1/3 p-2 rounded text-black"
+            onChange={(e) => setReservationDate(e.target.value)} // Actualiza el estado de la fecha de reserva
           />
-          <button className="bg-white p-2 rounded text-black">Buscar</button>
+          <button
+            className="bg-blue-500 p-2 rounded text-white"
+            onClick={handleCreateReservation} // Llama a la función para crear la reserva
+          >
+            Crear Reserva
+          </button>
         </div>
       </div>
         
@@ -78,14 +116,14 @@ const RestaurantPage = () => {
 {/* Main Content */}
 <div className="w-2/4 mx-4"> 
   <h2 className="text-xl font-bold mb-4 text-black">Productos disponibles</h2>
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div className="grid grid-cols-1 gap-4">
     {restaurant.menu && restaurant.menu.categories ? (
       restaurant.menu.categories.flatMap((category: IMenu_Category) =>
         category.dishes?.map((dish: IDish) => ( // Cambié 'products' por 'dishes'
           <div key={dish.id} className="bg-white p-4 rounded shadow-md flex justify-between">
             <div className='text-black'>
               <h3 className="font-bold text-lg">{dish.name}</h3>
-              <p className="text-gray-500 line-through">${dish.price}</p> {/* Asegúrate de que price sea un número */}
+              <p className="text-gray-500 ">${dish.price}</p> {/* Asegúrate de que price sea un número */}
             </div>
             {dish.imgUrl && (
               <img
@@ -102,21 +140,7 @@ const RestaurantPage = () => {
     )}
   </div>
 
-  
-
-          <h2 className="text-xl font-bold mt-8 mb-4 text-black">Almuerzos hasta $5999</h2>
-          <div className="grid grid-cols-1 gap-4">
-            {/* Producto */}
-            <div className="bg-white p-4 rounded shadow-md flex justify-between">
-              <div className='text-black'>
-                <h3 className="font-bold text-lg">Ruster + papas 30% OFF</h3>
-                <p className="text-gray-500 line-through">$7,200</p>
-                <p className="text-red-500 font-bold">$5,000</p>
-              </div>
-            </div>
-            {/* Repite para más productos */}
-          </div>
-        </div>
+      </div>
       </div>
     </div>
     <Footer/>

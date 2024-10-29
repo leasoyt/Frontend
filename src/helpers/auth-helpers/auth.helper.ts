@@ -59,7 +59,23 @@ export async function login(userData: IloginProps) {
       body: JSON.stringify(userData),
     });
     if (res.ok) {
-      return res.json();
+      const data = await res.json();
+
+      // Almacenar el token en localStorage
+      localStorage.setItem(
+        "userSession",
+        JSON.stringify({ token: data.token })
+      );
+
+      // Decodificar el token para obtener el user_id
+      const payload = data.token.split(".")[1]; // Obtiene la segunda parte del token
+      const decodedPayload = JSON.parse(atob(payload)); // Decodifica de Base64
+      const userId = decodedPayload.id; // Extrae el user_id
+
+      // Almacenar el user_id en localStorage
+      localStorage.setItem("userId", userId);
+
+      return data; // Retorna la respuesta para que pueda ser utilizada si es necesario
     } else {
       const Toast = Swal.mixin({
         toast: true,
