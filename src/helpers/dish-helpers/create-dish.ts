@@ -41,6 +41,7 @@ export async function createDish(dishData:IDish) {
             title: "Platillo creado exitosamente",
             text: `El platillo ${dish.name} ha sido creado.`,
           });
+          
           return dish
     } catch (error) {
         Swal.fire({

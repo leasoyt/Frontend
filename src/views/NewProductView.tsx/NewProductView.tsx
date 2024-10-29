@@ -1,3 +1,4 @@
+import NewCategoryForm from '@/components/NewCategotyForm/NewCategoryForm'
 import NewProductForm from '@/components/NewProductForm/NewProductForm'
 import Image from 'next/image'
 import React from 'react'
@@ -18,7 +19,10 @@ const NewProductView = () => {
           />
           <p className='italic ml-4'>Nuevo producto</p>
         </div>
-        <NewProductForm/>
+        <div className='flex justify-around'>
+          <NewProductForm/>
+          <NewCategoryForm/>
+        </div>
     </div>
   )
 }

@@ -51,7 +51,7 @@ const NewCategoryForm = () => {
     };
 
     console.log(categoryData);
-    // console.log(restaurants);
+    console.log(restaurants);
     
 
     return (
