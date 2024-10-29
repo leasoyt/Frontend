@@ -6,7 +6,7 @@ interface AdminSidebarProps {
 const AdminSidebar: React.FC<AdminSidebarProps> = ({ setSection }) => {
     return (
         <aside className="w-64 bg-gray-800 text-white p-4 md:w-1/4">
-            <h2 className="text-xl font-bold mb-6">Panel de Control</h2>
+            <h2 className="text-xl font-bold mb-6 text-center">Panel de Control</h2>
             <nav className="flex flex-col gap-4">
                 <button
                     onClick={() => setSection('restaurants')}
