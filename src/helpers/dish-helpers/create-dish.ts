@@ -2,7 +2,7 @@ import { API_URL } from "@/config/config";
 import Swal from "sweetalert2";
 import { IDish } from "@/interfaces/dishes.interface";
 
-export async function createDish(dishData:IDish) {
+export async function createDish(dishData: Partial<IDish>) {
     try {
       const userSession = localStorage.getItem("userSession");
       const token = userSession ? JSON.parse(userSession).token : null;
@@ -14,7 +14,8 @@ export async function createDish(dishData:IDish) {
     const response = await fetch(`${API_URL}/dish`,{
         method: "POST",
         headers: {
-            "Content-type": "application/json"
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify(dishData)
         })

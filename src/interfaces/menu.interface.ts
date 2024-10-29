@@ -8,8 +8,8 @@ export interface IMenu {
 }
 
 export interface IMenu_Category {
-  // id: string;
+  id: string;
   restaurant_id: string;
   name: string;
-  // dishes?: IDish[];
+  dishes?: IDish[];
 }
