@@ -46,8 +46,17 @@ const NewCategoryForm = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        try {
+            await createCategory(categoryData)
+            setCategoryData({
+                name: "",
+                restaurant_id:""
+            })
+            
+        } catch (error) {
+            
+        }
 
-        const response = await createCategory(categoryData)
     };
 
     console.log(categoryData);
@@ -61,7 +70,8 @@ const NewCategoryForm = () => {
                 <div className='p-1'>
                     <label>Nombre:</label>
                     <input
-                        name='name'
+                        id="name"
+                        name="name"
                         type="text"
                         className="border border-gray-300 p-1 italic ml-7"
                         value={categoryData.name}
@@ -78,6 +88,7 @@ const NewCategoryForm = () => {
                         onChange={handleChange}
                     /> */}
                     <select
+                        id='restaurant_id'
                         name='restaurant_id'
                         className="border border-gray-300 p-1 italic ml-7"
                         value={categoryData.restaurant_id}

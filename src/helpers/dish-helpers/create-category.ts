@@ -2,7 +2,7 @@ import { API_URL } from "@/config/config";
 import { IMenu_Category } from "@/interfaces/menu.interface";
 import Swal from "sweetalert2";
 
-export async function createCategory(categoryData: IMenu_Category) {
+export async function createCategory(categoryData: Partial<IMenu_Category>) {
     try {
       const userSession = localStorage.getItem("userSession");
       const token = userSession ? JSON.parse(userSession).token : null;
@@ -14,7 +14,7 @@ export async function createCategory(categoryData: IMenu_Category) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            // "Authorization": `Bearer ${token}`,
+            "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify(categoryData)
         })

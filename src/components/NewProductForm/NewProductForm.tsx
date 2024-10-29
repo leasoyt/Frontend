@@ -3,13 +3,13 @@ import { createDish } from '@/helpers/dish-helpers/create-dish';
 import React, { useState } from 'react'
 
 const NewProductForm = () => {
-  const initialState = {
+  const [productData, setProductData] = useState({
+    // id: "",
     name: "",
     price: "",
     description: "",
     category: ""
-  };
-  const [productData, setProductData] = useState(initialState);
+  });
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement |HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -20,6 +20,8 @@ const NewProductForm = () => {
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     await createDish(productData)
   }
 
@@ -32,6 +34,7 @@ const NewProductForm = () => {
             <div className='p-1'>
                 <label htmlFor="">Nombre:</label>
                 <input
+                  id='name'
                   name='name' 
                   type="text"
                   className="border border-gray-300 p-1 italic ml-7" 
@@ -42,6 +45,7 @@ const NewProductForm = () => {
             <div className='p-1'>
                 <label htmlFor="">Precio:</label>
                 <input
+                  id='price'
                   name='price' 
                   type="number"
                   className="border border-gray-300 p-1 italic ml-10" 
@@ -52,6 +56,7 @@ const NewProductForm = () => {
             <div className='p-1'>
                 <label htmlFor="">Categoria:</label>
                 <input
+                  id='category'
                   name='category' 
                   type="string"
                   className="border border-gray-300 p-1 italic ml-4" 
@@ -62,6 +67,7 @@ const NewProductForm = () => {
             <div className='p-1 flex items-center'>
                 <label htmlFor="">Descripción:</label>
                 <textarea
+                id='description'
                 name="description"
                 placeholder="Descripción del producto"
                 maxLength={500}
