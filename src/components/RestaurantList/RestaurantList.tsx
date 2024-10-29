@@ -66,10 +66,10 @@ const RestaurantList = () => {
 
   return (
     <div className="p-4">
-    <h2 className="text-xl font-semibold mb-4 text-center">Lista de Restaurantes</h2>
-    <ul className="bg-white rounded-lg shadow-lg overflow-hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <h2 className="text-4xl font-semibold mb-4 text-center p-5">Lista de Restaurantes</h2>
+    <ul className="bg-white rounded-lg overflow-hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  ">
         {(Array.isArray(restaurants) ? restaurants : []).map((restaurant) => (
-            <li key={restaurant.id} className="relative border p-2 rounded">
+            <li key={restaurant.id} className="relative  p-2 rounded">
                 <SuggestionCard {...restaurant} />
                 <button
                     onClick={() => handleDeleteRestaurant(restaurant.id)}
