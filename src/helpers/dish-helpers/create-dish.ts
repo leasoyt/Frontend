@@ -4,8 +4,8 @@ import { IDish } from "@/interfaces/dishes.interface";
 
 export async function createDish(dishData:IDish) {
     try {
-        const userSession = localStorage.getItem("userSession");
-    const token = userSession ? JSON.parse(userSession).token : null;
+      const userSession = localStorage.getItem("userSession");
+      const token = userSession ? JSON.parse(userSession).token : null;
 
     if (!token) {
       throw new Error("No se encontró el token de autenticación.");
