@@ -33,6 +33,7 @@ const Configuracion = () => {
         }
 
         const userData = await response.json();
+        console.log(userData)
         setUser(userData);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Error desconocido");

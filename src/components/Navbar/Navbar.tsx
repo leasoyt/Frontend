@@ -6,9 +6,14 @@ import Image from 'next/image';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false); // Estado para controlar el menú móvil
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para verificar si el usuario está logueado
 
-
-
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.localStorage) {
+      const userSession = localStorage.getItem("userSession");
+      setIsLoggedIn(!!userSession); // Cambia el estado si hay sesión activa
+    }
+  }, []);
 
   return (
     <nav className="bg-white p-4">
@@ -68,6 +73,16 @@ const Navbar: React.FC = () => {
               Precios
             </Link>
           </li>
+          {isLoggedIn && (
+            <li className="mt-2 md:mt-0">
+              <Link
+                href="/pageUser"
+                className="italic text-black text-[24px] hover:underline active:scale-110 transition-transform duration-200"
+              >
+                Mi Cuenta
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
       
