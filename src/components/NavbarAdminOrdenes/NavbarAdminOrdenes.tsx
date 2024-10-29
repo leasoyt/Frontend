@@ -9,12 +9,12 @@ const NavbarAdminOrdenes = () => {
         </div>
         <ul className="py-2">
             <li>
-                <Link href="/admin/ordenes/ordenes" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                <Link href="/manager/ordenes/ordenes" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
                     Ordenes
                 </Link>
             </li>
             <li>
-                <Link href="/admin/ordenes/new" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                <Link href="/manager/ordenes/new" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
                     Nueva Orden
                 </Link>
             </li>

@@ -13,18 +13,20 @@ export async function createCategory(categoryData: IMenu_Category) {
     const response = await fetch(`${API_URL}/menu-category`,{
         method: "POST",
         headers: {
-            "Content-type": "application/json"
+            "Content-Type": "application/json",
+            // "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify(categoryData)
         })
 
-        if (response.ok) {
-            return await response.json();
-            console.log(response);
-            
-        } else {
-            throw new Error("Error al crear nueva categoria")
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error("Error en la respuesta del servidor:", errorData);
+            throw new Error("Error en la creación de la categoría");
         }
+
+        const data = await response.json();
+        return data;
 
     } catch (error) {
         Swal.fire({

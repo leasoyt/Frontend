@@ -9,12 +9,12 @@ const NavbarAdminReservas = () => {
         </div>
         <ul className="py-2">
             <li>
-                <Link href="/admin/reservas/reservas" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                <Link href="/manager/reservas/reservas" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
                     Reservas
                 </Link>
             </li>
             <li>
-                <Link href="/admin/reservas/new" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                <Link href="/manager/reservas/new" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
                     Nueva Reserva
                 </Link>
             </li>
