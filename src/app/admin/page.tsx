@@ -10,7 +10,7 @@ const AdminDashboard = () => {
   const [section, setSection] = useState<'restaurants' | 'users'>('restaurants');
 
   return (
-    <div className="flex flex-col md:flex-row h-screen">
+    <div className="flex flex-col md:flex-row h-screen bg-white">
       <AdminSidebar setSection={setSection} />
       <div className="flex-1 p-6 overflow-y-auto">
         {section === 'restaurants' && <RestaurantList />}
