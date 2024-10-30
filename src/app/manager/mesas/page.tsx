@@ -7,7 +7,7 @@ const Mesas = () => {
   const [data, setData] = useState(false);
 
   return (
-    <div className="mr-5 mt-1 m-auto w-[95%] bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+    <div className="mr-5 mt-1 m-auto w-[95%] bg-white border border-gray-300 rounded-lg shadow-lg z-5">
       <div className='bg-slate-700 flex justify-center'>
         <h1 className='text-white italic font-semibold mt-2 mb-2'>Mesas</h1>
       </div>

@@ -12,12 +12,12 @@ import { useRouter } from "next/navigation";
 
 const LandingView: React.FC = () => {
   const router = useRouter();
-  const { user,isLoading } = useUser();
+  const { user, isLoading } = useUser();
   const [token, setToken] = useLocalStorage("token", "");
   const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(!!user);
 
-console.log('usuario en la pagina',user);
-console.log('estado isuserlogge',isUserLoggedIn);
+  console.log('usuario en la pagina', user);
+  console.log('estado isuserlogge', isUserLoggedIn);
 
 
   useEffect(() => {
@@ -32,8 +32,7 @@ console.log('estado isuserlogge',isUserLoggedIn);
         console.error("Error al obtener el token:", error);
       }
     };
-console.log('user',user);
-
+    console.log('user', user);
 
 
     if (user) {
@@ -45,8 +44,8 @@ console.log('user',user);
       localStorage.removeItem("token"); // Elimina el token del localStorage
       setIsUserLoggedIn(false); // Actualiza el estado local
     }
-    
-  }, [user,setToken]);
+
+  }, [user, setToken]);
 
   return (
     <>
@@ -78,14 +77,14 @@ console.log('user',user);
             </Link>
           </div>
         ) : (
-          
+
           <Link href='/api/auth/logout'>
-          <button
-          // onClick={handleLogout}
-            className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto m-5"
-          >
-            Cerrar Sesión
-          </button></Link>
+            <button
+              // onClick={handleLogout}
+              className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto m-5"
+            >
+              Cerrar Sesión
+            </button></Link>
         )}
 
         <section className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16 bg-neutral-200 p-10 w-full">

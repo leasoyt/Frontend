@@ -2,8 +2,8 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
 import Image from 'next/image'
-import Swal from 'sweetalert2'
 import { useRouter } from 'next/navigation'
+import { swalNotifySuccess } from '@/helpers/swal-notify-success'
 
 const NavbarAdmin = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -15,22 +15,7 @@ const NavbarAdmin = () => {
     const handleLogout = () => {
       localStorage.removeItem("userSession");
   
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-      });
-  
-      Toast.fire({
-        icon: "success",
-        title: "Seccion Cerrada!",
-      });
+      swalNotifySuccess("¡Bienvenido de nuevo!", "");
   
       router.push("/");
     };

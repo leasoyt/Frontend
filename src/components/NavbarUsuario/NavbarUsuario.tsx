@@ -1,13 +1,13 @@
 "use client";
+import { swalNotifySuccess } from "@/helpers/swal-notify-success";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import Swal from 'sweetalert2';
-
 const NavbarUsuario = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const router = useRouter();
+  
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -15,22 +15,7 @@ const NavbarUsuario = () => {
   const handleLogout = () => {
     localStorage.removeItem("userSession");
 
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      },
-    });
-
-    Toast.fire({
-      icon: "success",
-      title: "Seccion Cerrada!",
-    });
+    swalNotifySuccess("¡Adiós!", "Tu sesión ha finalizado.");
 
     router.push("/");
   };

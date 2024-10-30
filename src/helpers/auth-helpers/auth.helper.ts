@@ -1,6 +1,8 @@
 import { IloginProps, IRegisterProps } from "@/interfaces/Interfaces.types";
 import Swal from "sweetalert2";
 import { API_URL } from "../../config/config";
+import { swalNotifyError } from "../swal-notify-error";
+import { ErrorHelper, verifyError } from "../errorHelper";
 
 export async function register(userData: IRegisterProps) {
   try {
@@ -50,7 +52,9 @@ export async function register(userData: IRegisterProps) {
 }
 
 export async function login(userData: IloginProps) {
+
   try {
+
     const res = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
       headers: {
@@ -58,31 +62,23 @@ export async function login(userData: IloginProps) {
       },
       body: JSON.stringify(userData),
     });
+
     if (res.ok) {
       return res.json();
-    } else {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-      });
 
-      Toast.fire({
-        icon: "error",
-        title: "Login Fallido!",
-      });
-    }
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      throw new Error(error.message); // Lanza un nuevo error con el mensaje del error original
     } else {
-      throw new Error("Unknown error occurred during login.");
+      const error = await res.json();
+      throw new ErrorHelper(verifyError(error.message), error.error);
+
     }
+
+  } catch (error) {
+
+      if (error instanceof ErrorHelper) {
+        swalNotifyError(error);
+        console.log(error);
+      } else {
+        console.log("Error desconocido " + error);
+      }
   }
 }

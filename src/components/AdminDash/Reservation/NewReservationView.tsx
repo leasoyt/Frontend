@@ -2,7 +2,7 @@ import NewReservForm from '@/components/NewReservation/NewReservForm'
 import Image from 'next/image'
 import React from 'react'
 
-const NewReservView = () => {
+const NewReservationView = () => {
   return (
     <div className="mr-5 mt-1 w-[80%] bg-white border border-gray-300 rounded-lg shadow-lg z-10">
         <div className='bg-slate-700 flex justify-center'>
@@ -23,4 +23,4 @@ const NewReservView = () => {
   )
 }
 
-export default NewReservView
+export default NewReservationView
