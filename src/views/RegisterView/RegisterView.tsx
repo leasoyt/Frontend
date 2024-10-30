@@ -1,14 +1,16 @@
 "use client";
-import { register } from "../../helpers/auth-helpers/auth.helper";
-import { validateRegisterForm } from "../../helpers/auth-helpers/validate"//"@/helpers/auth-helpers/validate";
-import { IRegisterErrors, IRegisterProps } from "../../interfaces/Interfaces.types"//"@/interfaces/Interfaces.types";
+import { register } from "@/helpers/auth-helpers/auth.helper";
+import { validateRegisterForm } from "@/helpers/auth-helpers/validate";
+import { IRegisterErrors, IRegisterProps } from "@/interfaces/Interfaces.types";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import Navbar from "../../components/Navbar/Navbar";
 import { swalNotifySuccess } from "@/helpers/swal-notify-success";
-import { swalNotifyError } from "@/helpers/swal-notify-error";
+import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/Footer/Footer";
+import Link from "next/link";
+
 
 const RegisterView: React.FC = () => {
   const router = useRouter();
@@ -52,7 +54,7 @@ const RegisterView: React.FC = () => {
     try {
       await register(userData);
     } catch (err) {
-      
+
     }
 
     swalNotifySuccess("¡Registrado correctamente!", "");
@@ -158,7 +160,7 @@ const RegisterView: React.FC = () => {
           </div>
 
           {/* Confirmar Contraseña */}
-          <div >
+          <div>
             <div>
               <label
                 className="block text-gray-500 mb-2 text-center font-medium text-lg"
@@ -207,12 +209,28 @@ const RegisterView: React.FC = () => {
               !!errors.password ||
               !!errors.confirmPassword
             }
-            className="w-44 bg-gray-600 text-white font-medium py-2 rounded-lg hover:bg-gray-800"
+            className="w-44 bg-gray-600 text-white font-medium py-2 rounded-lg hover:bg-gray-800 mt-5"
           >
             Registrarse
           </button>
+          <Link href="/api/auth/login?prompt=login">
+            <button
+              type="button"
+              className="w-44 bg-gray-700 text-white font-medium py-2 rounded-lg hover:bg-gray-800 ml-4"
+            >
+              Registrarse con Auth0
+            </button>
+          </Link>
         </form>
+
       </div>
+      {userData.confirmPassword && errors.confirmPassword && (
+        <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
+          {errors.confirmPassword}
+        </span>
+      )}
+
+      <Footer />
     </>
   );
 };

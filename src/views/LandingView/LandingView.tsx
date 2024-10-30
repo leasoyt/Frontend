@@ -8,29 +8,44 @@ import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
+import { useRouter } from "next/navigation";
 
 const LandingView: React.FC = () => {
-  const { user, error, isLoading } = useUser();
-  const [token, setToken] = useLocalStorage('token','')
+  const router = useRouter();
+  const { user, isLoading } = useUser();
+  const [token, setToken] = useLocalStorage("token", "");
+  const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(!!user);
 
- 
+  console.log('usuario en la pagina', user);
+  console.log('estado isuserlogge', isUserLoggedIn);
+
+
   useEffect(() => {
     const fetchToken = async () => {
       try {
-        const response = await fetch('/api/auth/token'); // ruta actualizada
+        const response = await fetch("/api/auth/token");
         const data = await response.json();
         if (data.token) {
           setToken(data.token);
         }
       } catch (error) {
-        console.error('Error al obtener el token:', error);
+        console.error("Error al obtener el token:", error);
       }
     };
-
-    if (user) fetchToken();
-  }, [user]);
+    console.log('user', user);
 
 
+    if (user) {
+      fetchToken(); // Obtiene el token solo si hay un usuario
+      setIsUserLoggedIn(true);
+    } else {
+      // Si no hay usuario, elimina el token
+      setToken(""); // Limpia el token del estado local
+      localStorage.removeItem("token"); // Elimina el token del localStorage
+      setIsUserLoggedIn(false); // Actualiza el estado local
+    }
+
+  }, [user, setToken]);
 
   return (
     <>
@@ -41,14 +56,14 @@ const LandingView: React.FC = () => {
             src="https://i.pinimg.com/564x/5b/33/dd/5b33dde1543afe4a2eb6619e18ca2085.jpg"
             alt="photo"
             className="rounded-2xl"
-            width={500} // Ajusta los valores de ancho y alto según tus necesidades
+            width={500}
             height={300}
           />
         </div>
         <h2 className="text-2xl font-semibold text-center mt-4 text-black italic">
           Software para restaurantes, bares y cafés
         </h2>
-        {!user && (
+        {!isUserLoggedIn ? (
           <div className="mt-4 flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
             <Link href="/login">
               <button className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto">
@@ -61,6 +76,15 @@ const LandingView: React.FC = () => {
               </button>
             </Link>
           </div>
+        ) : (
+
+          <Link href='/api/auth/logout'>
+            <button
+              // onClick={handleLogout}
+              className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto m-5"
+            >
+              Cerrar Sesión
+            </button></Link>
         )}
 
         <section className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16 bg-neutral-200 p-10 w-full">
@@ -110,6 +134,5 @@ const LandingView: React.FC = () => {
     </>
   );
 };
-
 
 export default LandingView;

@@ -9,27 +9,27 @@ const NavbarAdminMenu = () => {
         </div>
         <ul className="py-2">
             <li>
-                <Link href="/admin/productos/bebidas" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                <Link href="/manager/productos/bebidas" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
                     Bebidas
                 </Link>
             </li>
             <li>
-                <Link href="/admin/productos/cafeteria" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                <Link href="/manager/productos/cafeteria" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
                     Cafeteria
                 </Link>
             </li>
             <li>
-                <Link href="/admin/productos/platos" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                <Link href="/manager/productos/platos" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
                     Platos Principales
                 </Link>
             </li>
             <li>
-                <Link href="/admin/productos/postres" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                <Link href="/manager/productos/postres" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
                     Postres
                 </Link>
             </li>
             <li>
-                <Link href="/admin/productos/new" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                <Link href="/manager/productos/new" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
                     Nuevo Producto
                 </Link>
             </li>

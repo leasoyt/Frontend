@@ -39,19 +39,19 @@ const NavbarAdmin = () => {
                     
                     <ul className='flex items-center'>
                         <li>
-                            <Link href="/admin/reservas/reservas" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Reservas</Link>
+                            <Link href="/manager/reservas/reservas" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Reservas</Link>
                         </li>
                         <li>
-                            <Link href="/admin/ordenes/ordenes" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Ordenes</Link>
+                            <Link href="/manager/ordenes/ordenes" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Ordenes</Link>
                         </li>
                         <li>
-                            <Link href="/admin/productos/platos" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Menu</Link>
+                            <Link href="/manager/productos/platos" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Menu</Link>
                         </li>
                         <li>
-                            <Link href="/admin/mesas" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Mesas</Link>
+                            <Link href="/manager/mesas" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Mesas</Link>
                         </li>
                         <li>
-                            <Link href="/admin/administracion/meseros" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Administracion</Link>
+                            <Link href="/manager/administracion/meseros" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Administracion</Link>
                         </li>
                     </ul>
                 </div>
@@ -113,7 +113,7 @@ const NavbarAdmin = () => {
     <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
       <ul className="py-2">
         <li>
-          <Link href="/admin/cuenta/pagos" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200">
+          <Link href="/manager/cuenta/pagos" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200">
             Mi cuenta
           </Link>
         </li>

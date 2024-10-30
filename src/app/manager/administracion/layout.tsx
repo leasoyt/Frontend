@@ -7,9 +7,14 @@ export default function DashboardLayout({
   }) {
   
     return (
-      <section className="top-0 flex">
-        <NavbarAdministracion/>
+      <section className="flex">
+      <div className="sticky top-0 w-1/4 bg-white shadow-md">
+          <NavbarAdministracion />
+      </div>
+      <div className="w-3/4 p-4">
           {children}
-      </section>
+      </div>
+  </section>
+  
     )
   }

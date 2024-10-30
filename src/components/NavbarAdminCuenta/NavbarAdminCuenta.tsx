@@ -9,12 +9,12 @@ const NavbarAdminCuenta = () => {
         </div>
         <ul className="py-2">
             <li>
-                <Link href="/admin/cuenta/pagos" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                <Link href="/manager/cuenta/pagos" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
                     Pagos
                 </Link>
             </li>
             <li>
-                <Link href="/admin/cuenta/planes" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                <Link href="/manager/cuenta/planes" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
                     Planes
                 </Link>
             </li>

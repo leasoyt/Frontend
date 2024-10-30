@@ -27,7 +27,8 @@ export async function createRestaurant(restaurant: Partial<IRestaurant>) {
       },
       body: JSON.stringify(new_restaurant),
     });
-
+      console.log(response);
+      
     if (!response.ok) {
       const error = await response.json();
       throw new ErrorHelper(verifyError(error.message), error.statusCode);

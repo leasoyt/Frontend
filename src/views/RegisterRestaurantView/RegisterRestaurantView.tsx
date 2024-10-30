@@ -34,7 +34,7 @@ const RegisterRestaurantView: React.FC = () => {
 
     try {
       await createRestaurant(formData); // Llama al helper con formData
-      router.push("/admin/administracion/meseros");
+      router.push("/manager/administracion/meseros");
       // Opcional: Reiniciar el formulario
       setFormData({
         name: "",
@@ -112,7 +112,7 @@ const RegisterRestaurantView: React.FC = () => {
               />
             </div>
 
-            <div>
+            {/* <div>
               <label className="block text-gray-700">Imagen Principal (Opcional)</label>
               <input
                 id="image"
@@ -122,7 +122,7 @@ const RegisterRestaurantView: React.FC = () => {
                 onChange={handleChange}
                 className="w-full border-gray-300 rounded-md shadow-sm p-2 text-black"
               />
-            </div>
+            </div> */}
 
             <button
               type="submit"
