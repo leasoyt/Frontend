@@ -1,4 +1,5 @@
-import NewProductForm from '@/components/NewProductForm/NewProductForm'
+import NewProductForm from '@/components/AdminDash/Products/NewProductForm'
+import NewCategoryForm from '@/components/NewCategotyForm/NewCategoryForm'
 import Image from 'next/image'
 import React from 'react'
 
@@ -16,9 +17,12 @@ const NewProductView = () => {
             height={35} 
             className="ml-2" 
           />
-          <p className='italic ml-4'>Nuevo producto</p>
+          <p className='italic ml-4 text-black'>Nuevo producto</p>
         </div>
-        <NewProductForm/>
+        <div className='flex justify-around bg-gray-100'>
+          <NewProductForm/>
+          <NewCategoryForm/>
+        </div>
     </div>
   )
 }

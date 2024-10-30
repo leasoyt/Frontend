@@ -1,8 +1,8 @@
 export interface IDish {
-    id: string,
-    name: string,
-    description: string,
-    stock: boolean,
-    price: string,
-    imgUrl?: string,
+    id: string;
+    name: string;
+    description: string;
+    stock?: boolean;
+    price: string;
+    imgUrl?: string;
 }

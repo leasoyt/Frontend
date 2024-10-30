@@ -1,7 +1,9 @@
 "use client";
 import Footer from "@/components/Footer/Footer";
 import NavbarUsuario from "@/components/NavbarUsuario/NavbarUsuario";
+import { ErrorHelper } from "@/helpers/errorHelper";
 import { createRestaurant } from "@/helpers/restaurant-helpers/register-restaurant";
+import { swalNotifyError } from "@/helpers/swal-notify-error";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -17,7 +19,7 @@ const RegisterRestaurantView: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, type, value, files } = e.target as HTMLInputElement;
-  
+
     if (type === "file") {
       // Si es un input de tipo archivo, obtenemos el archivo
       setFormData({ ...formData, [name]: files ? files[0] : null });
@@ -30,10 +32,9 @@ const RegisterRestaurantView: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-
     try {
       await createRestaurant(formData); // Llama al helper con formData
-      router.push("/admin/administracion/meseros");
+      router.push("/manager/administracion/meseros");
       // Opcional: Reiniciar el formulario
       setFormData({
         name: "",
@@ -43,8 +44,13 @@ const RegisterRestaurantView: React.FC = () => {
       });
 
     } catch (error) {
-      console.error('Error al crear el restaurante:', error);
-      alert('Error al crear el restaurante: ' + (error as Error).message);
+      
+      if (error instanceof ErrorHelper) {
+        swalNotifyError(error);
+      } else {
+        console.log("Error desconocido "+ error);
+      }
+
     }
   };
 
@@ -127,7 +133,7 @@ const RegisterRestaurantView: React.FC = () => {
           </form>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };

@@ -1,9 +1,11 @@
 import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
 
 export class ErrorHelper extends Error {
+    error: string | undefined;
     constructor(public message: string, public exception?: string) {
         super(message);
         this.name = "ErrorHelper";
+        this.error = exception;
     }
 }
 

@@ -1,6 +1,8 @@
 import { IloginProps, IRegisterProps } from "@/interfaces/Interfaces.types";
 import Swal from "sweetalert2";
 import { API_URL } from "../../config/config";
+import { swalNotifyError } from "../swal-notify-error";
+import { ErrorHelper, verifyError } from "../errorHelper";
 
 export async function register(userData: IRegisterProps) {
   try {
@@ -58,47 +60,19 @@ export async function login(userData: IloginProps) {
       },
       body: JSON.stringify(userData),
     });
+
     if (res.ok) {
-      const data = await res.json();
-
-      // Almacenar el token en localStorage
-      localStorage.setItem(
-        "userSession",
-        JSON.stringify({ token: data.token })
-      );
-
-      // Decodificar el token para obtener el user_id
-      const payload = data.token.split(".")[1]; // Obtiene la segunda parte del token
-      const decodedPayload = JSON.parse(atob(payload)); // Decodifica de Base64
-      const userId = decodedPayload.id; // Extrae el user_id
-
-      // Almacenar el user_id en localStorage
-      localStorage.setItem("userId", userId);
-
-      return data; // Retorna la respuesta para que pueda ser utilizada si es necesario
+      return res.json();
     } else {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-      });
-
-      Toast.fire({
-        icon: "error",
-        title: "Login Fallido!",
-      });
+      const error = await res.json();
+      throw new ErrorHelper(verifyError(error.message), error.error);
     }
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      throw new Error(error.message); // Lanza un nuevo error con el mensaje del error original
+  } catch (error) {
+    if (error instanceof ErrorHelper) {
+      swalNotifyError(error);
+      console.log(error);
     } else {
-      throw new Error("Unknown error occurred during login.");
+      console.log("Error desconocido " + error);
     }
   }
 }

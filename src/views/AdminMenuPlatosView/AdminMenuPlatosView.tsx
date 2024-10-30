@@ -15,7 +15,7 @@ const AdminMenuPlatosView = () => {
             height={15} 
             className="ml-2" 
           />
-          <p className='italic ml-2'>filtrar por producto:</p>
+          <p className='italic ml-2 text-black'>filtrar por producto:</p>
           <input 
                 type="search" 
                 // value={}

@@ -8,44 +8,17 @@ import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
-import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 
 const LandingView: React.FC = () => {
   const router = useRouter();
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
   const [token, setToken] = useLocalStorage("token", "");
   const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(!!user);
 
-  const handleLogout = async () => {
-    localStorage.removeItem("token");
+  console.log('usuario en la pagina', user);
+  console.log('estado isuserlogge', isUserLoggedIn);
 
-    try {
-      await fetch("/api/auth/logout"); // Asegúrate de que la ruta sea correcta
-      setIsUserLoggedIn(false); // Actualiza el estado local
-
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-      });
-
-      Toast.fire({
-        icon: "success",
-        title: "Sección Cerrada!",
-      });
-
-      router.push("/login"); // Redirige después de cerrar sesión
-    } catch (error) {
-      console.error("Error al cerrar sesión:", error);
-    }
-  };
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -59,11 +32,19 @@ const LandingView: React.FC = () => {
         console.error("Error al obtener el token:", error);
       }
     };
+    console.log('user', user);
+
 
     if (user) {
-      fetchToken();
-      setIsUserLoggedIn(true); // Asegúrate de que el estado local se actualice
+      fetchToken(); // Obtiene el token solo si hay un usuario
+      setIsUserLoggedIn(true);
+    } else {
+      // Si no hay usuario, elimina el token
+      setToken(""); // Limpia el token del estado local
+      localStorage.removeItem("token"); // Elimina el token del localStorage
+      setIsUserLoggedIn(false); // Actualiza el estado local
     }
+
   }, [user, setToken]);
 
   return (
@@ -96,12 +77,14 @@ const LandingView: React.FC = () => {
             </Link>
           </div>
         ) : (
-          <button
-            onClick={handleLogout}
-            className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto m-5"
-          >
-            Cerrar Sección
-          </button>
+
+          <Link href='/api/auth/logout'>
+            <button
+              // onClick={handleLogout}
+              className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto m-5"
+            >
+              Cerrar Sesión
+            </button></Link>
         )}
 
         <section className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16 bg-neutral-200 p-10 w-full">

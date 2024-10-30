@@ -46,58 +46,66 @@ const NewCategoryForm = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        try {
+            await createCategory(categoryData)
+            setCategoryData({
+                name: "",
+                restaurant_id:""
+            })
+            
+        } catch (error) {
+            
+        }
 
-        const response = await createCategory(categoryData)
     };
 
     console.log(categoryData);
-    // console.log(restaurants);
+    console.log(restaurants);
     
 
     return (
-        <div className='p-3 bg-gray-200'>
-            <h1 className='italic'>Crear categoría</h1>
-            <form onSubmit={handleSubmit}>
-                <div className='p-1'>
-                    <label>Nombre:</label>
-                    <input
-                        name='name'
-                        type="text"
-                        className="border border-gray-300 p-1 italic ml-7"
-                        value={categoryData.name}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className='p-1'>
-                    <label>Restaurante:</label>
-                    {/* <input
-                        name='restaurant_id'
-                        type="text"
-                        className="border border-gray-300 p-1 italic ml-7"
-                        value={categoryData.restaurant_id}
-                        onChange={handleChange}
-                    /> */}
-                    <select
-                        name='restaurant_id'
-                        className="border border-gray-300 p-1 italic ml-7"
-                        value={categoryData.restaurant_id}
-                        onChange={handleChange}
-                    >
-                        <option value="">Selecciona un restaurante</option>
-                        {restaurants.map((restaurant) => (
-                            <option key={restaurant.id} value={restaurant.id}>
-                                {restaurant.name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div className='flex justify-items-start p-2'>
-                    <button type="submit" className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-1.5 me-2 mb-2 ml-3 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
-                        Agregar categoria
-                    </button>
-                </div>
-            </form>
-        </div>
+        <div className="p-5 bg-gray-100 max-w-md mx-auto">
+        <h1 className="text-2xl font-semibold italic text-gray-800 mb-4">Crear categoría</h1>
+        <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+                <label className="block text-gray-700 font-medium mb-1">Nombre:</label>
+                <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    className="border border-gray-300 rounded-md p-2 w-full text-gray-800"
+                    value={categoryData.name}
+                    onChange={handleChange}
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block text-gray-700 font-medium mb-1">Restaurante:</label>
+                <select
+                    id="restaurant_id"
+                    name="restaurant_id"
+                    className="border border-gray-300 rounded-md p-2 w-full text-gray-800"
+                    value={categoryData.restaurant_id}
+                    onChange={handleChange}
+                >
+                    <option value="">Selecciona un restaurante</option>
+                    {restaurants.map((restaurant) => (
+                        <option key={restaurant.id} value={restaurant.id}>
+                            {restaurant.name}
+                        </option>
+                    ))}
+                </select>
+            </div>
+            <div className="mt-4">
+                <button
+                    type="submit"
+                    className="w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2"
+                >
+                    Agregar categoría
+                </button>
+            </div>
+        </form>
+    </div>
+    
     );
 };
 

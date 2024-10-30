@@ -9,7 +9,7 @@ export interface IMenu {
 
 export interface IMenu_Category {
   id: string;
-  menuId: string;
+  restaurant_id: string;
   name: string;
   dishes?: IDish[];
 }

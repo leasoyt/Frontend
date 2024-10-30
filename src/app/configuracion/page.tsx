@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import NavbarUsuario from "@/components/NavbarUsuario/NavbarUsuario";
 import Footer from "@/components/Footer/Footer";
 import UserProfileView from "../../views/UserProfileView/UserProfileView";
+import { API_URL } from "@/config/config";
 
 interface User {
   name: string;
@@ -21,7 +22,7 @@ const Configuracion = () => {
     const fetchUser = async () => {
       const token = localStorage.getItem('token');
       try {
-        const response = await fetch("http://localhost:4000/user/profile", {
+        const response = await fetch(`${API_URL}/user/profile`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -33,6 +34,7 @@ const Configuracion = () => {
         }
 
         const userData = await response.json();
+        console.log(userData)
         setUser(userData);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Error desconocido");

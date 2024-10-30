@@ -75,8 +75,8 @@ const RestaurantPage = () => {
     <div className="min-h-screen bg-gray-100">
       {/* Header */}
       <div className="bg-gradient-to-r from-gray-700 to-gray-900 p-6 text-white">
-            <h1 className="text-4xl font-bold">{restaurant.name}</h1>
-              <p className="text-sm">{restaurant.address}</p>
+            <h1 className="text-4xl font-extrabold">{restaurant.name}</h1>
+              <p className="text-sm font-extrabold">{restaurant.address}</p>
           <div className="mt-4 flex items-center space-x-4">
           <input
             type="date"

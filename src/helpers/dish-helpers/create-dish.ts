@@ -2,10 +2,10 @@ import { API_URL } from "@/config/config";
 import Swal from "sweetalert2";
 import { IDish } from "@/interfaces/dishes.interface";
 
-export async function createDish(dishData:IDish) {
+export async function createDish(dishData: Partial<IDish>) {
     try {
-        const userSession = localStorage.getItem("userSession");
-    const token = userSession ? JSON.parse(userSession).token : null;
+      const userSession = localStorage.getItem("userSession");
+      const token = userSession ? JSON.parse(userSession).token : null;
 
     if (!token) {
       throw new Error("No se encontró el token de autenticación.");
@@ -14,10 +14,13 @@ export async function createDish(dishData:IDish) {
     const response = await fetch(`${API_URL}/dish`,{
         method: "POST",
         headers: {
-            "Content-type": "application/json"
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify(dishData)
         })
+        console.log(response);
+        
 
         if (!response.ok) {
             throw new Error("Error al crear nuevo platillo")
@@ -41,6 +44,7 @@ export async function createDish(dishData:IDish) {
             title: "Platillo creado exitosamente",
             text: `El platillo ${dish.name} ha sido creado.`,
           });
+          
           return dish
     } catch (error) {
         Swal.fire({

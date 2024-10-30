@@ -2,9 +2,9 @@ import NewReservForm from '@/components/NewReservation/NewReservForm'
 import Image from 'next/image'
 import React from 'react'
 
-const NewReservView = () => {
+const NewReservationView = () => {
   return (
-    <div className="mr-5 mt-1 w-[80%] bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+    <div className="mr-5 mt-1 w-[80%] bg-gray-200 border border-gray-300 rounded-lg shadow-lg z-10 h-[min-content]">
         <div className='bg-slate-700 flex justify-center'>
             <h1 className='text-white italic font-semibold mt-2 mb-2'></h1>
         </div>
@@ -16,11 +16,11 @@ const NewReservView = () => {
             height={35} 
             className="ml-2" 
           />
-          <p className='italic ml-4'>Nueva Reservacion</p>
+          <p className='italic ml-4 text-black'>Nueva Reservacion</p>
         </div>
         <NewReservForm/>
     </div>
   )
 }
 
-export default NewReservView
+export default NewReservationView
