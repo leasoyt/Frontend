@@ -3,7 +3,7 @@ import React from 'react'
 
 const AdminMeserosView = () => {
   return (
-    <div className="mr-5 mt-1 w-[80%] bg-white border border-gray-300 rounded-lg shadow-lg z-5">
+    <div className="mr-5 mt-1 w-[80%] bg-gray-100 border border-gray-300 rounded-lg shadow-lg z-5 h-[max-content]">
         <div className='bg-slate-700 flex justify-center'>
             <h1 className='text-white italic font-semibold mt-2 mb-2'>Lista de meseros</h1>
         </div>
