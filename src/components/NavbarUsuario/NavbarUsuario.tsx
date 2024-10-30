@@ -7,6 +7,7 @@ import { useState } from "react";
 const NavbarUsuario = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const router = useRouter();
+  
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
