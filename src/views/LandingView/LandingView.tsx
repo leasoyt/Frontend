@@ -12,7 +12,6 @@ import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
 const LandingView: React.FC = () => {
   const { user, error, isLoading } = useUser();
   const [token, setToken] = useLocalStorage('token','')
- 
 
  
   useEffect(() => {
@@ -30,7 +29,6 @@ const LandingView: React.FC = () => {
 
     if (user) fetchToken();
   }, [user]);
-
 
 
 

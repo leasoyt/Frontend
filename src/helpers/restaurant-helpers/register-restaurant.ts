@@ -2,14 +2,18 @@
 import { API_URL } from "@/config/config";
 import Swal from "sweetalert2";
 import { IRestaurant } from "../../interfaces/restaurant.interface";
+import { ErrorHelper, verifyError } from "../errorHelper";
+import { swalNotifySuccess } from "../swal-notify-success";
 
 export async function createRestaurant(restaurant: Partial<IRestaurant>) {
-  
+
   try {
     // Recuperar el token del localStorage
     console.log(restaurant);
     const userSession = localStorage.getItem("userSession");
     const token = userSession ? JSON.parse(userSession).token : null;
+    const user = userSession ? JSON.parse(userSession).user : null;
+    const new_restaurant = { ...restaurant, future_manager: user.id };
 
     if (!token) {
       throw new Error("No se encontró el token de autenticación.");
@@ -21,39 +25,20 @@ export async function createRestaurant(restaurant: Partial<IRestaurant>) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`, // Incluir el token en la cabecera
       },
-      body: JSON.stringify(restaurant),
+      body: JSON.stringify(new_restaurant),
     });
 
     if (!response.ok) {
-      throw new Error("Error al crear el restaurante");
+      const error = await response.json();
+      throw new ErrorHelper(verifyError(error.message), error.statusCode);
     }
 
     const data = await response.json();
 
-    // Muestra un mensaje de éxito usando SweetAlert
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      },
-    });
-    Toast.fire({
-      icon: "success",
-      title: "Restaurante creado exitosamente",
-      text: `El restaurante ${data.name} ha sido creado.`,
-    });
-    return data; // Retornas el restaurante creado para futuras manipulaciones
+    swalNotifySuccess("¡Restaurante registrado con éxito! 🎉", "Tu restaurante ahora está en línea");
+
+    return data;
   } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Error",
-      text: (error as Error).message,
-    });
     throw error;
   }
 }

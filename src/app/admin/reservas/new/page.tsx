@@ -1,9 +1,9 @@
-import NewReservView from '@/views/NewReservView/NewReservView'
+import NewReservationView from '@/components/AdminDash/Reservation/NewReservationView'
 import React from 'react'
 
 const NewReservation = () => {
   return (
-    <NewReservView/>
+    <NewReservationView/>
   )
 }
 

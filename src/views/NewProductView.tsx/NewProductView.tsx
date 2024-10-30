@@ -1,4 +1,4 @@
-import NewProductForm from '@/components/NewProductForm/NewProductForm'
+import NewProductForm from '@/components/AdminDash/Products/NewProductForm'
 import Image from 'next/image'
 import React from 'react'
 
