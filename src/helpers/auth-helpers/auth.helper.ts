@@ -52,9 +52,7 @@ export async function register(userData: IRegisterProps) {
 }
 
 export async function login(userData: IloginProps) {
-
   try {
-
     const res = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
       headers: {
@@ -65,20 +63,16 @@ export async function login(userData: IloginProps) {
 
     if (res.ok) {
       return res.json();
-
     } else {
       const error = await res.json();
       throw new ErrorHelper(verifyError(error.message), error.error);
-
     }
-
   } catch (error) {
-
-      if (error instanceof ErrorHelper) {
-        swalNotifyError(error);
-        console.log(error);
-      } else {
-        console.log("Error desconocido " + error);
-      }
+    if (error instanceof ErrorHelper) {
+      swalNotifyError(error);
+      console.log(error);
+    } else {
+      console.log("Error desconocido " + error);
+    }
   }
 }
