@@ -11,9 +11,7 @@ export default function DashboardLayout({
       <div className="bg-white w-full md:w-1/4 p-4 md:p-0">
           <NavbarAdminReservas />
       </div>
-      <div className="w-full md:w-3/4 p-4">
           {children}
-      </div>
   </section>
   
     )
