@@ -13,11 +13,11 @@ const AdminCuentaPlanesView = () => {
             </div>
             <div className='border border-gray-300 p-3 ml-8'>
                 <div className='mb-5'>
-                    <p className='italic text-base font-semibold mb-2'>Escoge el plan que desees</p>
-                    <p className='italic text-sm'>Selecciona un plan de acuerdo a las funcionalidades que necesites:</p>
+                    <p className='italic text-base font-semibold mb-2 text-black'>Escoge el plan que desees</p>
+                    <p className='italic text-sm text-black'>Selecciona un plan de acuerdo a las funcionalidades que necesites:</p>
                 </div>
                 <div>
-                  <p>poner planes aca</p>
+                  <p className='text-black'>poner planes aca</p>
                 </div>
                 <div className='flex justify-end'>
                     <Link href="#">
