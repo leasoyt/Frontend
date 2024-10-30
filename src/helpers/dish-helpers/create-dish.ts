@@ -19,6 +19,8 @@ export async function createDish(dishData: Partial<IDish>) {
         },
         body: JSON.stringify(dishData)
         })
+        console.log(response);
+        
 
         if (!response.ok) {
             throw new Error("Error al crear nuevo platillo")
