@@ -11,7 +11,15 @@ const UserList = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(`${API_URL}/user/all`);
+        const userSession = localStorage.getItem("userSession");
+        const token = userSession ? JSON.parse(userSession).token : null;
+        const response = await fetch(`${API_URL}/user/all`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Incluir el token en la cabecera
+          },
+        });
         if (!response.ok) throw new Error("Error al obtener los usuarios");
         const data = await response.json();
         console.log(data); // Verifica que sea un array con los datos correctos
