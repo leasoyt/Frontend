@@ -73,10 +73,6 @@ const NewProductForm = () => {
 
     await createDish(productData)
   }
-
-  // console.log(productData);
-  console.log(restautantId);
-  
   
   return (
     <div className="p-3 bg-gray-100 ">
