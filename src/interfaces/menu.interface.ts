@@ -13,3 +13,9 @@ export interface IMenu_Category {
   name: string;
   dishes?: IDish[];
 }
+
+export interface MenuIdProps {
+  params: {
+    categoryId : string;
+  }
+}
