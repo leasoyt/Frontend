@@ -3,23 +3,30 @@ import { swalNotifySuccess } from "@/helpers/swal-notify-success";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 const NavbarUsuario = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false); 
   const router = useRouter();
-  
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   const handleLogout = () => {
     localStorage.removeItem("userSession");
-
     swalNotifySuccess("¡Adiós!", "Tu sesión ha finalizado.");
-
     router.push("/");
   };
 
+  useEffect(() => {
+   
+    const userSession = JSON.parse(localStorage.getItem("userSession")!); 
+    if (userSession && userSession.user && userSession.user.role === "admin") {
+      setIsAdmin(true); 
+    }
+  }, []);
 
   return (
     <nav className="bg-white p-4">
@@ -31,12 +38,10 @@ const NavbarUsuario = () => {
             alt="Logo"
             width={32}
             height={32}
-            className="mr-2 "
+            className="mr-2"
           />
           <p className="font-extrabold text-[24px] text-black">Rest0</p>
         </Link>
-
-     
 
         {/* Profile Dropdown */}
         <div className="relative">
@@ -57,9 +62,7 @@ const NavbarUsuario = () => {
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
               <circle cx="12" cy="7" r="4"></circle>
             </svg>
-
             <span className="font-semibold">Mi Perfil</span>
-
             <span className="ml-2">
               {isDropdownOpen ? (
                 <svg
@@ -107,7 +110,7 @@ const NavbarUsuario = () => {
                     href="/pageUser"
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
                   >
-                   Restaurantes
+                    Restaurantes
                   </Link>
                 </li>
                 <li>
@@ -123,9 +126,29 @@ const NavbarUsuario = () => {
                     href="/atencionAlCliente"
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
                   >
-                    Atencion Al Cliente
+                    Atención Al Cliente
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    href="/configuracion"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
+                  >
+                  Configuracion
+                  </Link>
+                </li>
+
+                {/* Botón para el rol admin */}
+                {isAdmin && (
+                  <li>
+                    <Link
+                      href="/admin"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
+                    >
+                      Admin 
+                    </Link>
+                  </li>
+                )}
                 <li>
                   <button
                     onClick={handleLogout}

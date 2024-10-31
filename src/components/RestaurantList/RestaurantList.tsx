@@ -44,6 +44,8 @@ const RestaurantList = () => {
       const response = await fetch(`${API_URL}/restaurant/${id}`, {
         method: "DELETE",
       });
+      console.log(response);
+      
       if (!response.ok) {
         throw new Error("Error al eliminar el restaurante");
       }
