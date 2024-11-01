@@ -2,53 +2,82 @@
 
 import { ButtonVerPrecios } from "@/components/ButtonVerPrecios/ButtonVerPrecios";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import Image from "next/image";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
+import ChatComponent from "@/components/chat/chatbot";
 import { useRouter } from "next/navigation";
 
 const LandingView: React.FC = () => {
   const router = useRouter();
-  const { user, isLoading } = useUser();
-  const [token, setToken] = useLocalStorage("token", "");
-  const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(!!user);
+  const {
+    user: authUser,
+    isLoading: authLoading,
+    error: authError,
+  } = useUser();
+  const [session, setSession] = useLocalStorage("userSession", {
+    token: "",
+    user: null,
+  });
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-  // console.log('usuario en la pagina', user);
-  // console.log('estado isuserlogge', isUserLoggedIn);
-
-  useEffect(() => {
-    const fetchToken = async () => {
+  const checkUserSession = useCallback(async () => {
+    if (authUser && !session.token) {
       try {
         const response = await fetch("/api/auth/token");
         const data = await response.json();
         if (data.token) {
-          setToken(data.token);
+          setSession({ token: data.token, user: authUser });
         }
       } catch (error) {
         console.error("Error al obtener el token:", error);
       }
-    };
-    // console.log('user', user);
+    }
+    setIsUserLoggedIn(!!authUser || !!session.user);
+  }, [authUser, session.token, session.user, setSession, router]);
 
+  useEffect(() => {
+    if (!authLoading) {
+      checkUserSession();
+    }
+  }, [authLoading, checkUserSession]);
 
-    if (user) {
-      fetchToken(); // Obtiene el token solo si hay un usuario
-      setIsUserLoggedIn(true);
+  const handleLogout = useCallback(async () => {
+    setIsUserLoggedIn(false);
+    localStorage.removeItem("userSession");
+
+    if (authUser) {
+      // Usuario autenticado con Auth0
+      try {
+        window.location.href = "/api/auth/logout";
+      } catch (error) {
+        console.error("Error al cerrar sesión de Auth0:", error);
+        router.push("/");
+      }
     } else {
-      // Si no hay usuario, elimina el token
-      setToken(""); // Limpia el token del estado local
-      localStorage.removeItem("token"); // Elimina el token del localStorage
-      setIsUserLoggedIn(false); // Actualiza el estado local
+      // Usuario autenticado de manera normal
+      try {
+        // Aquí puedes agregar cualquier lógica adicional necesaria para el cierre de sesión local
+        router.push("/");
+      } catch (error) {
+        console.error("Error al cerrar sesión local:", error);
+      }
     }
 
-  }, [user, setToken]);
+    setIsLoggingOut(false);
+  }, [authUser, router, setSession]);
+
+  if (authLoading) return <div>Cargando...</div>;
+  if (authError) return <div>Error al cargar el usuario</div>;
 
   return (
     <>
       <Navbar />
+      <ChatComponent />
       <div className="bg-gray-100 min-h-screen flex flex-col items-center">
         <div className="flex justify-center p-10">
           <Image
@@ -76,14 +105,13 @@ const LandingView: React.FC = () => {
             </Link>
           </div>
         ) : (
-
-          <Link href='/api/auth/logout'>
-            <button
-              // onClick={handleLogout}
-              className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto m-5"
-            >
-              Cerrar Sesión
-            </button></Link>
+          <button
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+            className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto m-5"
+          >
+            {isLoggingOut ? "Cerrando sesión..." : "Cerrar Sesión"}
+          </button>
         )}
 
         <section className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16 bg-neutral-200 p-10 w-full">
