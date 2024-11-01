@@ -8,7 +8,7 @@ import { getMenuById } from '@/helpers/menu-helper/get-menuByCategory';
 const MenuView: React.FC<ICategory_menu> = ({id, name, dishes}) => {
   const [loading, setLoading] = useState(true);
   const [categoryData, setCategoryData] = useState<ICategory_menu | null>(null);
-  
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchCategoryData = async () => {
@@ -34,6 +34,10 @@ const MenuView: React.FC<ICategory_menu> = ({id, name, dishes}) => {
     }
   };
 
+  const filteredDishes = categoryData?.dishes.filter(dish =>
+    dish.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="mr-5 mt-1 w-[80%] bg-white border border-gray-300 rounded-lg shadow-lg z-10">
         <div className='bg-slate-700 flex justify-center'>
@@ -50,8 +54,8 @@ const MenuView: React.FC<ICategory_menu> = ({id, name, dishes}) => {
           <p className='italic ml-2 text-black'>filtrar por producto:</p>
           <input 
                 type="search" 
-                // value={}
-                // onChange={}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 id="default-search" 
                 className="border border-gray-300 p-2 italic ml-1" 
                 placeholder="Producto" 
@@ -86,8 +90,8 @@ const MenuView: React.FC<ICategory_menu> = ({id, name, dishes}) => {
                   Cargando...
                 </td>
               </tr>
-              ) : categoryData?.dishes.length > 0 ? (
-                categoryData.dishes.map((dish) => (
+              ) : filteredDishes && filteredDishes.length > 0 ? (
+                filteredDishes.map((dish) => (
                 <tr key={dish.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                   <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {dish.id}
