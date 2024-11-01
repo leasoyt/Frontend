@@ -6,7 +6,6 @@ type Message = {
   id: string;
   type: "user" | "bot";
   text: string;
-  options?: string[];
 };
 
 interface IUserSession {
@@ -29,14 +28,12 @@ export default function ChatComponent() {
     if (userSession) {
       setUser(JSON.parse(userSession))
     }
+    console.log('user',userSession);
+    
   }, []);
 
   const handleSendMessage = async (text: string = message) => {
 
-if(!user){
-  alert('por favor inicia sesion para sar las funcionalidades de chatbot')
-  return;
-}
 
     if (!text.trim()) return;
 
@@ -69,7 +66,6 @@ if(!user){
         id: Date.now().toString(),
         type: "bot",
         text: data.response,
-        options: data.options,
       };
 
       setResponses((prev) => [...prev, newBotMessage]);
@@ -123,19 +119,6 @@ if(!user){
                       </p>
                     </div>
                   </div>
-                  {response.type === "bot" && response.options && (
-                    <div className="mt-4 space-y-2">
-                      {response.options.map((option, optionIndex) => (
-                        <button
-                          key={optionIndex}
-                          onClick={() => handleSendMessage(option)}
-                          className="w-full text-left p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200"
-                        >
-                          {`${optionIndex + 1}: ${option}`}
-                        </button>
-                      ))}
-                    </div>
-                  )}
                 </div>
               ))}
               <div ref={messagesEndRef} />
