@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react'
 const NavbarAdminMenu = () => {
     const [restaurants, setRestaurants] = useState<IRestaurant[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState(true);
     const [restautantId, setRestaurantId] = useState("");
     const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
 
@@ -38,6 +39,7 @@ const NavbarAdminMenu = () => {
         setRestaurantId(selectedRestaurantId);
     
         if (selectedRestaurantId) {
+          setLoading(true)
           try {
             const response = await fetch(`${API_URL}/restaurant/${selectedRestaurantId}`);
             if (!response.ok) throw new Error('Error al obtener las categorías del restaurante');
@@ -46,6 +48,8 @@ const NavbarAdminMenu = () => {
             setCategories(data.menu.categories || []);
           } catch (error) {
             setError(error instanceof Error ? error.message : "Error desconocido");
+          } finally {
+            setLoading(false)
           }
         } else {
           setCategories([]);
@@ -75,22 +79,26 @@ const NavbarAdminMenu = () => {
             <h1 className='text-white italic font-semibold mt-2 mb-2'>Categorias</h1>
         </div>
         <ul className="py-2">
-            {categories.length > 0 ?(
-                categories.map((category) => (
-                <li>
-                    <Link href={`/manager/productos/${category.id}`} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
-                      {category.name}
-                    </Link>
-                </li>
-                ))
-            ) : (
-                <p className="text-black text-center">No hay categorias para este restaurante</p>
-            )}
-            <li>
-                <Link href={`/manager/productos/new`} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
-                    Nuevo Producto
-                 </Link>
+        {loading ? (
+          <p className="text-black text-center">Cargando...</p>
+        ) : error ? (
+          <p className="text-red-500 text-center">{error}</p>
+        ) : categories.length > 0 ? (
+          categories.map((category) => (
+            <li key={category.id}>
+              <Link href={`/manager/productos/${category.id}`} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                {category.name}
+              </Link>
             </li>
+          ))
+        ) : (
+          <p className="text-black text-center">No hay categorías para este restaurante</p>
+        )}
+        <li>
+          <Link href={`/manager/productos/new`} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+            Nuevo Producto
+          </Link>
+        </li>
         </ul>
     </div>
   )

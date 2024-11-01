@@ -1,16 +1,38 @@
 "use client";
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { IMenu_Category } from '@/interfaces/menu.interface'
+import { ICategory_menu, IMenu_Category } from '@/interfaces/menu.interface'
+import { deleteDish } from '@/helpers/dish-helpers/delete.dish';
+import { getMenuById } from '@/helpers/menu-helper/get-menuByCategory';
 
-const MenuView: React.FC<IMenu_Category> = ({id, restaurant_id, name, dishes}) => {
-  const [products, setProducts] = useState(dishes ?? [])
+const MenuView: React.FC<ICategory_menu> = ({id, name, dishes}) => {
+  const [loading, setLoading] = useState(true);
+  const [categoryData, setCategoryData] = useState<ICategory_menu | null>(null);
+  
 
   useEffect(() => {
-    if (dishes) {
-      setProducts(dishes);
+    const fetchCategoryData = async () => {
+      setLoading(true)
+      try {
+        const data = await getMenuById(id);
+        setCategoryData(data);
+      } catch (error) {
+        console.error("Error al obtener los datos de la categoría:", error);
+      } finally {
+        setLoading(false)
+      }
+    };
+
+    fetchCategoryData();
+  }, [id]);
+
+  const handleDelete = async (dishId: string) => {
+    try {
+      await deleteDish(dishId);
+    } catch (error) {
+      console.error("Error al eliminar el producto:", error);
     }
-  }, [dishes]);
+  };
 
   return (
     <div className="mr-5 mt-1 w-[80%] bg-white border border-gray-300 rounded-lg shadow-lg z-10">
@@ -58,28 +80,37 @@ const MenuView: React.FC<IMenu_Category> = ({id, restaurant_id, name, dishes}) =
               </tr>
             </thead>
             <tbody>
-              {products.length > 0 ? (
-                products.map((dish) => (
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {dish.id}
-                </th>
-                <td className="px-6 py-4">
-                    {dish.name}
+            {loading ? (
+              <tr>
+                <td colSpan={5} className="text-center py-4 text-gray-500">
+                  Cargando...
                 </td>
-                <td className="px-6 py-4">
-                    {dish.stock}
-                </td>
-                <td className="px-6 py-4">
-                    {dish.price}
-                </td>
-                <th scope="col" className="px-6 py-3">
-                  <button className='bg-slate-500 text-white font-light p-1 rounded-md'>Eliminar producto</button>
-                </th>
               </tr>
-                ))
-              ) : (
-                <p className="text-black text-center">No hay productos para esta categoria </p>
+              ) : categoryData?.dishes.length > 0 ? (
+                categoryData.dishes.map((dish) => (
+                <tr key={dish.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {dish.id}
+                  </th>
+                  <td className="px-6 py-4">{dish.name}</td>
+                  <td className="px-6 py-4">{dish.stock}</td>
+                  <td className="px-6 py-4">{dish.price}</td>
+                  <td className="px-6 py-3">
+                    <button
+                      onClick={() => handleDelete(dish.id)}
+                      className="bg-slate-500 text-white font-light p-1 rounded-md"
+                    >
+                      Eliminar producto
+                    </button>
+                  </td>
+                </tr>
+                 ))
+                ) : (
+                <tr>
+                  <td colSpan={5} className="text-center py-4 text-gray-500">
+                    No hay productos para esta categoría
+                  </td>
+                </tr>
               )}
             </tbody>
           </table>
