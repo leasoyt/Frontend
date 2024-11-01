@@ -8,6 +8,12 @@ const nextConfig = {
         port: '',
         pathname: '/**', // Esto permite cualquier ruta bajo i.pinimg.com
       },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com', // Agrega el dominio de Cloudinary
+        port: '',
+        pathname: '/**', // Esto permite cualquier ruta bajo res.cloudinary.com
+      },
     ],
   },
 };
