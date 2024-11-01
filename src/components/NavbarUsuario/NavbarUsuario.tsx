@@ -22,6 +22,7 @@ const NavbarUsuario = () => {
   const handleLogout = () => {
 
     localStorage.removeItem("userSession");
+    localStorage.removeItem("restaurant")
     swalNotifySuccess("¡Adiós!", "Tu sesión ha finalizado.");
     router.push("/");
   };

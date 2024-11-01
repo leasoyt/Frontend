@@ -57,8 +57,9 @@ const RegisterView: React.FC = () => {
     try {
 
       await register(userData);
-      
-    } catch (error) {
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
 
       if (error instanceof ErrorHelper) {
         swalNotifyError(error);
@@ -68,10 +69,6 @@ const RegisterView: React.FC = () => {
 
     }
 
-    swalNotifySuccess("¡Registrado correctamente!", "");
-
-    // Redirigir al login después del registro
-    router.push("/login");
   };
 
   useEffect(() => {

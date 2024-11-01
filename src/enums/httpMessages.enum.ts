@@ -4,6 +4,8 @@ export enum HttpMessagesEnum {
     LOGIN_FAIL = "Error al iniciar sesión",
     REGISTRATION_FAIL = "Error al registrar el usuario",
 
+    MAIL_IN_USE = "Este correo ya esta en uso!",
+
     // PASSWORD_UPDATE_SUCCESS = "Contraseña actualizada correctamente",
     PASSWORD_UPDATE_FAILED = "Error al actualizar la contraseña",
 

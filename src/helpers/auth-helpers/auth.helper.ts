@@ -1,6 +1,8 @@
 import { IloginProps, IRegisterProps } from "@/interfaces/Interfaces.types";
 import { API_URL } from "../../config/config";
 import { ErrorHelper, verifyError } from "../error-helper";
+import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
+import { swalNotifySuccess } from "../swal-notify-success";
 
 export async function register(userData: IRegisterProps) {
   try {
@@ -12,15 +14,20 @@ export async function register(userData: IRegisterProps) {
       body: JSON.stringify(userData),
     });
 
-    if (res.ok) {
-      return await res.json(); // Devuelve el resultado de la respuesta si es exitoso
-    } else {
-      const error = await res.json(); // Intenta obtener el mensaje de error del servidor
-      // const errorMessage = errorData.message || "Registro fallido, por favor intenta nuevamente."; // Mensaje por defecto si no hay uno específico
-      throw new ErrorHelper(verifyError(error.message), error.error);
+    if (res.ok && res.status === 200) {
+      swalNotifySuccess("¡Registrado correctamente!", "");
+      window.location.href = "/login";
 
+      return await res.json();
+    } else if (res.status === 409) {
+
+      throw new ErrorHelper(HttpMessagesEnum.MAIL_IN_USE, "409");
     }
-  } catch (error: unknown) {
+
+    const error = await res.json();
+    throw new ErrorHelper(verifyError(error.message), error.error);
+
+  } catch (error) {
     throw error;
   }
 }
@@ -35,17 +42,14 @@ export async function login(userData: IloginProps) {
       body: JSON.stringify(userData),
     });
 
-    if (res.ok) {
-      return res.json();
+    if (!res.ok) {
+      const error = await res.json();
+      throw new ErrorHelper(verifyError(error.message), error.status);
 
     }
 
-    const error = await res.json();
-    throw new ErrorHelper(verifyError(error.message), error.error);
-
+    return res.json();
   } catch (error) {
-
     throw error;
-
   }
 }

@@ -33,6 +33,7 @@ const LoginView: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    
     try {
       const response = await login(userData);
       const { token, user } = response;
@@ -44,8 +45,11 @@ const LoginView: React.FC = () => {
       setUserData(initialState); // Limpia los inputs después del login exitoso
       router.push("/pageUser");
 
-    } catch (error) {
-
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.log(error);
+      console.log(error.message);
+      console.log(error.status);
       if (error instanceof ErrorHelper) {
         swalNotifyError(error);
       } else {
