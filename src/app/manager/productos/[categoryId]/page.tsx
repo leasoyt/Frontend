@@ -1,6 +1,7 @@
 import { getMenuById } from '@/helpers/menu-helper/get-menuByCategory';
 import { MenuIdProps } from '@/interfaces/menu.interface'
 import MenuView from '@/views/MenuView/MenuView';
+
 import React from 'react'
 
 const ProductsByCategory: React.FC<MenuIdProps> = async ({params}) => {
