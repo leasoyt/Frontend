@@ -3,14 +3,14 @@ import { login } from "@/helpers/auth-helpers/auth.helper";
 import { validateLoginForm } from "@/helpers/auth-helpers/validate";
 import { IErrorsProps, IloginProps } from "@/interfaces/Interfaces.types";
 import React, { useEffect, useState } from "react";
-import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Importa los iconos
 import Navbar from "@/components/Navbar/Navbar";
 import { useRouter } from "next/navigation";
 import Footer from "@/components/Footer/Footer";
 import { swalNotifySuccess } from "@/helpers/swal-notify-success";
 import { swalNotifyError } from "@/helpers/swal-notify-error";
-import { ErrorHelper } from "@/helpers/errorHelper";
+import { ErrorHelper } from "@/helpers/error-helper";
+import { swalNotifyUnknownError } from "@/helpers/swal-notify-unknown-error";
 
 const LoginView: React.FC = () => {
 
@@ -26,12 +26,9 @@ const LoginView: React.FC = () => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setUserData({
-      ...userData,
-      [name]: value,
-    });
-  };
 
+    setUserData({ ...userData, [name]: value });
+  };
 
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -42,7 +39,7 @@ const LoginView: React.FC = () => {
 
       localStorage.setItem("userSession", JSON.stringify({ token, user }));
 
-      swalNotifySuccess("¡Bienvenido de nuevo!","");
+      swalNotifySuccess("¡Bienvenido de nuevo!", "");
 
       setUserData(initialState); // Limpia los inputs después del login exitoso
       router.push("/pageUser");
@@ -52,7 +49,7 @@ const LoginView: React.FC = () => {
       if (error instanceof ErrorHelper) {
         swalNotifyError(error);
       } else {
-        console.log("Error desconocido "+ error);
+        swalNotifyUnknownError(error);
       }
 
       setUserData(initialState);

@@ -16,9 +16,8 @@ const LandingView: React.FC = () => {
   const [token, setToken] = useLocalStorage("token", "");
   const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(!!user);
 
-  console.log('usuario en la pagina', user);
-  console.log('estado isuserlogge', isUserLoggedIn);
-
+  // console.log('usuario en la pagina', user);
+  // console.log('estado isuserlogge', isUserLoggedIn);
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -32,7 +31,7 @@ const LandingView: React.FC = () => {
         console.error("Error al obtener el token:", error);
       }
     };
-    console.log('user', user);
+    // console.log('user', user);
 
 
     if (user) {

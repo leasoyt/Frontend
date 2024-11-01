@@ -1,24 +1,46 @@
 "use client";
+import { UserRole } from "@/enums/role.enum";
 import { swalNotifySuccess } from "@/helpers/swal-notify-success";
+import { IUser } from "@/interfaces/user.interface";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 const NavbarUsuario = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const router = useRouter();
-  
-  const toggleDropdown = () => {
+  const divRef = useRef<HTMLDivElement>(null);
+  const user: IUser = JSON.parse(localStorage.getItem('userSession') || '{}').user;
+
+  const toggleDropdown = (event: React.MouseEvent) => {
+    event.stopPropagation();
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   const handleLogout = () => {
+
     localStorage.removeItem("userSession");
 
     swalNotifySuccess("¡Adiós!", "Tu sesión ha finalizado.");
 
     router.push("/");
   };
+
+
+  useEffect(() => {
+
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (divRef.current && event.target instanceof Node && !divRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
 
   return (
@@ -36,10 +58,9 @@ const NavbarUsuario = () => {
           <p className="font-extrabold text-[24px] text-black">Rest0</p>
         </Link>
 
-     
 
         {/* Profile Dropdown */}
-        <div className="relative">
+        <div ref={divRef} className="relative">
           <button
             className="flex items-center border border-gray-300 px-4 py-2 rounded-full text-black bg-white shadow-md hover:shadow-lg transition-shadow duration-300"
             onClick={toggleDropdown}
@@ -60,7 +81,7 @@ const NavbarUsuario = () => {
 
             <span className="font-semibold">Mi Perfil</span>
 
-            <span className="ml-2">
+            <span ref={divRef} className="ml-2">
               {isDropdownOpen ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -94,20 +115,32 @@ const NavbarUsuario = () => {
           {isDropdownOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
               <ul className="py-2">
-                <li>
-                  <Link
-                    href="/registerRestaurant"
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
-                  >
-                    Registra tu negocio
-                  </Link>
-                </li>
+                {
+                  user.role === UserRole.CONSUMER ?
+                    (<li>
+                      <Link
+                        href="/registerRestaurant"
+                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
+                      >
+                        Registra tu negocio
+                      </Link>
+                    </li>)
+                    :
+                    (<li>
+                      <Link
+                        href="/manager/productos/platos"
+                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
+                      >
+                        Mi negocio
+                      </Link>
+                    </li>)
+                }
                 <li>
                   <Link
                     href="/pageUser"
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
                   >
-                   Restaurantes
+                    Restaurantes
                   </Link>
                 </li>
                 <li>

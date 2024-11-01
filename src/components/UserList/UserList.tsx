@@ -19,7 +19,7 @@ const UserList = () => {
     fetchUsers();
   }, []);
 
-  const handleBanUser = async (id: number) => {
+  const handleBanUser = async (id: string) => {
     try {
       await fetch(`/api/users/${id}/ban`, { method: 'POST' });
       setUsers(users.map(u => (u.id === id ? { ...u, status: 'Banned' } : u)));

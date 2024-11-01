@@ -10,6 +10,9 @@ import { swalNotifySuccess } from "@/helpers/swal-notify-success";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import Link from "next/link";
+import { swalNotifyError } from "@/helpers/swal-notify-error";
+import { swalNotifyUnknownError } from "@/helpers/swal-notify-unknown-error";
+import { ErrorHelper } from "@/helpers/error-helper";
 
 
 const RegisterView: React.FC = () => {
@@ -52,8 +55,16 @@ const RegisterView: React.FC = () => {
     }
 
     try {
+
       await register(userData);
-    } catch (err) {
+      
+    } catch (error) {
+
+      if (error instanceof ErrorHelper) {
+        swalNotifyError(error);
+      } else {
+        swalNotifyUnknownError(error);
+      }
 
     }
 
@@ -222,13 +233,7 @@ const RegisterView: React.FC = () => {
             </button>
           </Link>
         </form>
-
       </div>
-      {userData.confirmPassword && errors.confirmPassword && (
-        <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
-          {errors.confirmPassword}
-        </span>
-      )}
 
       <Footer />
     </>

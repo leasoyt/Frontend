@@ -1,7 +1,7 @@
 "use client";
 import Footer from "@/components/Footer/Footer";
 import NavbarUsuario from "@/components/NavbarUsuario/NavbarUsuario";
-import { ErrorHelper } from "@/helpers/errorHelper";
+import { ErrorHelper } from "@/helpers/error-helper";
 import { createRestaurant } from "@/helpers/restaurant-helpers/register-restaurant";
 import { swalNotifyError } from "@/helpers/swal-notify-error";
 import { useRouter } from "next/navigation";

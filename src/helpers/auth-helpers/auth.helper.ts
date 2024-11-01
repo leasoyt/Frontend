@@ -1,8 +1,6 @@
 import { IloginProps, IRegisterProps } from "@/interfaces/Interfaces.types";
-import Swal from "sweetalert2";
 import { API_URL } from "../../config/config";
-import { swalNotifyError } from "../swal-notify-error";
-import { ErrorHelper, verifyError } from "../errorHelper";
+import { ErrorHelper, verifyError } from "../error-helper";
 
 export async function register(userData: IRegisterProps) {
   try {
@@ -17,37 +15,13 @@ export async function register(userData: IRegisterProps) {
     if (res.ok) {
       return await res.json(); // Devuelve el resultado de la respuesta si es exitoso
     } else {
-      const errorData = await res.json(); // Intenta obtener el mensaje de error del servidor
-      const errorMessage =
-        errorData.message || "Registro fallido, por favor intenta nuevamente."; // Mensaje por defecto si no hay uno específico
+      const error = await res.json(); // Intenta obtener el mensaje de error del servidor
+      // const errorMessage = errorData.message || "Registro fallido, por favor intenta nuevamente."; // Mensaje por defecto si no hay uno específico
+      throw new ErrorHelper(verifyError(error.message), error.error);
 
-      // Mostrar el Toast con el mensaje de error personalizado
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-      });
-      Toast.fire({
-        icon: "error",
-        title: "Registro Fallido!",
-      });
-
-      // Lanza un error con el mensaje personalizado
-      throw new Error(errorMessage);
     }
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error("Error during registration:", error.message); // Log del error
-      throw new Error(error.message); // Lanza el error
-    } else {
-      throw new Error("Unknown error occurred during registration.");
-    }
+    throw error;
   }
 }
 
@@ -66,19 +40,14 @@ export async function login(userData: IloginProps) {
     if (res.ok) {
       return res.json();
 
-    } else {
-      const error = await res.json();
-      throw new ErrorHelper(verifyError(error.message), error.error);
-
     }
+
+    const error = await res.json();
+    throw new ErrorHelper(verifyError(error.message), error.error);
 
   } catch (error) {
 
-      if (error instanceof ErrorHelper) {
-        swalNotifyError(error);
-        console.log(error);
-      } else {
-        console.log("Error desconocido " + error);
-      }
+    throw error;
+
   }
 }

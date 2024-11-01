@@ -7,10 +7,10 @@ import { API_URL } from "@/config/config";
 import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
 import ViewTablePopUp from "./ViewTablePopUp";
 
-const TablesBoard: React.FC<{
-    updateBoard: boolean,
-    setParentState: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ updateBoard, setParentState }) => {
+const TablesBoard: React.FC<{ 
+    updateBoard: boolean, 
+    setParentState: React.Dispatch<React.SetStateAction<boolean>>, 
+    id: string }> = ({ updateBoard, setParentState, id }) => {
 
     const [tables, setTables] = useState<ITable[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -30,7 +30,7 @@ const TablesBoard: React.FC<{
 
             try {
                 setParentState(false);
-                const response: Response = await fetch(`${API_URL}/table/all/aefa8479-7091-4f72-8fef-e0f59e8457f5`);
+                const response: Response = await fetch(`${API_URL}/table/all/${id}`);
 
                 if (!response.ok) {
                     const error = await response.json();
@@ -63,15 +63,15 @@ const TablesBoard: React.FC<{
     }, [updateBoard]);
 
 
-    if (loading) return <div>Cargando...</div>;
-    if (error) return <div>Error: {error}</div>;
+    if (loading) return <div className="text-lg font-medium text-gray-900 mb-4">Cargando...</div>;
+    if (error) return <div className="text-lg font-medium text-gray-900 mb-4">{error}</div>;
 
     return (
         <>
             {tables.map((table) => (
-                <TableObject {...table} key={table.id} showPopup={togglePopup} setParentState={setTriggererId} setNumberParentState={setTriggererNumber}/>
+                <TableObject {...table} key={table.id} showPopup={togglePopup} setParentState={setTriggererId} setNumberParentState={setTriggererNumber} />
             ))}
-            {showPopup && <ViewTablePopUp showPopup={togglePopup} id={triggererId} table_number={triggererNumber}/>}
+            {showPopup && <ViewTablePopUp showPopup={togglePopup} id={triggererId} table_number={triggererNumber} />}
         </>
     );
 };
