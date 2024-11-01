@@ -15,7 +15,7 @@ const NavbarAdmin = () => {
     const handleLogout = () => {
       localStorage.removeItem("userSession");
   
-      swalNotifySuccess("¡Bienvenido de nuevo!", "");
+      swalNotifySuccess("¡Adiós!", "Tu sesión ha finalizado.");
   
       router.push("/");
     };

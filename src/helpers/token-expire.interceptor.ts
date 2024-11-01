@@ -1,22 +1,33 @@
-export function fetchWithAuth(url: string | URL | globalThis.Request, options: RequestInit) {
-    const token = localStorage.getItem("token");
+import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
+import { ErrorHelper, verifyError } from "./error-helper";
+
+export async function fetchWithAuth(url: string | URL | globalThis.Request, options: RequestInit) {
+    const userSession = localStorage.getItem("userSession");
+    const token = userSession ? JSON.parse(userSession).token : null;
 
     const headers = {
         ...options.headers,
         Authorization: `Bearer ${token}`,
     };
 
-    return fetch(url, { ...options, headers })
-        .then(response => {
-            if (response.status === 401) {
+    if (token!) {
+        try {
+            const response = await fetch(url, { ...options, headers });
+            const data = await response.json();
 
-                localStorage.removeItem("userSession");
-                window.location.href = "/login";
+            if (response.status === 401) {
+                throw new ErrorHelper(HttpMessagesEnum.TOKEN_EXPIRED, "401");
+            } else if(!response.ok) {
+                throw new ErrorHelper(verifyError(data.message), data.status);
             }
-            return response;
-        })
-        .catch(error => {
-            console.error("Fetch error:", error);
+
+            return data;
+        } catch (error) {
             throw error;
-        });
+        }
+
+    } else {
+        throw new ErrorHelper(HttpMessagesEnum.TOKEN_NOT_FOUND, "401");
+    }
+
 }

@@ -1,11 +1,12 @@
 import { API_URL } from "@/config/config";
 import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
-import { ErrorHelper, verifyError } from "@/helpers/errorHelper";
+import { ErrorHelper, verifyError } from "@/helpers/error-helper";
 import { ClickEvent, ViewTableProps } from "@/interfaces/Interfaces.types";
 import { IOrder } from "@/interfaces/order.interface";
 import React, { useEffect, useState } from "react";
 import TableOrderView from "./TableOrderView";
 import AddOrderToTable from "./AddOrderToTable";
+import { swalNotifyUnknownError } from "@/helpers/swal-notify-unknown-error";
 
 const ViewTablePopUp: React.FC<ViewTableProps & { table_number: number }> = ({ showPopup, id, table_number }) => {
     const [loading, setLoading] = useState<boolean>(true);
@@ -44,17 +45,18 @@ const ViewTablePopUp: React.FC<ViewTableProps & { table_number: number }> = ({ s
                 console.log(data);
 
                 setOrderData(data);
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
             } catch (error) {
 
                 if (error instanceof ErrorHelper) {
                     if (error.message === HttpMessagesEnum.NO_ORDERS_IN_TABLE) {
                         setError("No hay una orden aun");
                     } else {
-                        setError(error.message);
+                        swalNotifyUnknownError(error);
                     }
                 } else {
-                    setError("Error desconocido");
+                    console.log("Error desconocido " + error);
+                    // setError("Error desconocido");
                 }
 
             } finally {

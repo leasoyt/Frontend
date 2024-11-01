@@ -2,7 +2,7 @@
 import { API_URL } from "@/config/config";
 import Swal from "sweetalert2";
 import { IRestaurant } from "../../interfaces/restaurant.interface";
-import { ErrorHelper, verifyError } from "../errorHelper";
+import { ErrorHelper, verifyError } from "../error-helper";
 import { swalNotifySuccess } from "../swal-notify-success";
 
 export async function createRestaurant(restaurant: Partial<IRestaurant>) {
