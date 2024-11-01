@@ -26,9 +26,7 @@ export async function register(userData: IRegisterProps) {
 }
 
 export async function login(userData: IloginProps) {
-
   try {
-
     const res = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
       headers: {

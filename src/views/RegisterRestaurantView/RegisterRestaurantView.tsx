@@ -1,4 +1,5 @@
-"use client";
+'use client'
+
 import Footer from "@/components/Footer/Footer";
 import NavbarUsuario from "@/components/NavbarUsuario/NavbarUsuario";
 import { ErrorHelper } from "@/helpers/error-helper";
@@ -34,23 +35,18 @@ const RegisterRestaurantView: React.FC = () => {
 
     try {
       await createRestaurant(formData); // Llama al helper con formData
-      router.push("/manager/administracion/meseros");
-      // Opcional: Reiniciar el formulario
-      setFormData({
-        name: "",
-        address: "",
-        description: "",
-        image: null,
-      });
 
+      // Borrar la sesión actual del usuario para que tenga que iniciar sesión nuevamente
+      localStorage.removeItem("userSession"); // Asegúrate de que esto sea el key correcto de tu sesión
+
+      // Redirigir al usuario a la página de inicio de sesión
+      router.push("/login");
     } catch (error) {
-      
       if (error instanceof ErrorHelper) {
         swalNotifyError(error);
       } else {
-        console.log("Error desconocido "+ error);
+        console.log("Error desconocido " + error);
       }
-
     }
   };
 
@@ -73,8 +69,8 @@ const RegisterRestaurantView: React.FC = () => {
             <div>
               <label htmlFor="name" className="block text-gray-700">Nombre del negocio</label>
               <input
-                id="name" // Cambia este id
-                name="name" // Asegúrate de que el name coincida
+                id="name"
+                name="name"
                 type="text"
                 placeholder="Tu local"
                 value={formData.name}
@@ -112,12 +108,13 @@ const RegisterRestaurantView: React.FC = () => {
               />
             </div>
 
+            {/* Imagen Principal (Opcional) */}
             {/* <div>
               <label className="block text-gray-700">Imagen Principal (Opcional)</label>
               <input
                 id="image"
                 name="image"
-                type="url"
+                type="file"
                 accept="image/*"
                 onChange={handleChange}
                 className="w-full border-gray-300 rounded-md shadow-sm p-2 text-black"

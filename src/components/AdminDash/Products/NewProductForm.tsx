@@ -74,8 +74,9 @@ const NewProductForm = () => {
     await createDish(productData)
   }
 
-  // console.log(productData);
-  console.log(restautantId);
+  console.log(restaurants);
+  console.log(productData);
+  
   
   
   return (
