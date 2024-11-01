@@ -5,7 +5,7 @@ import { API_URL } from "@/config/config";
 import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
 import { SetStateProps } from "@/interfaces/Interfaces.types";
 
-const AddTableButton: React.FC<SetStateProps> = ({setParentState}) => {
+const AddTableButton: React.FC<SetStateProps & { id: string }> = ({ setParentState, id }) => {
     const [showPopup, setShowPopup] = useState<boolean>(false);
     const togglePopup = () => setShowPopup(!showPopup);
 
@@ -13,11 +13,13 @@ const AddTableButton: React.FC<SetStateProps> = ({setParentState}) => {
         const table_number = parseInt(formData);
 
         try {
-            const response: Response = await fetch(`${API_URL}/table/create/aefa8479-7091-4f72-8fef-e0f59e8457f5`, {
+            console.log("AAAAAAAAAA")
+            console.log(id);
+            const response: Response = await fetch(`${API_URL}/table/create/${id}`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
-                  },
+                },
                 body: JSON.stringify({
                     table_number,
                 })
@@ -27,7 +29,7 @@ const AddTableButton: React.FC<SetStateProps> = ({setParentState}) => {
                 const error = await response.json();
                 throw new Error(error.error);
             }
-                
+
             setParentState(true);
 
         } catch (error) {

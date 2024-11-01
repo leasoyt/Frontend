@@ -1,57 +1,46 @@
 import { API_URL } from "@/config/config";
 import { IMenu_Category } from "@/interfaces/menu.interface";
-import Swal from "sweetalert2";
+import { swalNotifySuccess } from "../swal-notify-success";
+import { swalNotifyError } from "../swal-notify-error";
+import { ErrorHelper, verifyError } from "../error-helper";
+import { swalNotifyUnknownError } from "../swal-notify-unknown-error";
+import { fetchWithAuth } from "../token-expire.interceptor";
 
-export async function createCategory(categoryData: Partial<IMenu_Category>) {
-    try {
-      const userSession = localStorage.getItem("userSession");
-      const token = userSession ? JSON.parse(userSession).token : null;
+export async function createCategory(id: string, categoryData: Partial<IMenu_Category>) {
 
-    if (!token) {
-      throw new Error("No se encontró el token de autenticación.");
+  try {
+    // const userSession = localStorage.getItem("userSession");
+    // const token = userSession ? JSON.parse(userSession).token : null;
+
+    // if (!token) {
+      // throw new ErrorHelper(HttpMessagesEnum.TOKEN_NOT_FOUND, "401");
+    // }
+
+    const response = await fetchWithAuth(`${API_URL}/menu-category`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify(categoryData)
+    })
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new ErrorHelper(verifyError(error.message), error.statusCode);
     }
-    const response = await fetch(`${API_URL}/menu-category`,{
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify(categoryData)
-        })
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            console.error("Error en la respuesta del servidor:", errorData);
-            throw new Error("Error en la creación de la categoría");
-        }
+    const data = await response.json();
 
-        const data = await response.json();
-        
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          },
-        });
-        Toast.fire({
-          icon: "success",
-          title: "Categoria creada exitosamente",
-          text: `La categoria ${data.name} ha sido creada.`,
-        });
+    swalNotifySuccess("Categoria creada", `La categoria ${data.name} ha sido creada.`);
 
-        return data;
+    return data;
 
-    } catch (error) {
-        Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: (error as Error).message,
-          });
-          throw error;
+  } catch (error) {
+    if (error instanceof ErrorHelper) {
+      swalNotifyError(error);
+    } else {
+      swalNotifyUnknownError(error);
     }
+  }
 }

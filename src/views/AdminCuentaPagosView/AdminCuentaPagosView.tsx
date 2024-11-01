@@ -11,9 +11,9 @@ const AdminCuentaPagosView = () => {
             <div>
                 <h2 className='text-black italic font-semibold'>TU PLAN DE REST0</h2>
             </div>
-            <div className='border border-gray-300 p-3 ml-8'>
+            <div className='border border-gray-300 p-3 ml-8 text-black'>
                 <div className='border border-gray-300 p-2 mb-3'>
-                    <h2 className='text-lg italic text-gray-500'>Estas probando gratis el Plan Pro</h2>
+                    <h2 className='text-lg italic text-gray-500 '>Estas probando gratis el Plan Pro</h2>
                 </div>
                 <div className='mb-5'>
                     <p className='italic text-base font-semibold mb-3'>Elige el plan que necesites para tu negocio</p>
@@ -32,8 +32,8 @@ const AdminCuentaPagosView = () => {
             </div>
             <div className='border border-gray-300 p-3 ml-8'>
                 <div className='mb-5'>
-                    <p className='italic text-base font-semibold mb-3'>Detalle de tus transacciones</p>
-                    <p className='italic text-sm'>Aquí verás todos los pagos que realizaste en Rest0 desde el 23/10/24.</p>
+                    <p className='italic text-base font-semibold mb-3 text-black'>Detalle de tus transacciones</p>
+                    <p className='italic text-sm text-black'>Aquí verás todos los pagos que realizaste en Rest0 desde el 23/10/24.</p>
                 </div>
             </div>
         </div>

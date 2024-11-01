@@ -17,9 +17,9 @@ const NewProductView = () => {
             height={35} 
             className="ml-2" 
           />
-          <p className='italic ml-4'>Nuevo producto</p>
+          <p className='italic ml-4 text-black'>Nuevo producto</p>
         </div>
-        <div className='flex justify-around'>
+        <div className='flex justify-around bg-gray-100'>
           <NewProductForm/>
           <NewCategoryForm/>
         </div>

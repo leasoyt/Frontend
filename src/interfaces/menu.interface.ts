@@ -8,8 +8,20 @@ export interface IMenu {
 }
 
 export interface IMenu_Category {
-  id: string;
-  restaurant_id: string;
-  name: string;
+  id?: string;
+  restaurant_id?: string;
+  name?: string;
   dishes?: IDish[];
+}
+
+export interface MenuIdProps {
+  params: {
+    categoryId : string;
+  }
+}
+
+export interface ICategory_menu {
+  id?: string;
+  name?: string;
+  dishes?: IDish[]
 }
