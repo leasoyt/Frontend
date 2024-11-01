@@ -1,8 +1,8 @@
 import { API_URL } from "@/config/config";
-import { IMenu, IMenu_Category } from "@/interfaces/menu.interface";
+import { ICategory_menu, IMenu, IMenu_Category } from "@/interfaces/menu.interface";
 import Swal from "sweetalert2";
 
-export const getMenuById = async (id:string): Promise<IMenu_Category | null> => {
+export const getMenuById = async (id:string): Promise<ICategory_menu | null> => {
     try {
         const res = await fetch(`${API_URL}/menu-category/${id}`,{
             method: "GET",
@@ -12,7 +12,7 @@ export const getMenuById = async (id:string): Promise<IMenu_Category | null> => 
         });
 
         if (res.ok) {
-            const data: IMenu_Category = await res.json();
+            const data: ICategory_menu = await res.json();
             console.log(data);
             return data;
         } else {

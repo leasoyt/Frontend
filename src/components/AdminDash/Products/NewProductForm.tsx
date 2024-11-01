@@ -73,6 +73,11 @@ const NewProductForm = () => {
 
     await createDish(productData)
   }
+
+  console.log(restaurants);
+  console.log(productData);
+  
+  
   
   return (
     <div className="p-3 bg-gray-100 ">
