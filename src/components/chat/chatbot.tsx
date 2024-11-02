@@ -58,14 +58,14 @@ export default function ChatComponent() {
         throw new Error(`Error del servidor: ${response.status}`);
       }
 
-      const data = await response.json();
-      console.log('data response',data.response);
+      const data = await response.text();
+      console.log('data response',data);
       
 
       const newBotMessage: Message = {
         id: Date.now().toString(),
         type: "bot",
-        text: data.response,
+        text: data,
       };
 
       setResponses((prev) => [...prev, newBotMessage]);
