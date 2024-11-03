@@ -1,22 +1,26 @@
 "use client";
 import { API_URL } from '@/config/config';
+import { createOrder } from '@/helpers/order-hlpers/create-order';
+import { IOrderCreate } from '@/interfaces/order.interface';
 import { IRestaurant } from '@/interfaces/restaurant.interface';
 import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2';
 
 const NewOrderForm = () => {
-  const [orderData, setOrderData] = useState({
+  const [orderData, setOrderData] = useState<IOrderCreate>({
     table: "",
     ordered_dishes: []
   });
   const [restaurantId, setRestaurantId] = useState("")
   const [categoryId, setCategoryId] = useState("");
+  const [selectedDish, setSelectedDish] = useState("");
+  const [dishQuantity, setDishQuantity] = useState(1);
   const [restaurants, setRestaurants] = useState<IRestaurant[]>([]);
   const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
   const [dishes, setDishes] = useState<{ id: string; name: string; description: string; price: string }[]>([]);
   const [tables, setTables] = useState<{id: string; status: string; number: number}[]>([])
   const [error, setError] = useState<string | null>(null);
   
-
   useEffect(() => {
     const fetchRestaurants = async () => {
 
@@ -98,8 +102,51 @@ const NewOrderForm = () => {
     })
   };
 
+  const handleAddDish = () => {
+    if (selectedDish && dishQuantity > 0) {
+      setOrderData((prevData) => ({
+        ...prevData,
+        ordered_dishes: [
+          ...prevData.ordered_dishes,
+          { id: selectedDish, quantity: dishQuantity }
+        ]
+      }));
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Producto agregado exitosamente",
+        text: `El producto ha sido agregado a la orden.`,
+      });
+    }
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (orderData.ordered_dishes.length === 0) {
+      setError("Debe agregar al menos un producto a la orden.");
+      return;
+    }
+    await createOrder(orderData)
+    setOrderData({
+      table: "",
+      ordered_dishes: []
+    });
+    setRestaurantId("");
+    setCategoryId("");
+    setTables([]);
+    setDishes([]);
+    setError(null);
   }
 
   console.log(tables);
@@ -109,7 +156,7 @@ const NewOrderForm = () => {
   return (
     <div className="p-4 bg-gray-200 max-w-md mx-auto">
   <h1 className="italic text-lg font-semibold text-black text-center mb-4">Detalles</h1>
-  <form action="">
+  <form action="" onSubmit={handleSubmit}>
   <div className="mb-3">
             <label className="text-gray-700 font-medium">Restaurante:</label>
             <select
@@ -137,11 +184,15 @@ const NewOrderForm = () => {
                 onChange={handleChange}
             >
                 <option value="">Selecciona una mesa</option>
-                {tables.map((table) => (
-                    <option key={table.id} value={table.number}>
+                {tables.length > 0 ? (
+                  tables.map((table) => (
+                    <option key={table.id} value={table.id}>
                         {table.number}
                     </option>
-                ))}
+                ))
+                ) : (
+                  <option>No hay mesas registradas para este restaurante</option>
+                )}
             </select>
         </div>
         <div className="mb-3">
@@ -154,11 +205,15 @@ const NewOrderForm = () => {
             onChange={handleCategoryChange}
           >
             <option value="">Selecciona una categoría</option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
+            {categories.length > 0 ? (
+              categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))
+            ) : (
+              <option>No existen categorias para este restaurante</option>
+            )}
           </select>
         </div>
         <div className="mb-3">
@@ -167,23 +222,46 @@ const NewOrderForm = () => {
             id="ordered_dish"
             name="ordered_dish"
             className="border border-gray-300 rounded-md p-2 w-full mt-1 text-gray-800"
-            // value={orderData.ordered_dish}
-            onChange={handleChange}
+            value={selectedDish}
+            onChange={(e) => setSelectedDish(e.target.value)}
           >
             <option value="">Selecciona un producto</option>
-            {dishes.map((dish) => (
-              <option key={dish.id} value={dish.id}>
-                {dish.name} - ${dish.price}
-              </option>
-            ))}
+            {dishes.length > 0 ? (
+              dishes.map((dish) => (
+                <option key={dish.id} value={dish.id}>
+                  {dish.name} - ${dish.price}
+                </option>
+              ))
+            ) : (
+              <option>No existen productos para esta categoria</option>
+            )}
           </select>
+        </div>
+        <div className='flex items-center'>
+        <div className="mb-3">
+          <label className="text-gray-700 font-medium">Cantidad:</label>
+          <input
+            type="number"
+            min="1"
+            value={dishQuantity}
+            onChange={(e) => setDishQuantity(parseInt(e.target.value))}
+            className="border border-gray-300 rounded-md p-2 w-full mt-1 text-gray-800"
+          />
+        </div>
+        <button
+          type="button"
+          onClick={handleAddDish}
+          className="h-10 text-sm text-white bg-gray-800 hover:bg-gray-900 rounded-lg px-0 py-0"
+        >
+          Agregar producto a Orden
+        </button>
         </div>
     <div className="flex justify-center p-2">
       <button
-        type="button"
+        type="submit"
         className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
       >
-        Agregar Orden
+        Crear Orden
       </button>
     </div>
   </form>
