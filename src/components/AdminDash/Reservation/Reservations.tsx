@@ -43,7 +43,7 @@ const ReservationsColumns: React.FC<{ id: string }> = ({ id }) => {
         };
 
         fetchReservations();
-    }, []);
+    }, [id]);
 
     if (loading) return <td colSpan={6} className="text-center py-4 text-gray-500">Cargando...</td>;
     if (error) return <td colSpan={6} className="text-center py-4 text-gray-500">{error}</td>;

@@ -45,39 +45,32 @@ const NavbarAdminMenu = () => {
   //   ]
   // }
 
-  const fetchCategories = async () => {
-    if (restId === "") {
-
-    } else {
-
-      try {
-        const response = await fetch(`${API_URL}/menu/list/${restId}?sub=true`);
-
-        const data = await response.json();
-        if (!response.ok) {
-          throw new ErrorHelper(verifyError(data.message), data.status);
-        }
-
-        console.log(data);
-        setLoading(false);
-        if (data.categories.length > 0) {
-          setCategories(data.categories);
-        }
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        AuthErrorHelper(error);
-
-      }
-
-    }
-  };
-
   useEffect(() => {
+    const fetchCategories = async () => {
+      if (restId !== "") {
+        try {
+          const response = await fetch(`${API_URL}/menu/list/${restId}?sub=true`);
+          const data = await response.json();
+          if (!response.ok) {
+            throw new ErrorHelper(verifyError(data.message), data.status);
+          }
+  
+          console.log(data);
+          setLoading(false);
+          if (data.categories.length > 0) {
+            setCategories(data.categories);
+          }
+        } catch (error: any) {
+          AuthErrorHelper(error);
+        }
+      }
+    };
+  
     fetchCategories();
     setUpdate(false);
-  }, [update]);
+  }, [update, restId]);
 
+  
   const handleOnSubmit = async (formData: string) => {
 
     try {

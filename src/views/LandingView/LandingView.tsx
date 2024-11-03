@@ -38,20 +38,13 @@ const LandingView: React.FC = () => {
       }
     }
     setIsUserLoggedIn(!!authUser || !!session.user);
-  }, [authUser, session.token, session.user, setSession, router]);
-
-  useEffect(() => {
-    if (!authLoading) {
-      checkUserSession();
-    }
-  }, [authLoading, checkUserSession]);
-
+  }, [authUser, session.token, session.user, setSession]);
+  
   const handleLogout = useCallback(async () => {
     setIsUserLoggedIn(false);
     localStorage.removeItem("userSession");
-
+  
     if (authUser) {
-      // Usuario autenticado con Auth0
       try {
         window.location.href = "/api/auth/logout";
       } catch (error) {
@@ -59,21 +52,16 @@ const LandingView: React.FC = () => {
         router.push("/");
       }
     } else {
-      // Usuario autenticado de manera normal
       try {
-        // Aquí puedes agregar cualquier lógica adicional necesaria para el cierre de sesión local
         router.push("/");
       } catch (error) {
         console.error("Error al cerrar sesión local:", error);
       }
     }
-
+  
     setIsLoggingOut(false);
-  }, [authUser, router, setSession]);
-
-  if (authLoading) return <div>Cargando...</div>;
-  if (authError) return <div>Error al cargar el usuario</div>;
-
+  }, [authUser, router]);
+  
   return (
     <>
       <Navbar />

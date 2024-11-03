@@ -9,10 +9,10 @@ import { useEffect, useRef, useState } from "react";
 
 const NavbarUsuario = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false); 
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [user, setUser] = useState<IUser | null>(null);
   const router = useRouter();
   const divRef = useRef<HTMLDivElement>(null);
-  const user: IUser = JSON.parse(localStorage.getItem('userSession') || '{}').user;
 
   const toggleDropdown = (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -26,16 +26,17 @@ const NavbarUsuario = () => {
   };
 
   useEffect(() => {
-   
-    const userSession = JSON.parse(localStorage.getItem("userSession")!); 
-    if (userSession && userSession.user && userSession.user.role === "admin") {
-      setIsAdmin(true); 
+    const userSession = localStorage.getItem("userSession");
+    if (userSession) {
+      const parsedSession = JSON.parse(userSession);
+      setUser(parsedSession.user); // Almacena el usuario en el estado
+      if (parsedSession.user?.role === "admin") {
+        setIsAdmin(true);
+      }
     }
   }, []);
 
   useEffect(() => {
-
-
     const handleClickOutside = (event: MouseEvent) => {
       if (divRef.current && event.target instanceof Node && !divRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
@@ -47,7 +48,6 @@ const NavbarUsuario = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
 
   return (
     <nav className="bg-white p-4">
@@ -85,7 +85,7 @@ const NavbarUsuario = () => {
             </svg>
             <span className="font-semibold">Mi Perfil</span>
 
-            <span ref={divRef} className="ml-2">
+            <span className="ml-2">
               {isDropdownOpen ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -119,39 +119,36 @@ const NavbarUsuario = () => {
           {isDropdownOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
               <ul className="py-2">
-                {
-                  user.role === UserRole.CONSUMER ?
-                    (<li>
-                      <Link
-                        href="/registerRestaurant"
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
-                      >
-                        Registra tu negocio
-                      </Link>
-                    </li>)
-                    :
-                    user.role === UserRole.MANAGER || user.role === UserRole.WAITER ?
-                    (<li>
-                      <Link
-                        href="/manager/productos"
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
-                      >
-                        Mi negocio
-                      </Link>
-                    </li>)
-                    :
-                    user.role === UserRole.ADMIN ?
-                    (<li>
-                      <Link
-                        href="/admin"
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
-                      >
-                        Administracion
-                      </Link>
-                    </li>)
-                    :
-                    null
-                }
+                {user && user.role === UserRole.CONSUMER && (
+                  <li>
+                    <Link
+                      href="/registerRestaurant"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
+                    >
+                      Registra tu negocio
+                    </Link>
+                  </li>
+                )}
+                {user && (user.role === UserRole.MANAGER || user.role === UserRole.WAITER) && (
+                  <li>
+                    <Link
+                      href="/manager/productos"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
+                    >
+                      Mi negocio
+                    </Link>
+                  </li>
+                )}
+                {user && user.role === UserRole.ADMIN && (
+                  <li>
+                    <Link
+                      href="/admin"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
+                    >
+                      Administracion
+                    </Link>
+                  </li>
+                )}
                 <li>
                   <Link
                     href="/pageUser"
@@ -181,7 +178,7 @@ const NavbarUsuario = () => {
                     href="/configuracion"
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
                   >
-                  Configuracion
+                    Configuracion
                   </Link>
                 </li>
 

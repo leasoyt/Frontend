@@ -50,7 +50,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       fetchThis();
     }
 
-  }, []);
+  }, [setRestId, user]);
 
   return (
     <>

@@ -31,7 +31,7 @@ const ProductsByCategory: React.FC<MenuIdProps> = ({ params }) => {
 
     fetchThis();
 
-  }, []);
+  }, [categoryId]);
 
   return (
     <>

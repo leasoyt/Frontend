@@ -6,7 +6,7 @@ import { ErrorHelper } from "@/helpers/errors/error-helper";
 import { createRestaurant } from "@/helpers/restaurant-helpers/register-restaurant";
 import { swalNotifyError } from "@/helpers/swal/swal-notify-error";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const RegisterRestaurantView: React.FC = () => {
   const router = useRouter();
@@ -37,7 +37,9 @@ const RegisterRestaurantView: React.FC = () => {
       await createRestaurant(formData); // Llama al helper con formData
 
       // Borrar la sesión actual del usuario para que tenga que iniciar sesión nuevamente
-      localStorage.removeItem("userSession"); // Asegúrate de que esto sea el key correcto de tu sesión
+      if (typeof window !== 'undefined') { // Verifica que se está en el navegador
+        localStorage.removeItem("userSession"); // Asegúrate de que esto es correcto
+      }
 
       // Redirigir al usuario a la página de inicio de sesión
       router.push("/login");
