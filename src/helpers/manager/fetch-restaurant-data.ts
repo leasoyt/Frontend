@@ -1,7 +1,6 @@
 import { IUser } from "@/interfaces/user.interface";
 import { fetchWithAuth } from "../token-expire.interceptor";
 import { API_URL } from "@/config/config";
-import { ErrorHelper, verifyError } from "../error-helper";
 
 export async function fetchRestaurantData(): Promise<string> {
     const userSession = JSON.parse(localStorage.getItem('userSession') || '{}');
@@ -15,11 +14,6 @@ export async function fetchRestaurantData(): Promise<string> {
             method: "PUT",
             body: JSON.stringify({ id: user.id })
         });
-        // const data = await response.json();
-        
-        // if (!response.ok) {
-        //     throw new ErrorHelper(verifyError(data.error), data.statusCode);
-        // }
 
         return response.id;
 

@@ -4,5 +4,11 @@ export interface IDish {
     description: string;
     stock?: boolean;
     price: string;
-    imgUrl?: string;
+    imgUrl?: File | null;
+}
+
+export interface SoftDish {
+    name: string;
+    description: string;
+    price: string;
 }

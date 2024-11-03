@@ -1,6 +1,6 @@
 "use client";
 import { UserRole } from "@/enums/role.enum";
-import { swalNotifySuccess } from "@/helpers/swal-notify-success";
+import { swalNotifySuccess } from "@/helpers/swal/swal-notify-success";
 import { IUser } from "@/interfaces/user.interface";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,9 +20,7 @@ const NavbarUsuario = () => {
   };
 
   const handleLogout = () => {
-
-    localStorage.removeItem("userSession");
-    localStorage.removeItem("restaurant")
+    localStorage.clear();
     swalNotifySuccess("¡Adiós!", "Tu sesión ha finalizado.");
     router.push("/");
   };
@@ -132,14 +130,27 @@ const NavbarUsuario = () => {
                       </Link>
                     </li>)
                     :
+                    user.role === UserRole.MANAGER || user.role === UserRole.WAITER ?
                     (<li>
                       <Link
-                        href="/manager/productos/platos"
+                        href="/manager/productos"
                         className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
                       >
                         Mi negocio
                       </Link>
                     </li>)
+                    :
+                    user.role === UserRole.ADMIN ?
+                    (<li>
+                      <Link
+                        href="/admin"
+                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
+                      >
+                        Administracion
+                      </Link>
+                    </li>)
+                    :
+                    null
                 }
                 <li>
                   <Link

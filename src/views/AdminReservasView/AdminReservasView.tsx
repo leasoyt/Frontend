@@ -1,9 +1,11 @@
 "use client";
 import ReservationsColumns from '@/components/AdminDash/Reservation/Reservations'
+import { useLocalStorage } from '@/helpers/auth-helpers/useLocalStorage';
 import React, { useEffect, useState } from 'react'
 
 const AdminReservasView = () => {
   const [isClient, setIsClient] = useState(false);
+  const [restId, setRestId] = useLocalStorage("restaurant", "");
 
   useEffect(() => {
     setIsClient(true);
@@ -42,7 +44,7 @@ const AdminReservasView = () => {
                 </th>
               </tr>
             </thead>
-            <ReservationsColumns />
+            <ReservationsColumns id={restId}/>
           </table>
         )}
       </div>

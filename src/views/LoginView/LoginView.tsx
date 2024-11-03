@@ -7,10 +7,10 @@ import { FaEye, FaEyeSlash } from "react-icons/fa"; // Importa los iconos
 import Navbar from "@/components/Navbar/Navbar";
 import { useRouter } from "next/navigation";
 import Footer from "@/components/Footer/Footer";
-import { swalNotifySuccess } from "@/helpers/swal-notify-success";
-import { swalNotifyError } from "@/helpers/swal-notify-error";
-import { ErrorHelper } from "@/helpers/error-helper";
-import { swalNotifyUnknownError } from "@/helpers/swal-notify-unknown-error";
+import { swalNotifySuccess } from "@/helpers/swal/swal-notify-success";
+import { swalNotifyError } from "@/helpers/swal/swal-notify-error";
+import { ErrorHelper } from "@/helpers/errors/error-helper";
+import { swalNotifyUnknownError } from "@/helpers/swal/swal-notify-unknown-error";
 
 const LoginView: React.FC = () => {
 
@@ -33,6 +33,9 @@ const LoginView: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    localStorage.removeItem("userSession");
+    localStorage.removeItem("restaurant");
+    // localStorage.removeItem("userId");
     
     try {
       const response = await login(userData);
@@ -43,13 +46,12 @@ const LoginView: React.FC = () => {
       swalNotifySuccess("¡Bienvenido de nuevo!", "");
 
       setUserData(initialState); // Limpia los inputs después del login exitoso
-      router.push("/pageUser");
+      // router.push("/pageUser");
+      window.location.href = "/pageUser";
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      console.log(error);
-      console.log(error.message);
-      console.log(error.status);
+
       if (error instanceof ErrorHelper) {
         swalNotifyError(error);
       } else {

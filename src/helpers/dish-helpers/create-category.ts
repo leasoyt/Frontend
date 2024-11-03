@@ -1,9 +1,9 @@
 import { API_URL } from "@/config/config";
 import { IMenu_Category } from "@/interfaces/menu.interface";
-import { swalNotifySuccess } from "../swal-notify-success";
-import { swalNotifyError } from "../swal-notify-error";
-import { ErrorHelper, verifyError } from "../error-helper";
-import { swalNotifyUnknownError } from "../swal-notify-unknown-error";
+import { swalNotifySuccess } from "../swal/swal-notify-success";
+import { swalNotifyError } from "../swal/swal-notify-error";
+import { ErrorHelper, verifyError } from "../errors/error-helper";
+import { swalNotifyUnknownError } from "../swal/swal-notify-unknown-error";
 import { fetchWithAuth } from "../token-expire.interceptor";
 
 export async function createCategory(id: string, categoryData: Partial<IMenu_Category>) {

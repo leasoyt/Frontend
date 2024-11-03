@@ -1,3 +1,4 @@
+import { IDish } from "./dishes.interface";
 import { IOrder } from "./order.interface";
 import { ITable } from "./table.interface";
 
@@ -54,12 +55,20 @@ export interface OptionCardProps {
   img: string; // URL de la imagen
 }
 
-export interface AddTableProps {
+export interface PopUpSubmitProps {
   showPopup: () => void;
   onSubmit: (data: string) => void;
 }
 
-export type ViewTableProps = Pick<AddTableProps, "showPopup"> & {
+export interface OnSubmitProduct {
+  onSubmit: (data: Partial<IDish>) => void;
+}
+
+export type ShowPopUpProp = Pick<PopUpSubmitProps, "showPopup"> & {
+
+}
+
+export type ViewTableProps = Pick<PopUpSubmitProps, "showPopup"> & {
   id: string;
 }
 
@@ -72,11 +81,14 @@ export interface VoidCallbackProps {
   updateBoard: () => void;
 }
 
-export interface SetStateProps {
+export interface SetStateBoolean {
   setParentState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export type TableWithSetState = ITable & ViewTableProps &  {
+export type TableWithSetState = ITable & ViewTableProps &  SetStateString & {
+}
+
+export type SetStateString = {
   setParentState: React.Dispatch<React.SetStateAction<string>>;
 }
 
