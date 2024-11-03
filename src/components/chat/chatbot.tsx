@@ -61,15 +61,28 @@ export default function ChatComponent() {
       const data = await response.text();
       console.log('data response',data);
       
+      let newBotMessageText: string;
+
+ // Intenta parsear la respuesta como JSON
+ try {
+  const jsonResponse = JSON.parse(data);
+  // Si es un objeto y tiene la propiedad "response", usa ese mensaje
+  newBotMessageText = jsonResponse.response || "Respuesta no válida";
+} catch (e) {
+  // Si falla, trata la respuesta como texto plano
+  newBotMessageText = data;
+}
 
       const newBotMessage: Message = {
         id: Date.now().toString(),
         type: "bot",
-        text: data,
+        text: newBotMessageText,
       };
 
       setResponses((prev) => [...prev, newBotMessage]);
     } catch (error) {
+      console.log('error',error);
+      
       console.error("Error:", error);
       const errorMessage: Message = {
         id: Date.now().toString(),
