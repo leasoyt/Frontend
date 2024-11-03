@@ -125,13 +125,6 @@ const RestaurantPage = () => {
               <h3 className="font-bold text-lg">{dish.name}</h3>
               <p className="text-gray-500 ">${dish.price}</p> {/* Asegúrate de que price sea un número */}
             </div>
-            {dish.imgUrl && (
-              <img
-                src={dish.imgUrl} // Asegúrate de que esto apunta a la URL correcta
-                alt={dish.name}
-                className="w-16 h-16 object-cover"
-              />
-            )}
           </div>
         ))
       )

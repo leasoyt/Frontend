@@ -6,14 +6,13 @@ import { ErrorHelper, verifyError } from "../errors/error-helper";
 import { swalNotifyUnknownError } from "../swal/swal-notify-unknown-error";
 import { fetchWithAuth } from "../token-expire.interceptor";
 
-export async function createCategory(id: string, categoryData: Partial<IMenu_Category>) {
-
+export async function createCategory(categoryData: Partial<IMenu_Category>) {
   try {
     // const userSession = localStorage.getItem("userSession");
     // const token = userSession ? JSON.parse(userSession).token : null;
 
     // if (!token) {
-      // throw new ErrorHelper(HttpMessagesEnum.TOKEN_NOT_FOUND, "401");
+    // throw new ErrorHelper(HttpMessagesEnum.TOKEN_NOT_FOUND, "401");
     // }
 
     const response = await fetchWithAuth(`${API_URL}/menu-category`, {
@@ -22,8 +21,8 @@ export async function createCategory(id: string, categoryData: Partial<IMenu_Cat
         "Content-Type": "application/json",
         // "Authorization": `Bearer ${token}`,
       },
-      body: JSON.stringify(categoryData)
-    })
+      body: JSON.stringify(categoryData),
+    });
 
     if (!response.ok) {
       const error = await response.json();
@@ -32,10 +31,12 @@ export async function createCategory(id: string, categoryData: Partial<IMenu_Cat
 
     const data = await response.json();
 
-    swalNotifySuccess("Categoria creada", `La categoria ${data.name} ha sido creada.`);
+    swalNotifySuccess(
+      "Categoria creada",
+      `La categoria ${data.name} ha sido creada.`
+    );
 
     return data;
-
   } catch (error) {
     if (error instanceof ErrorHelper) {
       swalNotifyError(error);
