@@ -1,5 +1,5 @@
 import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
-import { ErrorHelper, verifyError } from "./error-helper";
+import { ErrorHelper, verifyError } from "./errors/error-helper";
 
 export async function fetchWithAuth(url: string | URL | globalThis.Request, options: RequestInit) {
     const userSession = localStorage.getItem("userSession");

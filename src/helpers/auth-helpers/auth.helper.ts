@@ -1,8 +1,8 @@
 import { IloginProps, IRegisterProps } from "@/interfaces/Interfaces.types";
 import { API_URL } from "../../config/config";
-import { ErrorHelper, verifyError } from "../error-helper";
+import { ErrorHelper, verifyError } from "../errors/error-helper";
 import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
-import { swalNotifySuccess } from "../swal-notify-success";
+import { swalNotifySuccess } from "../swal/swal-notify-success";
 
 export async function register(userData: IRegisterProps) {
   try {

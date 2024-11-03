@@ -2,9 +2,9 @@
 
 import Footer from "@/components/Footer/Footer";
 import NavbarUsuario from "@/components/NavbarUsuario/NavbarUsuario";
-import { ErrorHelper } from "@/helpers/error-helper";
+import { ErrorHelper } from "@/helpers/errors/error-helper";
 import { createRestaurant } from "@/helpers/restaurant-helpers/register-restaurant";
-import { swalNotifyError } from "@/helpers/swal-notify-error";
+import { swalNotifyError } from "@/helpers/swal/swal-notify-error";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 

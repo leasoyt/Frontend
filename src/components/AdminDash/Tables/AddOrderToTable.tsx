@@ -1,6 +1,6 @@
-import { SetStateProps } from "@/interfaces/Interfaces.types";
+import { SetStateBoolean } from "@/interfaces/Interfaces.types";
 
-const AddOrderToTable: React.FC<SetStateProps & { parentState: boolean }> = ({ setParentState, parentState }) => {
+const AddOrderToTable: React.FC<SetStateBoolean & { parentState: boolean }> = ({ setParentState, parentState }) => {
 
     const handleClkick = () => {
         if (setParentState) {

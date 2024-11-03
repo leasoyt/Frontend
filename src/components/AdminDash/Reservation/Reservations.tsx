@@ -4,11 +4,15 @@ import { API_URL } from '../../../config/config';
 import ReserveColumn from './ReserveColumn';
 import { IReservation } from '@/interfaces/reservation.interface';
 import { HttpMessagesEnum } from '@/enums/httpMessages.enum';
+import { fetchWithAuth } from '@/helpers/token-expire.interceptor';
+import { ErrorHelper, verifyError } from '@/helpers/errors/error-helper';
+import { AuthErrorHelper } from '@/helpers/errors/auth-error-helper';
 
-const ReservationsColumns: React.FC = () => {
+const ReservationsColumns: React.FC<{ id: string }> = ({ id }) => {
     const [reservations, setReservations] = useState<IReservation[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+
 
     useEffect(() => {
         const fetchReservations = async () => {
@@ -16,40 +20,33 @@ const ReservationsColumns: React.FC = () => {
             setError(null);
 
             try {
-                const response: Response = await fetch(`${API_URL}/reservation/restaurant/aefa8479-7091-4f72-8fef-e0f59e8457f5`, {method: "GET"});
+                const response = await fetchWithAuth(`${API_URL}/reservation/restaurant/${id}`, { method: "GET" });
 
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error);
-                }
+                // if (!!response) {
+                //     throw new ErrorHelper(verifyError(response.message), response.status);
+                // }
 
-                const data = await response.json();
-
-                setReservations(data || []);
+                setReservations(response || []);
             } catch (error) {
-
-                if (error instanceof Error) {
+                if (error instanceof ErrorHelper) {
                     if (error.message === HttpMessagesEnum.NO_RESERVATIONS_IN_RESTAURANT) {
                         setError("No hay reservas por ahora!");
-
-                    } else {
-                        setError(error.message);
                     }
 
                 } else {
-                    setError("Error desconocido");
+                    AuthErrorHelper(error);
                 }
 
-            } finally {
-                setLoading(false);
             }
+
+            setLoading(false);
         };
 
         fetchReservations();
     }, []);
 
-    if (loading) return <div>Cargando...</div>;
-    if (error) return <div>Error: {error}</div>;
+    if (loading) return <td colSpan={6} className="text-center py-4 text-gray-500">Cargando...</td>;
+    if (error) return <td colSpan={6} className="text-center py-4 text-gray-500">{error}</td>;
 
     return (
         <tbody>

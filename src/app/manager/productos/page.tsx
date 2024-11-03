@@ -2,7 +2,7 @@ import React from 'react'
 
 const Productos = () => {
   return (
-    <div>page</div>
+    <h1 className="flex-1 flex items-center justify-center mb-4 text-lg font-light text-gray-500">Selecciona una categoria para empezar</h1>
   )
 }
 

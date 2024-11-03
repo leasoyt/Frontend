@@ -1,8 +1,9 @@
-import { PopUpSubmitProps } from '@/interfaces/Interfaces.types';
+import { PopUpSubmitProps, SetStateBoolean, ShowPopUpProp } from '@/interfaces/Interfaces.types';
 import React, { useState } from 'react';
 
-const AddTablePopUp: React.FC<PopUpSubmitProps> = ({ showPopup, onSubmit }) => {
-    const [data, setData] = useState('');
+const NewCategoryPopUp: React.FC<PopUpSubmitProps> = ({ showPopup, onSubmit }) => {
+    const [inputValue, setInputValue] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const exitPopup = (event: React.MouseEvent<HTMLDivElement | HTMLButtonElement>) => {
         if (event.target === event.currentTarget) {
@@ -14,27 +15,41 @@ const AddTablePopUp: React.FC<PopUpSubmitProps> = ({ showPopup, onSubmit }) => {
 
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
-        onSubmit(data);
-        showPopup();
+        if (inputValue !== "" && errorMessage === "") {
+            onSubmit(inputValue);
+            showPopup();
+        }
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setInputValue(value);
+
+        if (value.length < 1) {
+            setErrorMessage("este campo no puede estar vacio");
+        } else if (value.length > 20) {
+            setErrorMessage("texto de 20 caracteres maximo");
+        } else {
+            setErrorMessage("");
+        }
     };
 
     return (
         <div onClick={exitPopup} className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">Agregar mesa</h3>
+                <h3 className="text-lg font-medium text-gray-900 mb-4">Nueva categoria</h3>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Numero de mesa:</label>
+                        <label className="block text-gray-700 text-sm font-bold mb-2">Nombre de categoria:</label>
                         <input
-                            type="number"
-                            name="table_id"
-                            value={data}
+                            type="text"
+                            name="category_name"
+                            value={inputValue}
                             required
-                            min="1"
-                            max="1000"
-                            onChange={(e) => setData(e.target.value)}
+                            onChange={handleChange}
                             className="w-full p-2 text-gray-900 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                         />
+                        {errorMessage && <p className="text-sm text-red-600" style={{ fontSize: "12px" }}>{errorMessage}</p>}
                     </div>
                     <div className="flex justify-end space-x-4">
                         <button
@@ -57,4 +72,4 @@ const AddTablePopUp: React.FC<PopUpSubmitProps> = ({ showPopup, onSubmit }) => {
     );
 };
 
-export default AddTablePopUp;
+export default NewCategoryPopUp;

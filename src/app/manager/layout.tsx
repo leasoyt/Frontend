@@ -4,78 +4,69 @@ import Footer from "@/components/Footer/Footer"
 import NavbarAdmin from "@/components/NavbarAdmin/NavbarAdmin"
 import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
 import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
-import { ErrorHelper } from "@/helpers/error-helper";
+import { ErrorHelper } from "@/helpers/errors/error-helper";
 import { fetchRestaurantData } from "@/helpers/manager/fetch-restaurant-data";
-import { swalNotifyError } from "@/helpers/swal-notify-error";
+import { swalNotifyError } from "@/helpers/swal/swal-notify-error";
+import { IUser } from "@/interfaces/user.interface";
 import React from "react";
 import { useEffect, useState } from "react"
+import Unauthorized from "../unauthorized";
+import { UserRole } from "@/enums/role.enum";
+import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [restId, setRestId] = useLocalStorage("restaurant", "");
+  const [iuser, setUser] = useLocalStorage("userSession", "");
+  const user: Partial<IUser> = iuser.user;
+  const [isAllowed, setIsAllowed] = useState(true);
 
   useEffect(() => {
 
-    const fetchThis = async () => {
-      try {
+    if (user === null || user === undefined || !(user.role === UserRole.MANAGER)) {
+      setIsAllowed(false);
 
-        const id = await fetchRestaurantData();
+      swalNotifyError(new ErrorHelper(HttpMessagesEnum.INSUFFICIENT_PERMISSIONS, "")).then((result) => {
 
-        setRestId(id);
+        if (result.isConfirmed) {
+          window.location.href = "/pageUser";
+        }
+      });
 
-      } catch (error: any) {
+    } else {
 
-        if (error.message === HttpMessagesEnum.INSUFFICIENT_PERMISSIONS) {
+      const fetchThis = async () => {
+        try {
 
-          swalNotifyError(new ErrorHelper(HttpMessagesEnum.INSUFFICIENT_PERMISSIONS, "Cerrando sesion")).then((result) => {
-            if (result.isConfirmed) {
-              window.location.href = "/pageUser";
+          const id = await fetchRestaurantData();
 
-            }
-          });
+          setRestId(id);
 
-        } else if (error.message === HttpMessagesEnum.TOKEN_EXPIRED) {
-
-          swalNotifyError(new ErrorHelper(HttpMessagesEnum.TOKEN_EXPIRED, "Cerrando sesion")).then((result) => {
-            if (result.isConfirmed) {
-              window.location.href = "/login";
-
-            }
-          });;
-
-          localStorage.removeItem("userSession");
-
-        } else if (error.message === HttpMessagesEnum.RESTAURANT_NOT_FOUND) {
-
-          swalNotifyError(new ErrorHelper(HttpMessagesEnum.NOT_ALLOWED_HERE, "Cerrando sesion")).then((result) => {
-            if (result.isConfirmed) {
-              window.location.href = "/pageUser";
-
-            }
-          });
-
-        } else if (error.message !== HttpMessagesEnum.UNKNOWN_ERROR) {
-
-          swalNotifyError(error);
+        } catch (error: any) {
+          AuthErrorHelper(error);
 
         }
+      };
 
-      }
-    };
-
-    fetchThis();
+      fetchThis();
+    }
 
   }, []);
 
   return (
-    <section className="flex flex-col min-h-screen bg-white">
-      <div className="sticky top-0 z-10">
-        <NavbarAdmin />
-      </div>
-      <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 bg-white">
-        {children}
-      </main>
-      <Footer />
-    </section>
-
+    <>
+      {isAllowed ?
+        <section className="flex flex-col min-h-screen bg-white">
+          <div className="top-0">
+            <NavbarAdmin />
+          </div>
+          <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 bg-white z-0">
+            {children}
+          </main>
+          <Footer />
+        </section>
+        :
+        <Unauthorized/>
+      }
+    </>
   );
 }

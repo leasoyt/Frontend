@@ -2,10 +2,12 @@
 import { useState } from "react";
 import AddTablePopUp from "./AddTablePopUp";
 import { API_URL } from "@/config/config";
-import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
-import { SetStateProps } from "@/interfaces/Interfaces.types";
+import { SetStateBoolean } from "@/interfaces/Interfaces.types";
+import { fetchWithAuth } from "@/helpers/token-expire.interceptor";
+import { swalNotifyError } from "@/helpers/swal/swal-notify-error";
+import { ErrorHelper } from "@/helpers/errors/error-helper";
 
-const AddTableButton: React.FC<SetStateProps & { id: string }> = ({ setParentState, id }) => {
+const AddTableButton: React.FC<SetStateBoolean & { id: string }> = ({ setParentState, id }) => {
     const [showPopup, setShowPopup] = useState<boolean>(false);
     const togglePopup = () => setShowPopup(!showPopup);
 
@@ -13,9 +15,7 @@ const AddTableButton: React.FC<SetStateProps & { id: string }> = ({ setParentSta
         const table_number = parseInt(formData);
 
         try {
-            console.log("AAAAAAAAAA")
-            console.log(id);
-            const response: Response = await fetch(`${API_URL}/table/create/${id}`, {
+            const response: Response = await fetchWithAuth(`${API_URL}/table/create/${id}`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -25,16 +25,11 @@ const AddTableButton: React.FC<SetStateProps & { id: string }> = ({ setParentSta
                 })
             });
 
-            if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.error);
-            }
-
             setParentState(true);
 
         } catch (error) {
-            if (error instanceof Error && error.message === HttpMessagesEnum.TABLE_CREATION_FAIL) {
-                console.log("No table created here");
+            if (error instanceof ErrorHelper) {
+                swalNotifyError(error);
             }
         }
     };
@@ -45,7 +40,6 @@ const AddTableButton: React.FC<SetStateProps & { id: string }> = ({ setParentSta
             {showPopup && <AddTablePopUp showPopup={togglePopup} onSubmit={handleOnSubmit} />}
         </>
     );
-
 }
 
 export default AddTableButton;

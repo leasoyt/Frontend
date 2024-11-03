@@ -1,12 +1,12 @@
 import { API_URL } from "@/config/config";
 import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
-import { ErrorHelper, verifyError } from "@/helpers/error-helper";
+import { ErrorHelper, verifyError } from "@/helpers/errors/error-helper";
 import { ClickEvent, ViewTableProps } from "@/interfaces/Interfaces.types";
 import { IOrder } from "@/interfaces/order.interface";
 import React, { useEffect, useState } from "react";
 import TableOrderView from "./TableOrderView";
 import AddOrderToTable from "./AddOrderToTable";
-import { swalNotifyUnknownError } from "@/helpers/swal-notify-unknown-error";
+import { swalNotifyUnknownError } from "@/helpers/swal/swal-notify-unknown-error";
 
 const ViewTablePopUp: React.FC<ViewTableProps & { table_number: number }> = ({ showPopup, id, table_number }) => {
     const [loading, setLoading] = useState<boolean>(true);

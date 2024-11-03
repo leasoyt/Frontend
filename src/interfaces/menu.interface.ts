@@ -19,9 +19,3 @@ export interface MenuIdProps {
     categoryId : string;
   }
 }
-
-export interface ICategory_menu {
-  id?: string;
-  name?: string;
-  dishes?: IDish[]
-}
