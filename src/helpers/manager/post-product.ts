@@ -9,13 +9,20 @@ export async function PostOrUpdateProduct(dish: Partial<IDish>, method: "POST" |
         description: dish.description || null,
         category: dish.id || null,
     }
+    console.log(dish);
+    console.log(built_dish);
 
     const clean = cleanObject(built_dish);
     const { category, ...built_to_update } = clean;
-
+    console.log(clean);
     try {
 
-        const response = await fetchWithAuth(`${API_URL}/dish`, {
+        const response = await fetchWithAuth(`${API_URL}/dish` + (
+            method === "PUT" ?
+                `/${dish.id}`
+                :
+                ""
+        ), {
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -32,6 +39,6 @@ export async function PostOrUpdateProduct(dish: Partial<IDish>, method: "POST" |
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function cleanObject<T extends Record<string, any>>(obj: T): Partial<T> {
     return Object.fromEntries(
-      Object.entries(obj).filter(([_, value]) => value != null && value !== "")
+        Object.entries(obj).filter(([_, value]) => value != null && value !== "")
     ) as Partial<T>;
-  }
+}

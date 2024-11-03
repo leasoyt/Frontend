@@ -8,9 +8,10 @@ import { swalNotifyError } from '@/helpers/swal/swal-notify-error';
 import { swalNotifyUnknownError } from '@/helpers/swal/swal-notify-unknown-error';
 import { swalNotifyConfirmation } from '@/helpers/swal/swal-notify-confirm';
 import AddProductPopUp from '@/components/AdminDash/Menu/AddProductPopUp';
-import { IDish } from '@/interfaces/dishes.interface';
+import { IDish, SoftDish } from '@/interfaces/dishes.interface';
 import { AuthErrorHelper } from '@/helpers/errors/auth-error-helper';
 import { PostOrUpdateProduct } from '@/helpers/manager/post-product';
+import { filterRepeatedFields } from '@/helpers/object-repeated-filter';
 
 const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
   const [loading, setLoading] = useState(true);
@@ -18,25 +19,29 @@ const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
   const [update, setUpdate] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [showPopupUpdate, setShowPopupUpdate] = useState(false);
-  const togglePopup = () => setShowPopup(!showPopup);
-  const togglePopupUpdate = () => setShowPopup(!showPopup);
+  const togglePopup = (visible: boolean) => setShowPopup(visible);
+  const togglePopupUpdate = (visible: boolean) => setShowPopupUpdate(visible);
+  const [triggerer, setTriggerer] = useState<SoftDish & { id: string } | undefined>();
 
   useEffect(() => {
     const fetchCategoryData = async () => {
-      setLoading(true)
+      setLoading(true);
+
       try {
 
         if (categories.id !== undefined) {
           const data = await getMenuById(categories.id);
           setCategoryData(data);
+
         }
 
       } catch (error) {
-        if (error instanceof ErrorHelper) {
-          swalNotifyError(error);
-        } else {
-          swalNotifyUnknownError(error);
-        }
+        AuthErrorHelper(error);
+        // if (error instanceof ErrorHelper) {
+        //   swalNotifyError(error);
+        // } else {
+        //   swalNotifyUnknownError(error);
+        // }
 
       }
 
@@ -51,11 +56,12 @@ const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
   };
 
   const handleOnSubmit = (dish: Partial<IDish>) => {
-    
+
     const fetchThis = async () => {
       try {
-        const response = await PostOrUpdateProduct({...dish, id: categories.id}, "POST");
-        console.log(response);
+        const response = await PostOrUpdateProduct({ ...dish, id: categories.id }, "POST");
+
+        setUpdate(true);
       } catch (error) {
         AuthErrorHelper(error);
       }
@@ -65,35 +71,47 @@ const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
     fetchThis();
   };
 
-  const handleOnUpdate = (dish: Partial<IDish>) => {
+  const handleOnUpdate = (dish: Partial<SoftDish>) => {
 
     const fetchThis = async () => {
-      try {
-        const response = await PostOrUpdateProduct({...dish}, "PUT");
-        console.log(response);
-      } catch (error) {
-        AuthErrorHelper(error);
-      }
+      if (triggerer !== undefined && triggerer !== null) {
+        try {
+          const response = await PostOrUpdateProduct({ id: triggerer.id, ...filterRepeatedFields(dish, triggerer) }, "PUT");
+          console.log(response);
+        } catch (error) {
+          AuthErrorHelper(error);
+        }
 
+      }
     };
 
     fetchThis();
   };
+
+  const handleUpdateTriggerer = (dish: Partial<IDish>) => {
+    const { name, description, price, id, ...rest } = dish;
+    if (name !== undefined && description !== undefined && price !== undefined && id !== undefined) {
+      setTriggerer({ name, description, price, id });
+      setShowPopupUpdate(!showPopupUpdate);
+    }
+  }
 
   const handleDelete = async (dishId: string) => {
+
     swalNotifyConfirmation("Eliminar", "¿Deseas eliminar este producto?").then(async (result) => {
 
-      if (result.isDenied || result.isDenied || result.dismiss) {
+      if (result.isConfirmed) {
 
         try {
           await deleteDish(dishId);
           setUpdate(true);
         } catch (error) {
           AuthErrorHelper(error);
-
         }
       }
+
     });
+
   };
 
 
@@ -142,18 +160,18 @@ const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
                       <td className="px-6 py-4">{dish.description}</td>
                       <td className="px-6 py-4">{dish.stock}</td>
                       <td className="px-6 py-4">{dish.price}</td>
-                      <td className="px-6 py-3">
+                      <td className="px-6 py-3 flex justify-around">
+                        <button
+                          onClick={() => handleUpdateTriggerer(dish)}
+                          className="bg-slate-500 text-white font-light p-1 rounded-md"
+                        >
+                          Editar
+                        </button>
                         <button
                           onClick={() => handleDelete(dish.id)}
                           className="bg-slate-500 text-white font-light p-1 rounded-md"
                         >
                           Eliminar
-                        </button>
-                        <button
-                          onClick={togglePopupUpdate}
-                          className="bg-slate-500 text-white font-light p-1 rounded-md"
-                        >
-                          Editar
                         </button>
                       </td>
                     </tr>
@@ -173,8 +191,23 @@ const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
         <button onClick={handleClick} className="font-semibold text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-1.5 me-2 mb-2 ml-3 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 w-48">
           Nuevo producto
         </button>
-        {showPopup ? <AddProductPopUp showPopup={togglePopup} onSubmit={handleOnSubmit} /> : null}
-        {showPopupUpdate ? <AddProductPopUp showPopup={togglePopupUpdate} onSubmit={handleOnUpdate} /> : null}
+
+        {/* ADD PRODUCT FORM */}
+        {showPopup && !showPopupUpdate ? <AddProductPopUp showPopup={togglePopup} onSubmit={handleOnSubmit} /> : null}
+
+        {/* UPDATE PRODUCT FORM */}
+        {
+          showPopupUpdate &&
+            !showPopup &&
+            triggerer !== null &&
+            triggerer !== undefined 
+            ?
+            <AddProductPopUp
+              showPopup={togglePopupUpdate}
+              onSubmit={handleOnUpdate}
+              originalData={triggerer}
+            /> : null
+        }
       </div>
     </div>
   )

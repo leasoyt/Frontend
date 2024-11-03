@@ -1,21 +1,30 @@
 import { ClickEvent, OnSubmitProduct, ShowPopUpProp } from "@/interfaces/Interfaces.types";
 import React, { useEffect, useState } from "react";
-import { IDish } from "@/interfaces/dishes.interface";
+import { IDish, SoftDish } from "@/interfaces/dishes.interface";
 
-const AddProductPopUp: React.FC<ShowPopUpProp & OnSubmitProduct> = ({ showPopup, onSubmit }) => {
+const AddProductPopUp: React.FC<
+    OnSubmitProduct &
+    { originalData?: SoftDish, showPopup: (visible: boolean) => void }
+> = ({ showPopup, onSubmit, originalData }) => {
 
     const initialState: Partial<IDish> = { name: "", description: "", price: "" }
-    const [productData, setProductData] = useState<Partial<IDish>>(initialState);
-    const [errorMessage, setErrorMessage] = useState<Partial<IDish>>(initialState);
+    const [productData, setProductData] = useState<Partial<SoftDish>>(initialState);
+    const [errorMessage, setErrorMessage] = useState<Partial<SoftDish>>(initialState);
 
     const exitPopup = (event: ClickEvent) => {
         if (event.target === event.currentTarget) {
             if (showPopup) {
-                showPopup();
+                console.log("first")
+                showPopup(false);
             }
         }
     };
 
+    useEffect(() => {
+        if(originalData?.description !== undefined && originalData?.name !== undefined && originalData?.price !== undefined) {
+            setProductData(originalData);
+        }
+    }, [originalData]);
 
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
@@ -23,7 +32,7 @@ const AddProductPopUp: React.FC<ShowPopUpProp & OnSubmitProduct> = ({ showPopup,
         if (errorMessage.name === "" && errorMessage.price === "" && errorMessage.description === "") {
             if (productData.name !== "" && productData.price !== "" && productData.description !== "") {
                 onSubmit(productData);
-                showPopup();
+                showPopup(false);
             }
         }
     };

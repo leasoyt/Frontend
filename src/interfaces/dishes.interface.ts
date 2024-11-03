@@ -6,3 +6,9 @@ export interface IDish {
     price: string;
     imgUrl?: File | null;
 }
+
+export interface SoftDish {
+    name: string;
+    description: string;
+    price: string;
+}

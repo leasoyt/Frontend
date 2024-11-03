@@ -1,24 +1,19 @@
 import { API_URL } from "@/config/config";
 import { IMenu } from "@/interfaces/menu.interface";
 import { ErrorHelper, verifyError } from "../errors/error-helper";
+import { fetchWithAuth } from "../token-expire.interceptor";
 
-export const getMenuById = async (id: string): Promise<IMenu | null> => {
+export const getMenuById = async (id: string): Promise<IMenu> => {
 
     try {
-        const res = await fetch(`${API_URL}/menu-category/${id}`, {
+        const res = await fetchWithAuth(`${API_URL}/menu-category/${id}`, {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
             },
         });
-
-        const data = await res.json();
-
-        if (!res.ok) {
-            throw new ErrorHelper(verifyError(data.message), data.status);
-        }
         
-        return data;
+        return res;
 
     } catch (error) {
         throw error;
