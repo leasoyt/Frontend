@@ -1,6 +1,6 @@
 "use client";
-import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
 import { deleteDish } from '@/helpers/dish-helpers/delete.dish';
 import { getMenuById } from '@/helpers/menu-helper/get-menuByCategory';
 import { IMenu_Category } from '@/interfaces/menu.interface';
@@ -27,135 +27,91 @@ const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
   const togglePopupUpdate = (visible: boolean) => setShowPopupUpdate(visible);
   const [triggerer, setTriggerer] = useState<SoftDish & { id: string } | undefined>();
 
-
   useEffect(() => {
     const fetchCategoryData = async () => {
       setLoading(true);
-
       try {
-
         if (categories.id !== undefined) {
           const data = await getMenuById(categories.id);
           setCategoryData(data);
-
         }
-
       } catch (error) {
         AuthErrorHelper(error);
-
       }
-
       setLoading(false);
     };
-
     fetchCategoryData();
   }, [categories.id, update]);
 
-  const handleClick = () => {
-    setShowPopup(!showPopup);
-
-  };
-
+  const handleClick = () => setShowPopup(!showPopup);
 
   const handleOnSubmit = (dish: SoftDish) => {
-
     const fetchThis = async () => {
       if (categories.id !== undefined) {
-
         try {
           const response = await PostProduct(dish, categories.id);
-
           setUpdate(!update);
           swalNotifySuccess("¡Nuevo producto!", `${response.name}`);
-
         } catch (error) {
           AuthErrorHelper(error);
         }
       }
-
     };
-
     fetchThis();
   };
 
-
   const handleOnUpdate = (dish: Partial<SoftDish>) => {
-
     const fetchThis = async () => {
       if (triggerer !== undefined && triggerer !== null) {
         try {
           await UpdateProduct({ id: triggerer.id, ...filterRepeatedFields(dish, triggerer) });
-
           setUpdate(!update);
           swalNotifySuccess("Actualizado Correctamente", "");
-
         } catch (error) {
           AuthErrorHelper(error);
         }
-
       }
     };
-
     fetchThis();
   };
 
-
   const handleUpdateStock = (data: IUpdateStock) => {
-
     const fetchThis = async () => {
       try {
         await UpdateProduct({ id: data.id, stock: data.stock });
         swalNotifySuccess("Disponibilidad Actualizada!", "");
-
         setUpdate(!update);
       } catch (error) {
         AuthErrorHelper(error);
       }
-
     };
-
     fetchThis();
   };
 
-
   const handleUpdateTriggerer = (dish: Partial<IDish>) => {
     const { name, description, price, id, ...rest } = dish;
-
     if (name !== undefined && description !== undefined && price !== undefined && id !== undefined) {
-
       setTriggerer({ name, description, price, id });
       setShowPopupUpdate(!showPopupUpdate);
-
     }
-  }
-
+  };
 
   const handleDelete = async (dishId: string) => {
-
     swalNotifyConfirmation("¿Estas Seguro?", "Esta accion no se podrá deshacer").then(async (result) => {
-
       if (result.isConfirmed) {
-
         try {
           await deleteDish(dishId);
-
           setUpdate(!update);
-
         } catch (error) {
           AuthErrorHelper(error);
         }
       }
-
     });
-
   };
 
   const handleDeleteCategory = () => {
-
     swalNotifyConfirmation("¿Estas Seguro?", "Al eliminar esto, tambien se irán sus productos").then(async (result) => {
-
       if (result.isConfirmed) {
-
         try {
           await fetchWithAuth(`${API_URL}/menu-category/${categories.id}`, {
             method: "DELETE",
@@ -163,135 +119,103 @@ const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
               "Content-type": "application/json",
             }
           });
-
           window.location.href = "/manager/productos";
-
         } catch (error) {
           AuthErrorHelper(error);
         }
       }
-
     });
   };
 
-
   return (
     <div className="mr-5 mt-1 w-[80%] bg-white border border-gray-300 rounded-lg shadow-lg z-10">
-      <div className='bg-slate-700 flex items-center'>
-        <h1 className='text-white italic font-semibold mt-2 mb-2 mx-auto'>{categories.name}</h1>
-        <div className='pt-1 pr-2'>
-          <Image
-            src="https://svgsilh.com/svg/1691287-ffffff.svg"
-            onClick={handleDeleteCategory}
-            alt="Logo"
-            width={35}
-            height={35}
-            className="cursor-pointer"
-          />
-        </div>
+      <div className="bg-slate-700 flex justify-center items-center rounded-t-lg p-3">
+        <h1 className="text-white italic font-semibold text-lg">{categories.name}</h1>
+        <Image
+          src="https://svgsilh.com/svg/1691287-ffffff.svg"
+          onClick={handleDeleteCategory}
+          alt="Eliminar categoría"
+          width={35}
+          height={35}
+          className="cursor-pointer ml-3"
+        />
       </div>
-      <div className="relative overflow-x-auto flex flex-col">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <div className="relative overflow-x-auto flex flex-col p-4">
+        <table className="w-full text-sm text-left text-gray-500">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
-              <th scope="col" className="px-6 py-3">
-                Nombre
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Descripcion
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Stock
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Precio
-              </th>
-              <th scope="col" className="px-6 py-3">
-
-              </th>
+              <th className="px-6 py-3">Nombre</th>
+              <th className="px-6 py-3">Descripción</th>
+              <th className="px-6 py-3">Stock</th>
+              <th className="px-6 py-3">Precio</th>
+              <th className="px-6 py-3"></th>
             </tr>
           </thead>
           <tbody>
-            {loading ?
-              (
-                <tr>
-                  <td colSpan={5} className="text-center py-4 text-gray-500">
-                    Cargando...
+            {loading ? (
+              <tr>
+                <td colSpan={5} className="text-center py-4 text-gray-500">Cargando...</td>
+              </tr>
+            ) : categoryData && categoryData.dishes?.length ? (
+              categoryData.dishes.map((dish) => (
+                <tr key={dish.id} className="bg-white border-b hover:bg-gray-100">
+                  <th scope="row" className="px-6 py-4 font-medium text-gray-900">{dish.name}</th>
+                  <td className="px-6 py-4">{dish.description}</td>
+                  <td className="px-6 py-4">
+                    <UpdateStock triggerer={dish} onSubmit={handleUpdateStock} />
+                  </td>
+                  <td className="px-6 py-4">{dish.price}</td>
+                  <td className="px-6 py-3 flex space-x-3">
+                    <button
+                      onClick={() => handleUpdateTriggerer(dish)}
+                      className="bg-slate-500 text-white font-light p-1 rounded-md hover:bg-slate-600"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      onClick={() => handleDelete(dish.id)}
+                      className="bg-red-500 text-white font-light p-1 rounded-md hover:bg-red-600"
+                    >
+                      <Image
+                        src="https://svgsilh.com/svg/146131-ffffff.svg"
+                        alt="Eliminar"
+                        width={15}
+                        height={15}
+                      />
+                    </button>
                   </td>
                 </tr>
-              )
-              : categoryData !== null && categoryData.dishes !== undefined && !loading ?
-                (
-                  categoryData.dishes.map((dish) => (
-                    <tr key={dish.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {dish.name}
-                      </th>
-                      <td className="px-6 py-4">{dish.description}</td>
-                      <td className="px-6 py-4">
-                        {/* <button onClick={() => handleUpdateStock(dish.id)}> */}
-                        {/* {dish.stock ? "Si" : "No"} */}
-                        <UpdateStock triggerer={dish} onSubmit={handleUpdateStock} />
-                        {/* </button> */}
-                      </td>
-                      <td className="px-6 py-4">{dish.price}</td>
-                      <td className="px-6 py-3 flex justify-around">
-                        <button
-                          onClick={() => handleUpdateTriggerer(dish)}
-                          className="bg-slate-500 text-white font-light p-1 rounded-md"
-                        >
-                          Editar
-                        </button>
-                        <button
-                          onClick={() => handleDelete(dish.id)}
-                          className="bg-slate-500 text-white font-light p-1 rounded-md"
-                        >
-                          <Image
-                            src="https://svgsilh.com/svg/146131-ffffff.svg"
-                            alt="Logo"
-                            width={15}
-                            height={15}
-                            className="cursor-pointer"
-                          />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )
-                :
-                (
-                  <tr>
-                    <td colSpan={5} className="text-center py-4 text-gray-500">
-                      No hay productos para esta categoría
-                    </td>
-                  </tr>
-                )
-            }
+              ))
+            ) : (
+              <tr>
+                <td colSpan={5} className="text-center py-4 text-gray-500">
+                  No hay productos para esta categoría
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
-        <button onClick={handleClick} className="font-semibold text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-1.5 me-2 mb-2 ml-3 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 w-48">
+        <button
+          onClick={handleClick}
+          className="mt-4 w-48 font-semibold text-white bg-gray-800 hover:bg-gray-900 rounded-lg text-sm px-4 py-2"
+        >
           Nuevo producto
         </button>
 
-        {/* ADD PRODUCT FORM */}
-        {showPopup && !showPopupUpdate ? <AddProductPopUp showPopup={togglePopup} onSubmit={handleOnSubmit} /> : null}
+        {showPopup && !showPopupUpdate && (
+          <AddProductPopUp showPopup={togglePopup} onSubmit={handleOnSubmit} />
+        )}
 
-        {/* UPDATE PRODUCT FORM */}
-        {
-          showPopupUpdate &&
-            !showPopup &&
-            triggerer !== null &&
-            triggerer !== undefined
-            ?
-            <AddProductPopUp
-              showPopup={togglePopupUpdate}
-              onSubmit={handleOnUpdate}
-              originalData={triggerer}
-            /> : null
-        }
+        {showPopupUpdate && !showPopup && triggerer && (
+          <AddProductPopUp
+            showPopup={togglePopupUpdate}
+            onSubmit={handleOnUpdate}
+            originalData={triggerer}
+          />
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default MenuView;
