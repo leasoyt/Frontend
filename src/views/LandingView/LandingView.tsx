@@ -25,6 +25,9 @@ const LandingView: React.FC = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
+
+
+
   const checkUserSession = useCallback(async () => {
     if (authUser && !session.token) {
       try {
@@ -62,7 +65,16 @@ const LandingView: React.FC = () => {
   
     setIsLoggingOut(false);
   }, [authUser, router]);
-  
+
+
+  useEffect(()=>{
+    if(!authLoading){
+      checkUserSession()
+    }
+    },[authLoading,checkUserSession])
+
+
+  if (authLoading) return <div>Loading...</div>;
   return (
     <>
       <Navbar />

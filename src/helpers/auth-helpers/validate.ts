@@ -39,6 +39,9 @@ export function validateRegisterForm(values: IRegisterProps) {
   } else if (!/[0-9]/.test(values.password)) {
     errors.password = "La contraseña debe incluir al menos un número";
   }
+  else if (!/[!@#$%^&*]/.test(values.password)) {
+    errors.password = "La contraseña debe incluir al menos un carácter especial (!@#$%^&*)";
+  }
   if (values.confirmPassword !== values.password) {
     errors.confirmPassword = "Las contraseñas no coinciden";
   }
