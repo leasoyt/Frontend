@@ -13,8 +13,9 @@ export async function register(userData: IRegisterProps) {
       },
       body: JSON.stringify(userData),
     });
+console.log('response',res);
 
-    if (res.ok && res.status === 200) {
+    if (res.ok && res.status === 201) {
       swalNotifySuccess("¡Registrado correctamente!", "");
       window.location.href = "/login";
 
