@@ -6,11 +6,14 @@ import TableObject from "./TableObject";
 import { API_URL } from "@/config/config";
 import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
 import ViewTablePopUp from "./ViewTablePopUp";
+import { fetchWithAuth } from "@/helpers/token-expire.interceptor";
+import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
 
-const TablesBoard: React.FC<{ 
-    updateBoard: boolean, 
-    setParentState: React.Dispatch<React.SetStateAction<boolean>>, 
-    id: string }> = ({ updateBoard, setParentState, id }) => {
+const TablesBoard: React.FC<{
+    updateBoard: boolean,
+    setParentState: React.Dispatch<React.SetStateAction<boolean>>,
+    id: string
+}> = ({ updateBoard, setParentState, id }) => {
 
     const [tables, setTables] = useState<ITable[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -30,33 +33,16 @@ const TablesBoard: React.FC<{
 
             try {
                 setParentState(false);
-                const response: Response = await fetch(`${API_URL}/table/all/${id}`);
+                const response = await fetchWithAuth(`${API_URL}/table/all/${id}`, {});
 
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error);
-                }
+                setTables(response);
 
-                const data = await response.json();
-
-                setTables(data || []);
             } catch (error) {
+                AuthErrorHelper(error);
 
-                if (error instanceof Error) {
-                    if (error.message === HttpMessagesEnum.NO_TABLES_IN_RESTAURANT) {
-                        setError("No hay mesas aun");
-
-                    } else {
-                        setError(error.message);
-                    }
-
-                } else {
-                    setError("Error desconocido");
-                }
-
-            } finally {
-                setLoading(false);
             }
+
+            setLoading(false);
         };
 
         fetchTables();

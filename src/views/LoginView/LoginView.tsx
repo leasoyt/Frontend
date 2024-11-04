@@ -11,6 +11,9 @@ import { swalNotifySuccess } from "@/helpers/swal/swal-notify-success";
 import { swalNotifyError } from "@/helpers/swal/swal-notify-error";
 import { ErrorHelper } from "@/helpers/errors/error-helper";
 import { swalNotifyUnknownError } from "@/helpers/swal/swal-notify-unknown-error";
+import { fetchRestaurantData as fetchManagerData } from "@/helpers/manager/fetch-restaurant-data";
+import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
+import { UserRole } from "@/enums/role.enum";
 
 const LoginView: React.FC = () => {
 
@@ -23,6 +26,8 @@ const LoginView: React.FC = () => {
   const [userData, setUserData] = useState<IloginProps>(initialState);
   const [errors, setErrors] = useState<IErrorsProps>(initialState);
   const [showPassword, setShowPassword] = useState(false); // Estado para mostrar/ocultar la contraseña
+  const [restId, setRestId] = useLocalStorage("restaurant", "");
+
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -33,8 +38,9 @@ const LoginView: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    localStorage.removeItem("userSession");
-    localStorage.removeItem("restaurant");
+    localStorage.clear();
+    // localStorage.removeItem("userSession");
+    // localStorage.removeItem("restaurant");
     // localStorage.removeItem("userId");
     
     try {
@@ -46,6 +52,13 @@ const LoginView: React.FC = () => {
       swalNotifySuccess("¡Bienvenido de nuevo!", "");
 
       setUserData(initialState); // Limpia los inputs después del login exitoso
+
+      if(user.role === UserRole.MANAGER) {
+        const id = await fetchManagerData();
+
+        setRestId(id);
+      }
+
       // router.push("/pageUser");
       window.location.href = "/pageUser";
 

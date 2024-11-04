@@ -1,17 +1,21 @@
 "use client";
+import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { deleteDish } from '@/helpers/dish-helpers/delete.dish';
 import { getMenuById } from '@/helpers/menu-helper/get-menuByCategory';
 import { IMenu_Category } from '@/interfaces/menu.interface';
-import { ErrorHelper } from '@/helpers/errors/error-helper';
-import { swalNotifyError } from '@/helpers/swal/swal-notify-error';
-import { swalNotifyUnknownError } from '@/helpers/swal/swal-notify-unknown-error';
 import { swalNotifyConfirmation } from '@/helpers/swal/swal-notify-confirm';
-import AddProductPopUp from '@/components/AdminDash/Menu/AddProductPopUp';
+import AddProductPopUp from '@/components/AdminDash/Products/AddProductPopUp';
 import { IDish, SoftDish } from '@/interfaces/dishes.interface';
 import { AuthErrorHelper } from '@/helpers/errors/auth-error-helper';
-import { PostOrUpdateProduct } from '@/helpers/manager/post-product';
+import { PostProduct } from '@/helpers/manager/post-product';
 import { filterRepeatedFields } from '@/helpers/object-repeated-filter';
+import UpdateStock from '@/components/AdminDash/Menu/UpdateStock';
+import { swalNotifySuccess } from '@/helpers/swal/swal-notify-success';
+import { UpdateProduct } from '@/helpers/manager/update-product';
+import { IUpdateStock } from '@/interfaces/Interfaces.types';
+import { fetchWithAuth } from '@/helpers/token-expire.interceptor';
+import { API_URL } from '@/config/config';
 
 const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
   const [loading, setLoading] = useState(true);
@@ -22,6 +26,7 @@ const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
   const togglePopup = (visible: boolean) => setShowPopup(visible);
   const togglePopupUpdate = (visible: boolean) => setShowPopupUpdate(visible);
   const [triggerer, setTriggerer] = useState<SoftDish & { id: string } | undefined>();
+
 
   useEffect(() => {
     const fetchCategoryData = async () => {
@@ -37,11 +42,6 @@ const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
 
       } catch (error) {
         AuthErrorHelper(error);
-        // if (error instanceof ErrorHelper) {
-        //   swalNotifyError(error);
-        // } else {
-        //   swalNotifyUnknownError(error);
-        // }
 
       }
 
@@ -53,15 +53,61 @@ const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
 
   const handleClick = () => {
     setShowPopup(!showPopup);
+
   };
 
-  const handleOnSubmit = (dish: Partial<IDish>) => {
+
+  const handleOnSubmit = (dish: SoftDish) => {
+
+    const fetchThis = async () => {
+      if (categories.id !== undefined) {
+
+        try {
+          const response = await PostProduct(dish, categories.id);
+
+          setUpdate(!update);
+          swalNotifySuccess("¡Nuevo producto!", `${response.name}`);
+
+        } catch (error) {
+          AuthErrorHelper(error);
+        }
+      }
+
+    };
+
+    fetchThis();
+  };
+
+
+  const handleOnUpdate = (dish: Partial<SoftDish>) => {
+
+    const fetchThis = async () => {
+      if (triggerer !== undefined && triggerer !== null) {
+        try {
+          await UpdateProduct({ id: triggerer.id, ...filterRepeatedFields(dish, triggerer) });
+
+          setUpdate(!update);
+          swalNotifySuccess("Actualizado Correctamente", "");
+
+        } catch (error) {
+          AuthErrorHelper(error);
+        }
+
+      }
+    };
+
+    fetchThis();
+  };
+
+
+  const handleUpdateStock = (data: IUpdateStock) => {
 
     const fetchThis = async () => {
       try {
-        const response = await PostOrUpdateProduct({ ...dish, id: categories.id }, "POST");
+        await UpdateProduct({ id: data.id, stock: data.stock });
+        swalNotifySuccess("Disponibilidad Actualizada!", "");
 
-        setUpdate(true);
+        setUpdate(!update);
       } catch (error) {
         AuthErrorHelper(error);
       }
@@ -71,40 +117,30 @@ const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
     fetchThis();
   };
 
-  const handleOnUpdate = (dish: Partial<SoftDish>) => {
-
-    const fetchThis = async () => {
-      if (triggerer !== undefined && triggerer !== null) {
-        try {
-          const response = await PostOrUpdateProduct({ id: triggerer.id, ...filterRepeatedFields(dish, triggerer) }, "PUT");
-          console.log(response);
-        } catch (error) {
-          AuthErrorHelper(error);
-        }
-
-      }
-    };
-
-    fetchThis();
-  };
 
   const handleUpdateTriggerer = (dish: Partial<IDish>) => {
     const { name, description, price, id, ...rest } = dish;
+
     if (name !== undefined && description !== undefined && price !== undefined && id !== undefined) {
+
       setTriggerer({ name, description, price, id });
       setShowPopupUpdate(!showPopupUpdate);
+
     }
   }
 
+
   const handleDelete = async (dishId: string) => {
 
-    swalNotifyConfirmation("Eliminar", "¿Deseas eliminar este producto?").then(async (result) => {
+    swalNotifyConfirmation("¿Estas Seguro?", "Esta accion no se podrá deshacer").then(async (result) => {
 
       if (result.isConfirmed) {
 
         try {
           await deleteDish(dishId);
-          setUpdate(true);
+
+          setUpdate(!update);
+
         } catch (error) {
           AuthErrorHelper(error);
         }
@@ -114,11 +150,45 @@ const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
 
   };
 
+  const handleDeleteCategory = () => {
+
+    swalNotifyConfirmation("¿Estas Seguro?", "Al eliminar esto, tambien se irán sus productos").then(async (result) => {
+
+      if (result.isConfirmed) {
+
+        try {
+          await fetchWithAuth(`${API_URL}/menu-category/${categories.id}`, {
+            method: "DELETE",
+            headers: {
+              "Content-type": "application/json",
+            }
+          });
+
+          window.location.href = "/manager/productos";
+
+        } catch (error) {
+          AuthErrorHelper(error);
+        }
+      }
+
+    });
+  };
+
 
   return (
     <div className="mr-5 mt-1 w-[80%] bg-white border border-gray-300 rounded-lg shadow-lg z-10">
-      <div className='bg-slate-700 flex justify-center'>
-        <h1 className='text-white italic font-semibold mt-2 mb-2'>{categories.name}</h1>
+      <div className='bg-slate-700 flex items-center'>
+        <h1 className='text-white italic font-semibold mt-2 mb-2 mx-auto'>{categories.name}</h1>
+        <div className='pt-1 pr-2'>
+          <Image
+            src="https://svgsilh.com/svg/1691287-ffffff.svg"
+            onClick={handleDeleteCategory}
+            alt="Logo"
+            width={35}
+            height={35}
+            className="cursor-pointer"
+          />
+        </div>
       </div>
       <div className="relative overflow-x-auto flex flex-col">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -158,7 +228,12 @@ const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
                         {dish.name}
                       </th>
                       <td className="px-6 py-4">{dish.description}</td>
-                      <td className="px-6 py-4">{dish.stock}</td>
+                      <td className="px-6 py-4">
+                        {/* <button onClick={() => handleUpdateStock(dish.id)}> */}
+                        {/* {dish.stock ? "Si" : "No"} */}
+                        <UpdateStock triggerer={dish} onSubmit={handleUpdateStock} />
+                        {/* </button> */}
+                      </td>
                       <td className="px-6 py-4">{dish.price}</td>
                       <td className="px-6 py-3 flex justify-around">
                         <button
@@ -171,7 +246,13 @@ const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
                           onClick={() => handleDelete(dish.id)}
                           className="bg-slate-500 text-white font-light p-1 rounded-md"
                         >
-                          Eliminar
+                          <Image
+                            src="https://svgsilh.com/svg/146131-ffffff.svg"
+                            alt="Logo"
+                            width={15}
+                            height={15}
+                            className="cursor-pointer"
+                          />
                         </button>
                       </td>
                     </tr>
@@ -200,7 +281,7 @@ const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
           showPopupUpdate &&
             !showPopup &&
             triggerer !== null &&
-            triggerer !== undefined 
+            triggerer !== undefined
             ?
             <AddProductPopUp
               showPopup={togglePopupUpdate}

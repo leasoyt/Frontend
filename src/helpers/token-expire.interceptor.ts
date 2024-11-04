@@ -27,7 +27,7 @@ export async function fetchWithAuth(url: string | URL | globalThis.Request, opti
         }
 
     } else {
-        throw new ErrorHelper(HttpMessagesEnum.TOKEN_NOT_FOUND, "401");
+        throw new ErrorHelper(HttpMessagesEnum.NOT_ALLOWED_HERE, "");
     }
 
 }

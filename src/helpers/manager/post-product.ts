@@ -1,44 +1,27 @@
-import { IDish } from "@/interfaces/dishes.interface";
+import { SoftDish } from "@/interfaces/dishes.interface";
 import { fetchWithAuth } from "../token-expire.interceptor";
 import { API_URL } from "@/config/config";
 
-export async function PostOrUpdateProduct(dish: Partial<IDish>, method: "POST" | "PUT") {
+export async function PostProduct(dish: SoftDish, category_id: string) {
     const built_dish = {
-        name: dish.name || null,
-        price: dish.price || null,
-        description: dish.description || null,
-        category: dish.id || null,
+        name: dish.name,
+        price: dish.price,
+        description: dish.description,
+        category: category_id,
     }
-    console.log(dish);
-    console.log(built_dish);
 
-    const clean = cleanObject(built_dish);
-    const { category, ...built_to_update } = clean;
-    console.log(clean);
     try {
 
-        const response = await fetchWithAuth(`${API_URL}/dish` + (
-            method === "PUT" ?
-                `/${dish.id}`
-                :
-                ""
-        ), {
+        const response = await fetchWithAuth(`${API_URL}/dish`, {
             headers: {
                 'Content-Type': 'application/json'
             },
-            method: method,
-            body: JSON.stringify(method === "POST" ? built_dish : built_to_update)
+            method: "POST",
+            body: JSON.stringify(built_dish)
         });
 
         return response;
     } catch (error) {
         throw error;
     }
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function cleanObject<T extends Record<string, any>>(obj: T): Partial<T> {
-    return Object.fromEntries(
-        Object.entries(obj).filter(([_, value]) => value != null && value !== "")
-    ) as Partial<T>;
 }
