@@ -15,13 +15,13 @@ const PagoCompletado = () => {
       setMessage("¡Pago exitoso! Gracias por tu compra.");
       setIsSuccess(true);
       setTimeout(() => {
-        router.push("/registro-restaurante");
+        router.push("/manager/mesas");
       }, 3000);
     } else {
       setMessage("Hubo un error con tu pago. Por favor, inténtalo de nuevo.");
       setIsSuccess(false);
       setTimeout(() => {
-        router.push("/");
+        router.push("/manager/pagos");
       }, 3000);
     }
   }, [searchParams, router]);
