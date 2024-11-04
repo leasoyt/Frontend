@@ -45,8 +45,7 @@ const LandingView: React.FC = () => {
   
   const handleLogout = useCallback(async () => {
     setIsUserLoggedIn(false);
-    // localStorage.removeItem("userSession");
-    localStorage.clear();
+    localStorage.removeItem("userSession");
   
     if (authUser) {
       try {
