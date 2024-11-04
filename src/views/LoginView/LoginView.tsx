@@ -39,6 +39,8 @@ const LoginView: React.FC = () => {
     
     try {
       const response = await login(userData);
+      console.log('response',response);
+      
       const { token, user } = response;
 
       localStorage.setItem("userSession", JSON.stringify({ token, user }));
