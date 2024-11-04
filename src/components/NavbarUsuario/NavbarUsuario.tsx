@@ -38,14 +38,18 @@ const NavbarUsuario = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (divRef.current && event.target instanceof Node && !divRef.current.contains(event.target)) {
+      if (
+        divRef.current &&
+        event.target instanceof Node &&
+        !divRef.current.contains(event.target)
+      ) {
         setIsDropdownOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -129,16 +133,18 @@ const NavbarUsuario = () => {
                     </Link>
                   </li>
                 )}
-                {user && (user.role === UserRole.MANAGER || user.role === UserRole.WAITER) && (
-                  <li>
-                    <Link
-                      href="/manager/productos"
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
-                    >
-                      Mi negocio
-                    </Link>
-                  </li>
-                )}
+                {user &&
+                  (user.role === UserRole.MANAGER ||
+                    user.role === UserRole.WAITER) && (
+                    <li>
+                      <Link
+                        href="/manager/productos"
+                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
+                      >
+                        Mi negocio
+                      </Link>
+                    </li>
+                  )}
                 {user && user.role === UserRole.ADMIN && (
                   <li>
                     <Link
@@ -182,17 +188,6 @@ const NavbarUsuario = () => {
                   </Link>
                 </li>
 
-                {/* Botón para el rol admin */}
-                {isAdmin && (
-                  <li>
-                    <Link
-                      href="/admin"
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
-                    >
-                      Admin 
-                    </Link>
-                  </li>
-                )}
                 <li>
                   <button
                     onClick={handleLogout}
