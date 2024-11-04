@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { swalNotifySuccess } from "@/helpers/swal/swal-notify-success";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import Link from "next/link";
@@ -229,7 +228,7 @@ const RegisterView: React.FC = () => {
           >
             {isSubmitting ? "Registrando..." : "Registrarse"}
           </button>
-          <Link href="/api/auth/login?prompt=login">
+          <Link href="/api/auth/login">
             <button
               type="button"
               className="w-44 bg-gray-700 text-white font-medium py-2 rounded-lg hover:bg-gray-800 ml-4"
