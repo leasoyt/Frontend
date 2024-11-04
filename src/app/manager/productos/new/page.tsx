@@ -1,4 +1,4 @@
-import NewProductView from '@/views/NewProductView.tsx/NewProductView'
+import NewProductView from '@/views/NewProductView/NewProductView'
 import React from 'react'
 
 const NewProduct = () => {

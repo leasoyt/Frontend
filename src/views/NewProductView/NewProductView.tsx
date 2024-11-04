@@ -1,6 +1,6 @@
-import NewCategoryForm from '@/components/NewCategotyForm/NewCategoryForm'
-import Image from 'next/image'
-import React from 'react'
+import NewCategoryForm from '@/components/NewCategotyForm/NewCategoryForm';
+import Image from 'next/image';
+import React from 'react';
 
 const NewProductView = () => {
   return (
@@ -19,10 +19,10 @@ const NewProductView = () => {
           <p className='italic ml-4 text-black'>Nuevo producto</p>
         </div>
         <div className='flex justify-around bg-gray-100'>
-          <NewCategoryForm/>
+          <NewCategoryForm />
         </div>
     </div>
-  )
-}
+  );
+};
 
-export default NewProductView
+export default NewProductView;
