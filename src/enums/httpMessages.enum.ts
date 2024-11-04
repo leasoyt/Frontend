@@ -13,6 +13,7 @@ export enum HttpMessagesEnum {
     RANKING_UP_FAIL = "Error al mejorar el rango del usuario",
     // RANKING_UP_SUCCESS = "El rol de este usuario ha cambiado",
     USER_NOT_FOUND = "Usuario no encontrado",
+    NOTHING_UPDATED = "No se ha hecho ninguna actualizacion",
 
     DISH_CREATION_FAILED = "Error al crear un nuevo plato",
     DISH_UPDATE_FAILED = "Error al actualizar el plato",

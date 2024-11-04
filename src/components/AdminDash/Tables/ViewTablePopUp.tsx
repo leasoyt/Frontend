@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import TableOrderView from "./TableOrderView";
 import AddOrderToTable from "./AddOrderToTable";
 import { swalNotifyUnknownError } from "@/helpers/swal/swal-notify-unknown-error";
+import NewOrderForm from "./NewOrderForm";
 
 const ViewTablePopUp: React.FC<ViewTableProps & { table_number: number }> = ({ showPopup, id, table_number }) => {
     const [loading, setLoading] = useState<boolean>(true);
@@ -78,7 +79,7 @@ const ViewTablePopUp: React.FC<ViewTableProps & { table_number: number }> = ({ s
 
                 {/* NUEVA ORDEN */}
 
-                {showForm ? (<div className="text-lg font-medium text-gray-900 mb-4">Order Form here</div>) : null}
+                {showForm ? (<NewOrderForm/>) : null}
 
                 <div className="mt-6 flex space-x-4">
                     {!showForm ? (<button onClick={exitPopup} className="bg-gray-500 text-white p-2 rounded-md">Volver</button>)

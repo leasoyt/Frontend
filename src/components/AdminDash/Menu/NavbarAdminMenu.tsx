@@ -19,7 +19,6 @@ const NavbarAdminMenu = () => {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const togglePopup = () => setShowPopup(!showPopup);
-  const [triggererId, setTriggererId] = useState("");
 
 
   // {
@@ -85,7 +84,6 @@ const NavbarAdminMenu = () => {
         })
       });
 
-      console.log(response);
       if (!!response) {
         setUpdate(true);
       }
@@ -116,18 +114,18 @@ const NavbarAdminMenu = () => {
             loading ?
               (<p className="text-black text-center">Cargando...</p>)
               :
-              <CategoriesMaping categories={categories} setParentState={setTriggererId} />
+              <CategoriesMaping categories={categories} />
           }
 
           <li>
-            <a onClick={togglePopup} className="block px-4 py-2 text-gray-800 hover:bg-gray-200 cursor-pointer font-bold">
-              Nueva Categoria
+            <a onClick={togglePopup} className="block px-4 py-2 text-gray-800 hover:bg-gray-200 cursor-pointer font-bold text-center text-xl">
+              + Categoria
             </a>
           </li>
         </ul>
       </div>
       {showPopup && <NewCategoryPopUp showPopup={togglePopup} onSubmit={handleOnSubmit} />}
-      {/* {showPopup ? setUpdate(true) : null} */}
+
     </>
   )
 }

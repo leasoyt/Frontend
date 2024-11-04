@@ -16,7 +16,6 @@ const NewReservationView = () => {
             height={35} 
             className="ml-2" 
           />
-          <p className='italic ml-4 text-black'>Nueva Reservacion</p>
         </div>
         <NewReservForm/>
     </div>

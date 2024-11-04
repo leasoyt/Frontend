@@ -6,7 +6,7 @@ import { swalNotifyError } from "../swal/swal-notify-error";
 export function AuthErrorHelper(error: any) {
     if (error.message === HttpMessagesEnum.INSUFFICIENT_PERMISSIONS) {
 
-        swalNotifyError(new ErrorHelper(HttpMessagesEnum.INSUFFICIENT_PERMISSIONS, "Cerrando sesion")).then((result) => {
+        swalNotifyError(new ErrorHelper(HttpMessagesEnum.INSUFFICIENT_PERMISSIONS, "")).then((result) => {
           if (result.isConfirmed) {
             window.location.href = "/pageUser";
 
@@ -18,16 +18,16 @@ export function AuthErrorHelper(error: any) {
         swalNotifyError(new ErrorHelper(HttpMessagesEnum.TOKEN_EXPIRED, "Cerrando sesion")).then((result) => {
           if (result.isConfirmed) {
             window.location.href = "/login";
+            localStorage.clear();
 
           }
         });;
 
-        localStorage.clear();
-
       } else if (error.message === HttpMessagesEnum.RESTAURANT_NOT_FOUND) {
 
-        swalNotifyError(new ErrorHelper(HttpMessagesEnum.NOT_ALLOWED_HERE, "Cerrando sesion")).then((result) => {
+        swalNotifyError(new ErrorHelper(HttpMessagesEnum.NOT_ALLOWED_HERE, "")).then((result) => {
           if (result.isConfirmed) {
+            console.log("first");
             window.location.href = "/pageUser";
 
           }
@@ -36,5 +36,7 @@ export function AuthErrorHelper(error: any) {
       } else if (error.message !== HttpMessagesEnum.UNKNOWN_ERROR) {
         swalNotifyError(error);
 
+      } else {
+        console.log(error);
       }
 }

@@ -1,4 +1,4 @@
-import { IDish } from "./dishes.interface";
+import { IDish, SoftDish } from "./dishes.interface";
 import { IOrder } from "./order.interface";
 import { ITable } from "./table.interface";
 
@@ -61,7 +61,16 @@ export interface PopUpSubmitProps {
 }
 
 export interface OnSubmitProduct {
+  onSubmit: (data: SoftDish) => void;
+}
+
+export interface OnUpdateProduct {
   onSubmit: (data: Partial<IDish>) => void;
+}
+
+export interface IUpdateStock {
+  id: string,
+  stock: boolean
 }
 
 export type ShowPopUpProp = Pick<PopUpSubmitProps, "showPopup"> & {
@@ -85,7 +94,7 @@ export interface SetStateBoolean {
   setParentState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export type TableWithSetState = ITable & ViewTableProps &  SetStateString & {
+export type TableWithSetState = ITable & ViewTableProps & SetStateString & {
 }
 
 export type SetStateString = {
