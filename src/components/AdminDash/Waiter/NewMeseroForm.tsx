@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const NewMeseroForm = () => {
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+
   return (
     <div className="p-6 bg-gray-100  max-w-lg mx-auto">
     <h1 className="italic font-bold text-2xl text-gray-800 mb-4">Registrar mesero</h1>
@@ -38,18 +43,38 @@ const NewMeseroForm = () => {
             <input
                 id="password"
                 name="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 className="border border-gray-300 rounded-md p-2 w-full italic text-gray-800"
             />
+             <div
+                className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <FaEyeSlash style={{ color: "black" }} />
+                ) : (
+                  <FaEye style={{ color: "black" }} />
+                )}
+              </div>
         </div>
         <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-1">Confirmar Contraseña:</label>
             <input
                 id="confirm-password"
                 name="confirmPassword"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 className="border border-gray-300 rounded-md p-2 w-full italic text-gray-800"
             />
+               <div
+                className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? (
+                  <FaEyeSlash style={{ color: "black" }} />
+                ) : (
+                  <FaEye style={{ color: "black" }} />
+                )}
+              </div>
         </div>
         <div className="mt-6">
             <button
