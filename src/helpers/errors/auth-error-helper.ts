@@ -13,6 +13,7 @@ export function AuthErrorHelper(error: any) {
           }
         });
 
+        return;
       } else if (error.message === HttpMessagesEnum.TOKEN_EXPIRED) {
 
         swalNotifyError(new ErrorHelper(HttpMessagesEnum.TOKEN_EXPIRED, "Cerrando sesion")).then((result) => {
@@ -23,6 +24,7 @@ export function AuthErrorHelper(error: any) {
           }
         });;
 
+        return;
       } else if (error.message === HttpMessagesEnum.RESTAURANT_NOT_FOUND) {
 
         swalNotifyError(new ErrorHelper(HttpMessagesEnum.NOT_ALLOWED_HERE, "")).then((result) => {
@@ -33,9 +35,12 @@ export function AuthErrorHelper(error: any) {
           }
         });
 
+        return;
       } else if (error.message !== HttpMessagesEnum.UNKNOWN_ERROR) {
+        console.log("UNknown here")
         swalNotifyError(error);
 
+        return;
       } else {
         console.log(error);
       }

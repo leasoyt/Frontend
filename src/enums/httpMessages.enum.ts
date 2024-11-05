@@ -14,6 +14,7 @@ export enum HttpMessagesEnum {
     // RANKING_UP_SUCCESS = "El rol de este usuario ha cambiado",
     USER_NOT_FOUND = "Usuario no encontrado",
     NOTHING_UPDATED = "No se ha hecho ninguna actualizacion",
+    NO_WAITERS_IN_RESTAURANT = "Aun no hay meseros para este restaurante",
 
     DISH_CREATION_FAILED = "Error al crear un nuevo plato",
     DISH_UPDATE_FAILED = "Error al actualizar el plato",

@@ -9,9 +9,15 @@ export interface IOrder {
     table_id: number
 }
 
+export interface IOrderB {
+    table: string;
+    ordered_dishes: OrderedDish[];
+}
+
 export interface OrderedDish {
     id: string;
     quantity: number;
+    price: string;
 }
 
 export interface IOrderCreate {

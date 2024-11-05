@@ -1,5 +1,4 @@
-'use client';
-
+"use client";
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -7,11 +6,14 @@ const NewMeseroForm = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+    const handleSubmit = (event: { preventDefault: () => void; }) => {
+        event.preventDefault();
+    };
+
     return (
-        <div className="p-6 bg-gray-100 max-w-lg mx-auto">
+        <div className="p-6 bg-gray-100  max-w-lg mx-auto">
             <h1 className="italic font-bold text-2xl text-gray-800 mb-4">Registrar mesero</h1>
-            <h2 className="italic text-gray-700 mb-4">Información:</h2>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <label className="block text-gray-700 font-medium mb-1">Nombre:</label>
                     <input
