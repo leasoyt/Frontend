@@ -4,17 +4,40 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  isLoggedInProp?: boolean;
+}
+
+
+const Navbar: React.FC<NavbarProps> = ({ isLoggedInProp }) => {
   const [isOpen, setIsOpen] = useState(false); // Estado para controlar el menú móvil
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para verificar si el usuario está logueado
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.localStorage) {
-      const userSession = localStorage.getItem("userSession");
-      setIsLoggedIn(!!userSession); // Cambia el estado si hay sesión activa
-    }
-  }, []);
+    const checkLoginStatus = () => {
+      if (typeof window !== "undefined" && window.localStorage) {
+        const userSession = localStorage.getItem("userSession");
+        return !!userSession;
+      }
+      return false;
+    };
 
+    if (isLoggedInProp !== undefined) {
+      // Si se proporciona isLoggedInProp, úsalo
+      setIsLoggedIn(isLoggedInProp);
+      
+      // Si isLoggedInProp es true, asegúrate de que localStorage esté actualizado
+      if (isLoggedInProp && !checkLoginStatus()) {
+        localStorage.setItem("userSession", JSON.stringify({ isLoggedIn: true }));
+      } else if (!isLoggedInProp && checkLoginStatus()) {
+        // Si isLoggedInProp es false pero localStorage indica que está logueado, limpia localStorage
+        localStorage.removeItem("userSession");
+      }
+    } else {
+      // Si no se proporciona isLoggedInProp, usa localStorage
+      setIsLoggedIn(checkLoginStatus());
+    }
+  }, [isLoggedInProp]);
   return (
     <nav className="bg-white p-4">
       <div className="container mx-auto flex justify-between items-center mt-6 max-w-5xl">
