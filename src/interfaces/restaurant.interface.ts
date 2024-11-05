@@ -19,6 +19,7 @@ export interface IRestaurant {
   reservations?: IReservation[]; // Reservas si tienes esta relación en el frontend
   createdAt?: string;
   updatedAt?: string;
+  was_deleted:boolean
 }
 
 export interface RestaurantProps {
