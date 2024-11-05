@@ -22,9 +22,6 @@ const Suggestions: React.FC = () => {
         url.searchParams.append("page", "1");
         url.searchParams.append("limit", "100");
 
-        // Agregar los filtros de búsqueda si existen
-        if (searchTerm) url.searchParams.append("search", searchTerm);
-        if (rating) url.searchParams.append("rating", rating.toString());
 
         const response = await fetch(url.toString());
         if (!response.ok) {
@@ -65,6 +62,18 @@ const Suggestions: React.FC = () => {
   if (loading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error}</div>;
 
+  const noResultsMessage = () => {
+    if (!searchTerm && rating === null) {
+      return "No se encontraron resultados";
+    }
+
+    const filters = [];
+    if (searchTerm) filters.push(`la búsqueda "${searchTerm}"`);
+    if (rating !== null) filters.push(`rating mayor o igual a ${rating}`);
+
+    return `No se encontraron resultados para ${filters.join(" y ")}`;
+  };
+
   return (
     <div className="max-w-5xl mx-auto p-4">
       {/* Search Bar */}
@@ -100,7 +109,7 @@ const Suggestions: React.FC = () => {
             </Link>
           ))
         ) : (
-          <p className="text-black text-center col-span-full">No se encontraron resultados para `${searchTerm}`</p>
+          <p className="text-black text-center col-span-full">{noResultsMessage()}</p>
         )}
       </div>
     </div>
