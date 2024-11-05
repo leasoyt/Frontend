@@ -29,10 +29,14 @@ const LandingView: React.FC = () => {
 
 
   const checkUserSession = useCallback(async () => {
+    console.log('hola');
+    
     if (authUser && !session.token) {
       try {
         const response = await fetch("/api/auth/token");
         const data = await response.json();
+        console.log('token',data.token);
+        
         if (data.token) {
           setSession({ token: data.token, user: authUser });
         }
@@ -76,7 +80,7 @@ const LandingView: React.FC = () => {
   if (authLoading) return <div>Loading...</div>;
   return (
     <>
-      <Navbar />
+      <Navbar isLoggedInProp={isUserLoggedIn}/>
       <ChatComponent />
       <div className="bg-gray-100 min-h-screen flex flex-col items-center">
         <div className="flex justify-center p-10">
