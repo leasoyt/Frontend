@@ -36,7 +36,7 @@ const NavbarAdmin = () => {
             </p>
           </Link>
 
-          <ul className='flex items-center'>
+          <ul className='flex items-center space-x-4'>
             <li>
               <Link href="/manager/reservas/reservas" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Reservas</Link>
             </li>
@@ -49,9 +49,9 @@ const NavbarAdmin = () => {
             <li>
               <Link href="/manager/mesas" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Mesas</Link>
             </li>
-            <li>
+            {/* <li>
               <Link href="/manager/administracion/meseros" className='ml-4 italic text-black text-xl hover:underline active:scale-110 transition-transform duration-200'>Administracion</Link>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div className="relative pl-24">

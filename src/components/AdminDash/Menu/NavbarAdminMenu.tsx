@@ -119,7 +119,7 @@ const NavbarAdminMenu = () => {
 
           <li>
             <a onClick={togglePopup} className="block px-4 py-2 text-gray-800 hover:bg-gray-200 cursor-pointer font-bold text-center text-xl">
-              + Categoria
+              Nueva Categoria
             </a>
           </li>
         </ul>

@@ -57,7 +57,7 @@ const TablesBoard: React.FC<{
             {tables.map((table) => (
                 <TableObject {...table} key={table.id} showPopup={togglePopup} setParentState={setTriggererId} setNumberParentState={setTriggererNumber} />
             ))}
-            {showPopup && <ViewTablePopUp showPopup={togglePopup} id={triggererId} table_number={triggererNumber} />}
+            {showPopup && <ViewTablePopUp showPopup={togglePopup} id={triggererId} table_number={triggererNumber} rest_id={id} />}
         </>
     );
 };
