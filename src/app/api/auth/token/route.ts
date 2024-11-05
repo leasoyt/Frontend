@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 export async function GET(req: Request) {
   try {
     const { accessToken } = await getAccessToken();
+    console.log('token',accessToken);
     return NextResponse.json({ token: accessToken });
   } catch (error) {
     console.error('Error obteniendo el token:', error);
