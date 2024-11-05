@@ -2,17 +2,27 @@ import { API_URL } from "@/config/config";
 import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
 import { ErrorHelper, verifyError } from "@/helpers/errors/error-helper";
 import { ClickEvent, ViewTableProps } from "@/interfaces/Interfaces.types";
-import { IOrder } from "@/interfaces/order.interface";
+import { IOrder, IOrderB, OrderedDish } from "@/interfaces/order.interface";
 import React, { useEffect, useState } from "react";
 import TableOrderView from "./TableOrderView";
-import AddOrderToTable from "./AddOrderToTable";
 import { swalNotifyUnknownError } from "@/helpers/swal/swal-notify-unknown-error";
+import NewOrderForm from "./NewOrderForm";
+import { fetchWithAuth } from "@/helpers/token-expire.interceptor";
+import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
+import { swalNotifySuccess } from "@/helpers/swal/swal-notify-success";
+import { swalNotifyError } from "@/helpers/swal/swal-notify-error";
 
-const ViewTablePopUp: React.FC<ViewTableProps & { table_number: number }> = ({ showPopup, id, table_number }) => {
+const ViewTablePopUp: React.FC<ViewTableProps & { table_number: number, rest_id: string }> = ({ showPopup, id, table_number, rest_id }) => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [orderData, setOrderData] = useState<IOrder | null>(null);
     const [showForm, setShowForm] = useState<boolean>(false);
+    const [addForm, setAddForm] = useState([1]);
+    const [total, setTotal] = useState<number>(0);
+    const [order, setOrder] = useState<OrderedDish[]>([]);
+    const [finalOrder, setFinalOrder] = useState<OrderedDish[]>([]);
+    const [update, setUpdate] = useState(false);
+
 
     const exitPopup = (event: ClickEvent) => {
         if (event.target === event.currentTarget) {
@@ -22,11 +32,18 @@ const ViewTablePopUp: React.FC<ViewTableProps & { table_number: number }> = ({ s
         }
     };
 
+    const togglePopup = (state: boolean) => {
+        if (showPopup) {
+            showPopup();
+        }
+    };
+
     const cancelClick = () => {
         if (setShowForm) {
             setShowForm(false);
         }
     }
+
 
     useEffect(() => {
         const fetchOrder = async () => {
@@ -65,28 +82,149 @@ const ViewTablePopUp: React.FC<ViewTableProps & { table_number: number }> = ({ s
         };
 
         fetchOrder();
-    }, [id]);
+    }, [id, update]);
+
+
+    const addItem = () => {
+        setAddForm([...addForm, 1]);
+    };
+
+    const removeItem = () => {
+        const new_form = addForm.slice(0, -1);
+        setAddForm(new_form);
+        
+        if(new_form.length === 0) {
+            setOrder([]);
+            setFinalOrder([]);
+            setTotal(0);
+        }
+
+        const clean_dishes = reducedDishes;
+        const new_order = clean_dishes.slice(0, -1);
+        setOrder(new_order);
+    }
+
+    const handleClick = () => {
+        setShowForm(true);
+    };
+
+    const reducedDishes = order.reduce<OrderedDish[]>((acc: any[], current: OrderedDish) => {
+        const existingDish = acc.find((dish: OrderedDish) => dish.id === current.id);
+
+        if (existingDish) {
+            existingDish.quantity = current.quantity;
+        } else {
+            acc.push({ ...current });
+        }
+
+        return acc;
+    }, []);
+
+
+    useEffect(() => {
+
+        if (order && order.length > 0) {
+            const clean_dishes = reducedDishes;
+
+            if (clean_dishes) {
+                let count: number = 0;
+
+                clean_dishes.forEach((dish) => {
+                    count = count + Number((parseFloat(dish.price) * dish.quantity).toFixed(2));
+                });
+
+                setTotal(count);
+                setFinalOrder(clean_dishes);
+
+            }
+        }
+    }, [order]);
+
+
+    const handleSubmit = () => {
+        const fetchThis = async () => {
+
+            if (finalOrder.length > 0) {
+                try {
+
+                    await fetchWithAuth(`${API_URL}/order`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ table: id, ordered_dishes: finalOrder, }),
+                    });
+
+                    swalNotifySuccess("Nueva orden creada!", `Mesa: ${table_number}`);
+                    cancelClick();
+                    setUpdate(true);
+                } catch (error) {
+                    AuthErrorHelper(error);
+                }
+
+            } else {
+                swalNotifySuccess("Se deben agregar platos", "");
+            }
+        };
+
+        fetchThis();
+    };
 
     return (
         <div onClick={exitPopup} className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg shadow-lg p-6 max-w-3xl w-full">
+            <div className="bg-white rounded-lg shadow-lg p-6 max-w-2xl w-full">
                 {/* ANTES DE LA ORDEN */}
                 {loading && (<div className="text-lg font-medium text-gray-900 mb-4">Cargando...</div>)}
                 {!loading && (<div className="text-3xl font-semibold text-center mt-4 text-black italic">Mesa #{table_number}</div>)}
                 {(error && !showForm) ? (<div className="text-lg font-medium text-gray-900 mb-4">{error}</div>) : null}
-                {(!loading && !error && orderData !== null && !showForm) ? (<TableOrderView order={orderData} exitPopup={exitPopup} />) : null}
+                {(!loading && !error && orderData !== null && !showForm) ? (<TableOrderView order={orderData} exitPopup={exitPopup} togglePopup={togglePopup} />) : null}
+
+                {
+                    (error === "No hay una orden aun") && showForm ?
+                        (<h2 className='text-black text-xl mt-6'>Nueva orden</h2>)
+                        :
+                        null
+                }
 
                 {/* NUEVA ORDEN */}
+                <div className="flex flex-col space-y-4">
+                    {
+                        showForm ?
+                            addForm.map((item, index) => (
+                                <NewOrderForm key={index} rest_id={rest_id} state={order} setState={setOrder} />
+                            ))
+                            :
+                            null
+                    }
+                </div>
 
-                {showForm ? (<div className="text-lg font-medium text-gray-900 mb-4">Order Form here</div>) : null}
-
-                <div className="mt-6 flex space-x-4">
-                    {!showForm ? (<button onClick={exitPopup} className="bg-gray-500 text-white p-2 rounded-md">Volver</button>)
-                        :
-                        (<button onClick={cancelClick} className="bg-gray-500 text-white p-2 rounded-md">Cancelar</button>)
+                <div className="mt-6 flex items-center ml-1 justify-between">
+                    {
+                        !showForm ?
+                            (<button onClick={exitPopup} className="bg-gray-500 text-white p-2 rounded-md">Volver</button>)
+                            :
+                            null
                     }
 
-                    {(error === "No hay una orden aun") ? <AddOrderToTable setParentState={setShowForm} parentState={showForm} /> : null}
+                    {/* {(error === "No hay una orden aun") ? <AddOrderToTable setParentState={setShowForm} parentState={showForm} /> : null} */}
+                    {
+                        (error === "No hay una orden aun") && showForm ?
+                            (
+                                <>
+                                    <div>
+                                        <button onClick={cancelClick} className="bg-gray-500 text-white p-2 rounded-md mx-4">Cancelar</button>
+                                        <button onClick={handleSubmit} className="bg-green-500 text-white p-2 rounded-md">Enviar</button>
+                                    </div>
+                                    <div>
+                                        <button onClick={addItem} className="bg-blue-500 text-xl text-white font-bold ml-7 p-2 px-3.5 rounded-md mx-4">+</button>
+                                        <button onClick={removeItem} className="bg-red-500 text-xl text-white font-bold p-2 px-4 rounded-md">-</button>
+                                    </div>
+                                    <div className="text-black inline-block text-xl">Total: ${total}</div>
+                                </>
+                            )
+                            :
+                            (<button onClick={handleClick} className="bg-green-500 text-white p-2 rounded-md">Nueva Orden</button>)
+                    }
                 </div>
             </div>
         </div>

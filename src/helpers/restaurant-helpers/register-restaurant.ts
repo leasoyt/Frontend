@@ -18,6 +18,7 @@ export async function createRestaurant(restaurant: Partial<IRestaurant>) {
     if (!token) {
       throw new Error("No se encontró el token de autenticación.");
     }
+    
 
     const response = await fetch(`${API_URL}/restaurant/create`, {
       method: "POST",
@@ -27,7 +28,7 @@ export async function createRestaurant(restaurant: Partial<IRestaurant>) {
       },
       body: JSON.stringify(new_restaurant),
     });
-      console.log(response);
+      console.log('respuesta de creacion de restaurante',response);
       
     if (!response.ok) {
       const error = await response.json();

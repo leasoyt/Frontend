@@ -25,6 +25,9 @@ const LandingView: React.FC = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
+
+
+
   const checkUserSession = useCallback(async () => {
     if (authUser && !session.token) {
       try {
@@ -61,7 +64,16 @@ const LandingView: React.FC = () => {
   
     setIsLoggingOut(false);
   }, [authUser, router]);
-  
+
+
+  useEffect(()=>{
+    if(!authLoading){
+      checkUserSession()
+    }
+    },[authLoading,checkUserSession])
+
+
+  if (authLoading) return <div>Loading...</div>;
   return (
     <>
       <Navbar />
@@ -111,7 +123,7 @@ const LandingView: React.FC = () => {
             height={300}
           />
           <div className="text-center md:text-left">
-            <h3 className="text-gray-500 uppercase text-sm text-gray-600 italic font-medium">
+            <h3 className="uppercase text-sm text-gray-600 italic font-medium">
               Servicio Eficiente
             </h3>
             <h4 className="text-3xl font-semibold text-gray-900 font-serif">
@@ -122,9 +134,11 @@ const LandingView: React.FC = () => {
               Reducí tiempos de espera al incorporar tu Monitor de Cocina
               (Kitchen Display System).
             </p>
-            <button className="bg-black text-white py-2 px-4 rounded mt-4">
-              Funcionalidades
-            </button>
+            <Link href="/funcionalidades">
+              <button className="bg-black text-white py-2 px-4 rounded mt-4">
+                Funcionalidades
+               </button>
+            </Link>
           </div>
 
           <div className="text-center p-24">

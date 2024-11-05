@@ -15,7 +15,7 @@ const AddTableButton: React.FC<SetStateBoolean & { id: string }> = ({ setParentS
         const table_number = parseInt(formData);
 
         try {
-            const response: Response = await fetchWithAuth(`${API_URL}/table/create/${id}`, {
+            const response = await fetchWithAuth(`${API_URL}/table/create/${id}`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'

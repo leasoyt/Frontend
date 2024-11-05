@@ -9,7 +9,7 @@ export interface IRestaurant {
   name: string;
   address: string;
   description?: string;
-  imageUrl: string;
+  imgUrl?: string | File;
   rating?: number;
   menu?: IMenu;
   tables: ITable[];
@@ -19,6 +19,7 @@ export interface IRestaurant {
   reservations?: IReservation[]; // Reservas si tienes esta relación en el frontend
   createdAt?: string;
   updatedAt?: string;
+  was_deleted:boolean
 }
 
 export interface RestaurantProps {

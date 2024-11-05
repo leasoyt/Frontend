@@ -5,7 +5,7 @@ const NewReservForm: React.FC = () => {
 
   return (
     <div className='p-3 bg-gray-200'>
-        <h1 className='italic'>Detalles</h1>
+        {/* <h1 className='italic'>Detalles</h1>
         <form action="">
             <div className='p-1'>
                 <label htmlFor="">Fecha:</label>
@@ -30,7 +30,7 @@ const NewReservForm: React.FC = () => {
             <div className='flex justify-items-start p-2'>
                 <button type="button" className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-1.5 me-2 mb-2 ml-3 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Agregar Reservacion</button>
             </div>
-        </form>
+        </form> */}
     </div>
   )
 }

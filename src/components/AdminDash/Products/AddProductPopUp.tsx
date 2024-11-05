@@ -14,7 +14,6 @@ const AddProductPopUp: React.FC<
     const exitPopup = (event: ClickEvent) => {
         if (event.target === event.currentTarget) {
             if (showPopup) {
-                console.log("first")
                 showPopup(false);
             }
         }
@@ -31,7 +30,7 @@ const AddProductPopUp: React.FC<
 
         if (errorMessage.name === "" && errorMessage.price === "" && errorMessage.description === "") {
             if (productData.name !== "" && productData.price !== "" && productData.description !== "") {
-                onSubmit(productData);
+                onSubmit(productData as SoftDish);
                 showPopup(false);
             }
         }

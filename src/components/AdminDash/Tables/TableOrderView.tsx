@@ -1,7 +1,41 @@
+import { API_URL } from "@/config/config";
+import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
+import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
+import { ErrorHelper } from "@/helpers/errors/error-helper";
+import { swalNotifyConfirmation } from "@/helpers/swal/swal-notify-confirm";
+import { swalNotifyError } from "@/helpers/swal/swal-notify-error";
+import { swalNotifySuccess } from "@/helpers/swal/swal-notify-success";
+import { fetchWithAuth } from "@/helpers/token-expire.interceptor";
 import { ClickEvent } from "@/interfaces/Interfaces.types";
 import { IOrder } from "@/interfaces/order.interface";
 
-const TableOrderView: React.FC<{order: IOrder, exitPopup: (event: ClickEvent) => void}> = ({order, exitPopup}) => {
+const TableOrderView: React.FC<{ order: IOrder, exitPopup: (event: ClickEvent) => void, togglePopup: (state: boolean) => void }> = ({ order, exitPopup, togglePopup }) => {
+
+    const completeOrder = () => {
+
+        if (order) {
+
+            swalNotifyConfirmation("¿Estas Seguro?", "Finalizar orden").then(async (result) => {
+                try {
+                    const response = await fetchWithAuth(`${API_URL}/order/${order.id}`, {
+                        method: "DELETE"
+                    });
+
+                    togglePopup(false);
+                    swalNotifySuccess("Orden finalizada!", "esta mesa está libre");
+                } catch (error) {
+                    AuthErrorHelper(error);
+                }
+
+            }
+            )
+        } else {
+            swalNotifyError(new ErrorHelper(HttpMessagesEnum.NO_ORDERS_IN_TABLE, ""));
+
+        }
+
+    };
+
     return (
         <div className="bg-gray-100 min-h-screen flex flex-col items-center p-10">
             <h2 className="text-3xl font-semibold text-center mt-4 text-black italic">
@@ -38,8 +72,8 @@ const TableOrderView: React.FC<{order: IOrder, exitPopup: (event: ClickEvent) =>
 
                 <div className="mt-6 flex space-x-4">
                     <button onClick={exitPopup} className="bg-gray-500 text-white p-2 rounded-md">Volver</button>
-                    <button className="bg-blue-500 text-white p-2 rounded-md">Cancelar Orden</button>
-                    <button className="bg-green-500 text-white p-2 rounded-md">Revisar Orden</button>
+                    <button onClick={completeOrder} className="bg-blue-500 text-white p-2 rounded-md">Finalizar Orden</button>
+                    {/* <button onClick={} className="bg-green-500 text-white p-2 rounded-md">Completar Orden</button> */}
                 </div>
             </div>
         </div>
