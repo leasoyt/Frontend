@@ -37,6 +37,8 @@ const Suggestions: React.FC = () => {
     fetchRestaurants();
   }, []);
 
+  console.log('restaurnrs',restaurants);
+  
   // Filtrar restaurantes según el término de búsqueda
   const filteredRestaurants = restaurants.filter((restaurant) =>
     restaurant.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -64,7 +66,7 @@ const Suggestions: React.FC = () => {
           filteredRestaurants.map((restaurant) => (
             <Link href={`/restaurant/${restaurant.id}`} key={restaurant.id}>
               
-              <SuggestionCard {...restaurant} />
+              <SuggestionCard restaurant={restaurant} />
             </Link>
           ))
         ) : (

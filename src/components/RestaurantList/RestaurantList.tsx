@@ -72,7 +72,7 @@ const RestaurantList = () => {
     <ul className="bg-white rounded-lg overflow-hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {(Array.isArray(restaurants) ? restaurants : []).map((restaurant) => (
         <li key={restaurant.id} className="relative p-4 rounded flex flex-col items-center bg-gray-100">
-          <SuggestionCard {...restaurant} />
+          <SuggestionCard restaurant={restaurant} />
           <button
             onClick={() => handleDeleteRestaurant(restaurant.id)}
             className="mt-4 px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700"
