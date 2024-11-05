@@ -1,6 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import dynamic from "next/dynamic";
 
 const PagoCompletado = () => {
   const router = useRouter();
@@ -47,4 +48,4 @@ const PagoCompletado = () => {
   );
 };
 
-export default PagoCompletado;
+export default dynamic(() => Promise.resolve(PagoCompletado), { ssr: false });
