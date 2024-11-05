@@ -22,7 +22,7 @@ const NewProductView = () => {
         <NewCategoryForm />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default NewProductView
+export default NewProductView;

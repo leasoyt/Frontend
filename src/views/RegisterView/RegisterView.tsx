@@ -6,14 +6,12 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { swalNotifySuccess } from "@/helpers/swal/swal-notify-success";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import Link from "next/link";
 import { swalNotifyError } from "@/helpers/swal/swal-notify-error";
 import { swalNotifyUnknownError } from "@/helpers/swal/swal-notify-unknown-error";
 import { ErrorHelper } from "@/helpers/errors/error-helper";
-
 
 const RegisterView: React.FC = () => {
   const router = useRouter();
@@ -38,43 +36,39 @@ const RegisterView: React.FC = () => {
     });
   };
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (isSubmitting) return; // Evitar múltiples clics rápidos
+    setIsSubmitting(true);
+
     const currentErrors = validateRegisterForm(userData);
     setErrors(currentErrors);
 
-
-    if (Object.values(currentErrors).some(error => error)) {
-
+    if (Object.values(currentErrors).some((error) => error)) {
       Swal.fire({
         icon: "error",
         title: "Error en el registro",
         text: "Por favor corrige los errores antes de continuar.",
       });
+      setIsSubmitting(false);
       return;
     }
 
     try {
-
       await register(userData);
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-
       if (error instanceof ErrorHelper) {
         swalNotifyError(error);
       } else {
         swalNotifyUnknownError(error);
       }
-
+    } finally {
+      setIsSubmitting(false);
     }
-
   };
-
-  useEffect(() => {
-    const errors = validateRegisterForm(userData);
-    setErrors(errors);
-  }, [userData]);
 
   return (
     <>
@@ -101,7 +95,10 @@ const RegisterView: React.FC = () => {
               className="w-full px-4 py-2 border-gray-300 rounded-lg bg-gray-200 focus:outline-none text-black font-sans"
             />
             {userData.name && errors.name && (
-              <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
+              <span
+                className="text-sm text-red-600"
+                style={{ fontSize: "12px" }}
+              >
                 {errors.name}
               </span>
             )}
@@ -124,7 +121,10 @@ const RegisterView: React.FC = () => {
               className="w-full px-4 py-2 border-gray-300 rounded-lg bg-gray-200 focus:outline-none text-black font-sans"
             />
             {userData.email && errors.email && (
-              <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
+              <span
+                className="text-sm text-red-600"
+                style={{ fontSize: "12px" }}
+              >
                 {errors.email}
               </span>
             )}
@@ -161,7 +161,10 @@ const RegisterView: React.FC = () => {
             </div>
 
             {userData.password && errors.password && (
-              <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
+              <span
+                className="text-sm text-red-600"
+                style={{ fontSize: "12px" }}
+              >
                 {errors.password}
               </span>
             )}
@@ -200,7 +203,10 @@ const RegisterView: React.FC = () => {
               </div>
             </div>
             {userData.confirmPassword && errors.confirmPassword && (
-              <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
+              <span
+                className="text-sm text-red-600"
+                style={{ fontSize: "12px" }}
+              >
                 {errors.confirmPassword}
               </span>
             )}
@@ -208,6 +214,7 @@ const RegisterView: React.FC = () => {
           <button
             type="submit"
             disabled={
+              isSubmitting ||
               !userData.name ||
               !userData.email ||
               !userData.password ||
@@ -219,9 +226,9 @@ const RegisterView: React.FC = () => {
             }
             className="w-44 bg-gray-600 text-white font-medium py-2 rounded-lg hover:bg-gray-800 mt-5"
           >
-            Registrarse
+            {isSubmitting ? "Registrando..." : "Registrarse"}
           </button>
-          <Link href="/api/auth/login?prompt=login">
+          <Link href="/api/auth/login">
             <button
               type="button"
               className="w-44 bg-gray-700 text-white font-medium py-2 rounded-lg hover:bg-gray-800 ml-4"

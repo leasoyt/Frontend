@@ -1,10 +1,14 @@
-import UserView from '@/views/UserView/UserView'
-import React from 'react'
+import ChatComponent from "@/components/chat/chatbot";
+import UserView from "@/views/UserView/UserView";
+import React from "react";
 
-const  pageUser  = () => {
+const pageUser = () => {
   return (
-  <UserView/>
-  )
-}
+    <>
+      <UserView />
+      <ChatComponent />
+    </>
+  );
+};
 
-export default  pageUser 
+export default pageUser;
