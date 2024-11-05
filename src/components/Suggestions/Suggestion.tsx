@@ -68,7 +68,7 @@ const Suggestions: React.FC = () => {
             </Link>
           ))
         ) : (
-          <p className="text-black text-center">No se encontraron resultados para `${searchTerm}`</p>
+          <p className="text-black text-center col-span-full">No se encontraron resultados para `${searchTerm}`</p>
         )}
       </div>
     </div>

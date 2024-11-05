@@ -49,8 +49,7 @@ const Footer: React.FC = () => {
               Sé el primero en enterarte de nuestras últimas actualizaciones, ofertas exclusivas y más.
             </p>
             <form className='flex gap-x-3 w-full'>
-              <input type="email" placeholder='Ingresa tu email' className='border rounded-lg p-3 text-sm focus:outline-cyan-600 flex-1' />
-              <input type="submit" value="Suscríbete" className='bg-black rounded-lg py-3 px-5 text-white text-sm' />
+              {/* <input type="submit" value="Suscríbete" className='bg-black rounded-lg py-3 px-5 text-white text-sm' /> */}
             </form>
           </div>
         </div>
@@ -60,7 +59,7 @@ const Footer: React.FC = () => {
             <li><a href='#' className='hover:text-black'>Privacidad</a></li>
             <li><a href='#' className='hover:text-black'>Legal</a></li>
           </ul>
-          <p className='text-xs text-gray-400'>2023 Cadet UI. All Rights Reserved.</p>
+          <p className='text-xs text-gray-400'>2024 Rest0. All Rights Reserved.</p>
         </div>
       </div>
     </footer>
