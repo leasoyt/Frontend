@@ -1,31 +1,36 @@
 "use client";
-import React, { useEffect, useState, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { useRouter, useSearchParams, useParams } from "next/navigation";
 import dynamic from "next/dynamic";
 
-const PagoCompletado = () => {
+const PagoCompletado: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [message, setMessage] = useState("");
-  const [isSuccess, setIsSuccess] = useState(false);
+  const { id } = useParams() as { id: string };
+  const [message, setMessage] = useState<string>("");
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   useEffect(() => {
-    const status = searchParams ? searchParams.get("status") : null;
+    const status = searchParams?.get("status");
 
     if (status === "approved") {
-      setMessage("¡Pago exitoso! Gracias por tu compra.");
+      setMessage(`¡Pago exitoso para el ID ${id}! Gracias por tu compra.`);
       setIsSuccess(true);
-      setTimeout(() => {
+      const timeout = setTimeout(() => {
         router.push("/manager/reservas/reservas");
       }, 3000);
+
+      return () => clearTimeout(timeout);
     } else {
-      setMessage("Hubo un error con tu pago. Por favor, inténtalo de nuevo.");
+      setMessage(`Hubo un error con tu pago para el ID ${id}. Por favor, inténtalo de nuevo.`);
       setIsSuccess(false);
-      setTimeout(() => {
+      const timeout = setTimeout(() => {
         router.push("/manager/cuenta/planes");
       }, 3000);
+
+      return () => clearTimeout(timeout);
     }
-  }, [searchParams, router]);
+  }, [searchParams, router, id]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -40,8 +45,8 @@ const PagoCompletado = () => {
         <p className="text-gray-700 text-lg mb-6">{message}</p>
         <p className="text-gray-500">
           {isSuccess
-            ? "Redirigiendo a la página de registro en 3 segundos..."
-            : "Redirigiendo a la página principal en 3 segundos..."}
+            ? "Redirigiendo a la página de reservas en 3 segundos..."
+            : "Redirigiendo a la página de planes en 3 segundos..."}
         </p>
       </div>
     </div>
