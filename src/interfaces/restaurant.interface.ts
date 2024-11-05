@@ -9,7 +9,7 @@ export interface IRestaurant {
   name: string;
   address: string;
   description?: string;
-  imageUrl: string;
+  imgUrl?: string | File;
   rating?: number;
   menu?: IMenu;
   tables: ITable[];
