@@ -14,6 +14,7 @@ import { useLocalStorage } from '@/helpers/auth-helpers/useLocalStorage';
 import { IUser } from '@/interfaces/user.interface';
 import isDateAfterTomorrow from '@/utils/afterTomorrow';
 import { swalNotifyCustomError } from '@/helpers/swal/swal-custom-error';
+import { UserProvider } from '@auth0/nextjs-auth0/client';
 
 
 const RestaurantPage = () => {
@@ -79,6 +80,8 @@ const RestaurantPage = () => {
 
   return (
     <>
+    <UserProvider>
+
       <NavbarUsuario />
       <div className="min-h-screen bg-gray-100">
         {/* Header */}
@@ -145,6 +148,7 @@ const RestaurantPage = () => {
         </div>
       </div>
       <Footer />
+    </UserProvider>
     </>
   );
 };
