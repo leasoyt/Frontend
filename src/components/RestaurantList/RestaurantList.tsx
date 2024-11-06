@@ -20,13 +20,13 @@ const RestaurantList = () => {
         const response = await fetch(
           `${API_URL}/restaurant/query?page=1&limit=100`
         );
-        
+
         if (!response.ok) {
           throw new Error("Error al obtener los restaurantes");
         }
         const data = await response.json();
         setRestaurants(
-          data.restaurants.filter((restaurant) => !restaurant.was_deleted)
+          data.restaurants.filter((restaurant: { was_deleted: boolean; }) => !restaurant.was_deleted)
         );
       } catch (error) {
         if (error instanceof Error) {
@@ -53,7 +53,7 @@ const RestaurantList = () => {
         throw new Error("Error al eliminar el restaurante");
       }
 
-     
+
       setUpdate((prevUpdate) => !prevUpdate);
     } catch (error) {
       console.error("Error al eliminar restaurante:", error);

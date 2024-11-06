@@ -22,6 +22,7 @@ const NavbarUsuario = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("userSession");
+    localStorage.removeItem("restaurant");
 
     // Redirige a la API de logout de Auth0
     if (authUser) {

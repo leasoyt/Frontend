@@ -66,7 +66,7 @@ const LoginView: React.FC = () => {
     } catch (error) {
       console.log(error);
       if (error instanceof ErrorHelper && error.message === HttpMessagesEnum.USER_DELETED) {
-        swalNotifyCustomError(HttpMessagesEnum.USER_DELETED, "No se pudo loguear");
+        swalNotifyCustomError(HttpMessagesEnum.USER_DELETED, "No se pudo logear");
       } else {
         AuthErrorHelper(error);
 
