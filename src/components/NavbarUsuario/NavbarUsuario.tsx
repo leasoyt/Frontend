@@ -2,6 +2,7 @@
 import { UserRole } from "@/enums/role.enum";
 import { swalNotifySuccess } from "@/helpers/swal/swal-notify-success";
 import { IUser } from "@/interfaces/user.interface";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,16 +14,23 @@ const NavbarUsuario = () => {
   const [user, setUser] = useState<IUser | null>(null);
   const router = useRouter();
   const divRef = useRef<HTMLDivElement>(null);
-
+  const { user: authUser } = useUser();
   const toggleDropdown = (event: React.MouseEvent) => {
     event.stopPropagation();
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   const handleLogout = () => {
-    localStorage.clear();
-    swalNotifySuccess("¡Adiós!", "Tu sesión ha finalizado.");
-    router.push("/");
+    localStorage.removeItem("userSession");
+    localStorage.removeItem("restaurant");
+
+    // Redirige a la API de logout de Auth0
+    if (authUser) {
+      window.location.href = "/api/auth/logout"; // Esto redirige al endpoint de logout de Auth0
+    } else {
+      swalNotifySuccess("¡Adiós!", "Tu sesión ha finalizado.");
+      router.push("/"); // Si el logout es local, solo redirige
+    }
   };
 
   useEffect(() => {
@@ -54,6 +62,7 @@ const NavbarUsuario = () => {
   }, []);
 
   return (
+    
     <nav className="bg-white p-4">
       <div className="container mx-auto flex justify-between items-center mt-6 max-w-5xl">
         {/* Logo */}

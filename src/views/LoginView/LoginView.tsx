@@ -14,6 +14,9 @@ import { swalNotifyUnknownError } from "@/helpers/swal/swal-notify-unknown-error
 import { fetchRestaurantData as fetchManagerData } from "@/helpers/manager/fetch-restaurant-data";
 import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
 import { UserRole } from "@/enums/role.enum";
+import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
+import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
+import { swalNotifyCustomError } from "@/helpers/swal/swal-custom-error";
 
 const LoginView: React.FC = () => {
 
@@ -39,14 +42,10 @@ const LoginView: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     localStorage.clear();
-    // localStorage.removeItem("userSession");
-    // localStorage.removeItem("restaurant");
-    // localStorage.removeItem("userId");
-    
+
     try {
       const response = await login(userData);
-      console.log('response',response);
-      
+
       const { token, user } = response;
 
       localStorage.setItem("userSession", JSON.stringify({ token, user }));
@@ -55,22 +54,22 @@ const LoginView: React.FC = () => {
 
       setUserData(initialState); // Limpia los inputs después del login exitoso
 
-      if(user.role === UserRole.MANAGER) {
+      if (user.role === UserRole.MANAGER) {
         const id = await fetchManagerData();
 
         setRestId(id);
       }
 
-      // router.push("/pageUser");
       window.location.href = "/pageUser";
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-
-      if (error instanceof ErrorHelper) {
-        swalNotifyError(error);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error) {
+      console.log(error);
+      if (error instanceof ErrorHelper && error.message === HttpMessagesEnum.USER_DELETED) {
+        swalNotifyCustomError(HttpMessagesEnum.USER_DELETED, "No se pudo logear");
       } else {
-        swalNotifyUnknownError(error);
+        AuthErrorHelper(error);
+
       }
 
       setUserData(initialState);

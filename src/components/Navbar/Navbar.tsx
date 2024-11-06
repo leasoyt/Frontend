@@ -1,17 +1,50 @@
-"use client"
-
+"use client";
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { IUserSession } from '@/interfaces/Interfaces.types';
+
+// interface NavbarProps {
+//   isLoggedInProp?: boolean;
+// }
 
 const Navbar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false); // Estado para controlar el menú móvil
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para verificar si el usuario está logueado
+  const [isOpen, setIsOpen] = useState(false);
+  const [userData, setUserData] = useState<IUserSession | null>(null);
+
+  // const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para verificar si el usuario está logueado
+
+  // useEffect(() => {
+  //   const checkLoginStatus = () => {
+  //     if (typeof window !== "undefined" && window.localStorage) {
+  //       const userSession = localStorage.getItem("userSession");
+  //       return !!userSession;
+  //     }
+  //     return false;
+  //   };
+
+  //   if (isLoggedInProp !== undefined) {
+  //     // Si se proporciona isLoggedInProp, úsalo
+  //     setIsLoggedIn(isLoggedInProp);
+
+  //     // Si isLoggedInProp es true, asegúrate de que localStorage esté actualizado
+  //     if (isLoggedInProp && !checkLoginStatus()) {
+  //       localStorage.setItem("userSession", JSON.stringify({ isLoggedIn: true }));
+  //     } else if (!isLoggedInProp && checkLoginStatus()) {
+  //       // Si isLoggedInProp es false pero localStorage indica que está logueado, limpia localStorage
+  //       localStorage.removeItem("userSession");
+  //     }
+  //   } else {
+  //     // Si no se proporciona isLoggedInProp, usa localStorage
+  //     setIsLoggedIn(checkLoginStatus());
+  //   }
+  // }, [isLoggedInProp]);
+
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.localStorage) {
-      const userSession = localStorage.getItem("userSession");
-      setIsLoggedIn(!!userSession); // Cambia el estado si hay sesión activa
+      const aux = JSON.parse(localStorage.getItem("userSession")!);
+      setUserData(aux);
     }
   }, []);
 
@@ -21,11 +54,11 @@ const Navbar: React.FC = () => {
         {/* Logo */}
         <Link href="/" className="flex items-center">
           <Image
-            src="/Rest0logo.png" 
+            src="/Rest0logo.png"
             alt="Logo"
-            width={32} 
-            height={32} 
-            className="mr-2" 
+            width={32}
+            height={32}
+            className="mr-2"
           />
           <p className="font-extrabold text-[24px] text-black">
             Rest0
@@ -73,19 +106,25 @@ const Navbar: React.FC = () => {
               Precios
             </Link>
           </li>
-          {isLoggedIn && (
-            <li className="mt-2 md:mt-0">
-              <Link
-                href="/pageUser"
-                className="italic text-black text-[24px] hover:underline active:scale-110 transition-transform duration-200"
-              >
-                Mi Cuenta
-              </Link>
-            </li>
-          )}
+
+          {userData?.token ?
+            (
+              <li className="mt-2 md:mt-0">
+                <Link
+                  href="/pageUser"
+                  className="italic text-black text-[24px] hover:underline active:scale-110 transition-transform duration-200"
+                >
+                  Mi Cuenta
+                </Link>
+              </li>
+            )
+            :
+            null
+          }
+
         </ul>
       </div>
-      
+
       <hr className="w-4/5 mx-auto mt-4 border-2"></hr>
     </nav>
   );

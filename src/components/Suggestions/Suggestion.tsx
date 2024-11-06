@@ -90,7 +90,7 @@ const Suggestions: React.FC = () => {
        <div className="flex justify-center mb-4">
         <input
           type="number"
-          min="1"
+          min="0"
           max="5"
           placeholder="Filtrar por rating"
           className="px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent rounded-full bg-gray-100 text-black shadow-md w-96 text-center"

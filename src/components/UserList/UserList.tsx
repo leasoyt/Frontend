@@ -33,7 +33,7 @@ const UserList = () => {
 
   const handleDeleteUser = async (id: string) => {
     try {
-      const response = await fetch(`${API_URL}/user/${id}`, { method: 'DELETE' });
+      const response = await fetch(`${API_URL}/user/deactivate/${id}`, { method: 'PUT' });
       if (!response.ok) {
         throw new Error("Error al borrar el usuario");
       }

@@ -3,6 +3,7 @@ export enum HttpMessagesEnum {
     // LOGIN_SUCCESS = "Logeado correctamente",
     LOGIN_FAIL = "Error al iniciar sesión",
     REGISTRATION_FAIL = "Error al registrar el usuario",
+    USER_DELETED = "Este usuario fue eliminado!",
 
     MAIL_IN_USE = "Este correo ya esta en uso!",
 

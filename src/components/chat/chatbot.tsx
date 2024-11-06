@@ -100,7 +100,7 @@ export default function ChatComponent() {
     <div className="fixed bottom-4 right-4">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="mb-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+        className="mb-4 bg-gray-500 hover:bg-black text-white font-bold py-2 px-4 rounded transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
         aria-expanded={isOpen}
         aria-controls="chat-window"
       >
@@ -123,7 +123,7 @@ export default function ChatComponent() {
                     <div
                       className={`max-w-[70%] p-3 rounded-lg ${
                         response.type === "user"
-                          ? "bg-blue-500 text-white"
+                          ? "bg-gray-200 text-white"
                           : "bg-gray-200 text-gray-800"
                       }`}
                     >
@@ -146,16 +146,16 @@ export default function ChatComponent() {
                     e.key === "Enter" && !isLoading && handleSendMessage()
                   }
                   placeholder="Escribe un mensaje..."
-                  className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2  text-black"
                   disabled={isLoading}
                 />
                 <button
                   onClick={() => handleSendMessage()}
                   disabled={isLoading || !message.trim()}
-                  className={`px-4 py-2 bg-blue-500 text-white rounded-lg transition-colors ${
+                  className={`px-4 py-2 bg-gray-600 text-white rounded-lg transition-colors ${
                     isLoading || !message.trim()
                       ? "opacity-50 cursor-not-allowed"
-                      : "hover:bg-blue-600"
+                      : "hover:bg-gray-400"
                   } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
                   aria-label="Enviar mensaje"
                 >
