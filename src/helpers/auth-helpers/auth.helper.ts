@@ -45,6 +45,10 @@ export async function login(userData: IloginProps) {
 
     if (!res.ok) {
       const error = await res.json();
+
+      if(error.error === HttpMessagesEnum.USER_DELETED) {
+        throw new ErrorHelper(HttpMessagesEnum.USER_DELETED, "403");
+      }
       throw new ErrorHelper(verifyError(error.message), error.status);
 
     }

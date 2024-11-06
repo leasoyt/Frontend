@@ -29,7 +29,7 @@ const AddProductPopUp: React.FC<
         event.preventDefault();
 
         if (errorMessage.name === "" && errorMessage.price === "" && errorMessage.description === "") {
-            if (productData.name !== "" && productData.price !== "" && productData.description !== "") {
+            if (productData.name !== "" && productData.price !== "") {
                 onSubmit(productData as SoftDish);
                 showPopup(false);
             }
@@ -82,7 +82,6 @@ const AddProductPopUp: React.FC<
                             type="text"
                             name="description"
                             value={productData?.description}
-                            required
                             onChange={handleChange}
                             className="w-full p-2 text-gray-900 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                         />

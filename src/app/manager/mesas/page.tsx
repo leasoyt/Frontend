@@ -8,10 +8,6 @@ const Mesas = () => {
   const [data, setData] = useState(false);
   const [restId, setRestId] = useLocalStorage("restaurant", "");
 
-  useEffect(() => {
-
-  }, []);
-
   return (
     <div className="mr-5 mt-1 m-auto w-[95%] bg-white border border-gray-300 rounded-lg shadow-lg z-5">
       <div className='bg-slate-700 flex justify-center'>
