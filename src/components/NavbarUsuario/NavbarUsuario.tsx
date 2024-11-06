@@ -14,9 +14,7 @@ const NavbarUsuario = () => {
   const [user, setUser] = useState<IUser | null>(null);
   const router = useRouter();
   const divRef = useRef<HTMLDivElement>(null);
-  const {
-    user: authUser
-  } = useUser();
+  const { user: authUser } = useUser();
   const toggleDropdown = (event: React.MouseEvent) => {
     event.stopPropagation();
     setIsDropdownOpen(!isDropdownOpen);
@@ -24,13 +22,13 @@ const NavbarUsuario = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("userSession");
-  
+
     // Redirige a la API de logout de Auth0
     if (authUser) {
-      window.location.href = "/api/auth/logout";  // Esto redirige al endpoint de logout de Auth0
+      window.location.href = "/api/auth/logout"; // Esto redirige al endpoint de logout de Auth0
     } else {
       swalNotifySuccess("¡Adiós!", "Tu sesión ha finalizado.");
-      router.push("/");  // Si el logout es local, solo redirige
+      router.push("/"); // Si el logout es local, solo redirige
     }
   };
 
@@ -63,6 +61,7 @@ const NavbarUsuario = () => {
   }, []);
 
   return (
+    
     <nav className="bg-white p-4">
       <div className="container mx-auto flex justify-between items-center mt-6 max-w-5xl">
         {/* Logo */}

@@ -9,6 +9,12 @@ export async function PostProduct(dish: SoftDish, category_id: string) {
         description: dish.description,
         category: category_id,
     }
+    let no_description = {}
+    const no_dscbool = dish.description === undefined || dish.description === null;
+    if (no_dscbool) {
+        const { description, ...rest } = built_dish;
+        no_description = rest;
+    }
 
     try {
 
@@ -17,7 +23,7 @@ export async function PostProduct(dish: SoftDish, category_id: string) {
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify(built_dish)
+            body: JSON.stringify(no_dscbool ? no_description : built_dish)
         });
 
         return response;

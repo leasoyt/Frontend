@@ -9,6 +9,6 @@ export interface IDish {
 
 export interface SoftDish {
     name: string;
-    description: string;
+    description?: string;
     price: string;
 }
