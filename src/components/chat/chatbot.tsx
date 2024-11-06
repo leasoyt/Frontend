@@ -123,7 +123,7 @@ export default function ChatComponent() {
                     <div
                       className={`max-w-[70%] p-3 rounded-lg ${
                         response.type === "user"
-                          ? "bg-gray-200 text-white"
+                          ? "bg-gray-500 text-white"
                           : "bg-gray-200 text-gray-800"
                       }`}
                     >
