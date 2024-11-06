@@ -14,9 +14,7 @@ const NavbarUsuario = () => {
   const [user, setUser] = useState<IUser | null>(null);
   const router = useRouter();
   const divRef = useRef<HTMLDivElement>(null);
-  const {
-    user: authUser
-  } = useUser();
+  const { user: authUser } = useUser();
   const toggleDropdown = (event: React.MouseEvent) => {
     event.stopPropagation();
     setIsDropdownOpen(!isDropdownOpen);
@@ -24,7 +22,8 @@ const NavbarUsuario = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("userSession");
-  
+    localStorage.removeItem("restaurant");
+
     // Redirige a la API de logout de Auth0
     if (authUser) {
       window.location.href = "/api/auth/logout";  // Esto redirige al endpoint de logout de Auth0
