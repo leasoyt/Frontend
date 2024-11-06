@@ -172,14 +172,7 @@ const NavbarUsuario = () => {
                     Restaurantes
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    href="/historial"
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
-                  >
-                    Historial de Pedidos
-                  </Link>
-                </li>
+                
                 <li>
                   <Link
                     href="/atencionAlCliente"
