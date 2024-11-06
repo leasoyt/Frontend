@@ -4,49 +4,44 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { IUserSession } from '@/interfaces/Interfaces.types';
 
-// interface NavbarProps {
-//   isLoggedInProp?: boolean;
-// }
+interface NavbarProps {
+  isLoggedInProp?: boolean;
+}
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC<NavbarProps> = ({ isLoggedInProp })=> {
   const [isOpen, setIsOpen] = useState(false);
   const [userData, setUserData] = useState<IUserSession | null>(null);
 
-  // const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para verificar si el usuario está logueado
-
-  // useEffect(() => {
-  //   const checkLoginStatus = () => {
-  //     if (typeof window !== "undefined" && window.localStorage) {
-  //       const userSession = localStorage.getItem("userSession");
-  //       return !!userSession;
-  //     }
-  //     return false;
-  //   };
-
-  //   if (isLoggedInProp !== undefined) {
-  //     // Si se proporciona isLoggedInProp, úsalo
-  //     setIsLoggedIn(isLoggedInProp);
-
-  //     // Si isLoggedInProp es true, asegúrate de que localStorage esté actualizado
-  //     if (isLoggedInProp && !checkLoginStatus()) {
-  //       localStorage.setItem("userSession", JSON.stringify({ isLoggedIn: true }));
-  //     } else if (!isLoggedInProp && checkLoginStatus()) {
-  //       // Si isLoggedInProp es false pero localStorage indica que está logueado, limpia localStorage
-  //       localStorage.removeItem("userSession");
-  //     }
-  //   } else {
-  //     // Si no se proporciona isLoggedInProp, usa localStorage
-  //     setIsLoggedIn(checkLoginStatus());
-  //   }
-  // }, [isLoggedInProp]);
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para verificar si el usuario está logueado
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.localStorage) {
-      const aux = JSON.parse(localStorage.getItem("userSession")!);
-      setUserData(aux);
+    const checkLoginStatus = () => {
+      if (typeof window !== "undefined" && window.localStorage) {
+        const userSession = localStorage.getItem("userSession");
+        return !!userSession;
+      }
+      return false;
+    };
+
+    if (isLoggedInProp !== undefined) {
+      // Si se proporciona isLoggedInProp, úsalo
+      setIsLoggedIn(isLoggedInProp);
+
+      // Si isLoggedInProp es true, asegúrate de que localStorage esté actualizado
+      if (isLoggedInProp && !checkLoginStatus()) {
+        localStorage.setItem("userSession", JSON.stringify({ isLoggedIn: true }));
+      } else if (!isLoggedInProp && checkLoginStatus()) {
+        // Si isLoggedInProp es false pero localStorage indica que está logueado, limpia localStorage
+        localStorage.removeItem("userSession");
+      }
+    } else {
+      // Si no se proporciona isLoggedInProp, usa localStorage
+      setIsLoggedIn(checkLoginStatus());
     }
-  }, []);
+  }, [isLoggedInProp]);
+
+
+  
 
   return (
     <nav className="bg-white p-4">
@@ -106,22 +101,16 @@ const Navbar: React.FC = () => {
               Precios
             </Link>
           </li>
-
-          {userData?.token ?
-            (
-              <li className="mt-2 md:mt-0">
-                <Link
-                  href="/pageUser"
-                  className="italic text-black text-[24px] hover:underline active:scale-110 transition-transform duration-200"
-                >
-                  Mi Cuenta
-                </Link>
-              </li>
-            )
-            :
-            null
-          }
-
+          {isLoggedIn && (
+            <li className="mt-2 md:mt-0">
+              <Link
+                href="/pageUser"
+                className="italic text-black text-[24px] hover:underline active:scale-110 transition-transform duration-200"
+              >
+                Mi Cuenta
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
 
