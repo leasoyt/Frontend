@@ -1,20 +1,28 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useRouter, useSearchParams, useParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 
 const PagoCompletado: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { id } = useParams() as { id: string };
   const [message, setMessage] = useState<string>("");
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user") || "null");
+
+    if (!token || !user) {
+      router.push("/login");
+      return;
+    }
+
     const status = searchParams?.get("status");
+    const preapprovalId = searchParams?.get("preapproval_id"); // Obtén el ID de aprobación si lo necesitas
 
     if (status === "approved") {
-      setMessage(`¡Pago exitoso para el ID ${id}! Gracias por tu compra.`);
+      setMessage(`¡Pago exitoso! Gracias por tu compra. ID de aprobación: ${preapprovalId}`);
       setIsSuccess(true);
       const timeout = setTimeout(() => {
         router.push("/manager/reservas/reservas");
@@ -22,7 +30,7 @@ const PagoCompletado: React.FC = () => {
 
       return () => clearTimeout(timeout);
     } else {
-      setMessage(`Hubo un error con tu pago para el ID ${id}. Por favor, inténtalo de nuevo.`);
+      setMessage(`Hubo un error con tu pago. Por favor, inténtalo de nuevo.`);
       setIsSuccess(false);
       const timeout = setTimeout(() => {
         router.push("/manager/cuenta/planes");
@@ -30,7 +38,7 @@ const PagoCompletado: React.FC = () => {
 
       return () => clearTimeout(timeout);
     }
-  }, [searchParams, router, id]);
+  }, [searchParams, router]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
