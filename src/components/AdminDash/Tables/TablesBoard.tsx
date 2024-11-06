@@ -8,6 +8,7 @@ import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
 import ViewTablePopUp from "./ViewTablePopUp";
 import { fetchWithAuth } from "@/helpers/token-expire.interceptor";
 import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
+import { ErrorHelper } from "@/helpers/errors/error-helper";
 
 const TablesBoard: React.FC<{
     updateBoard: boolean,
@@ -24,6 +25,7 @@ const TablesBoard: React.FC<{
 
     const [triggererId, setTriggererId] = useState("");
     const [triggererNumber, setTriggererNumber] = useState<number>(0);
+    const [update, setUpdate] = useState<boolean | null>(false);
 
 
     useEffect(() => {
@@ -38,15 +40,21 @@ const TablesBoard: React.FC<{
                 setTables(response);
 
             } catch (error) {
-                AuthErrorHelper(error);
+
+                if(error instanceof ErrorHelper && error.message === HttpMessagesEnum.NO_TABLES_IN_RESTAURANT) {
+
+                } else {
+                    AuthErrorHelper(error);
+                }
 
             }
 
             setLoading(false);
+            setUpdate(null);
         };
 
         fetchTables();
-    }, [updateBoard]);
+    }, [updateBoard, update]);
 
 
     if (loading) return <div className="text-lg font-medium text-gray-900 mb-4">Cargando...</div>;
@@ -57,7 +65,7 @@ const TablesBoard: React.FC<{
             {tables.map((table) => (
                 <TableObject {...table} key={table.id} showPopup={togglePopup} setParentState={setTriggererId} setNumberParentState={setTriggererNumber} />
             ))}
-            {showPopup && <ViewTablePopUp showPopup={togglePopup} id={triggererId} table_number={triggererNumber} rest_id={id} />}
+            {showPopup && <ViewTablePopUp showPopup={togglePopup} id={triggererId} table_number={triggererNumber} rest_id={id} updateParent={setUpdate} />}
         </>
     );
 };

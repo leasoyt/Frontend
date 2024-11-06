@@ -1,6 +1,8 @@
 import { API_URL } from "@/config/config";
 import { IReservation } from "@/interfaces/reservation.interface";
 import Swal from "sweetalert2";
+import { swalNotifySuccess } from "../swal/swal-notify-success";
+import { getDividedDate } from "@/utils/getDividedDate";
 
 export async function createReservation(reservation: Partial<IReservation>) {
   try {
@@ -25,23 +27,11 @@ export async function createReservation(reservation: Partial<IReservation>) {
     }
 
     const data = await response.json();
+
+    const [date, time] = getDividedDate(new Date(data.date));
     // Muestra un mensaje de éxito usando SweetAlert
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      },
-    });
-    Toast.fire({
-      icon: "success",
-      title: "Reserva creada",
-      text: `la reservacion ${data.date} ha sido creada.`,
-    });
+    swalNotifySuccess("Nueva reservacion Agendada!", `Para el dia ${date}`)
+
     return data; // Retornas el restaurante creado para futuras manipulaciones
   } catch (error) {
     Swal.fire({
