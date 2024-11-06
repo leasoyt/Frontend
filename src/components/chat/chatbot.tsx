@@ -23,6 +23,8 @@ export default function ChatComponent() {
   const [user, setUser] = useState<IUserSession | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  const [isFirstMessage, setIsFirstMessage] = useState(true);
+
   useEffect(() => {
     const userSession = localStorage.getItem('userSession')
     if (userSession) {
@@ -96,6 +98,11 @@ export default function ChatComponent() {
     }
   };
 
+  const handleOptionSelect = (option: string) => {
+    setIsFirstMessage(false); // Desactivar el primer mensaje después de seleccionar una opción
+    handleSendMessage(option); // Enviar el mensaje de la opción seleccionada
+  };
+
   return (
     <div className="fixed bottom-4 right-4">
       <button
@@ -137,38 +144,71 @@ export default function ChatComponent() {
               <div ref={messagesEndRef} />
             </div>
             <div className="border-t p-4">
-              <div className="flex space-x-2">
-                <input
-                  type="text"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  onKeyUp={(e) =>
-                    e.key === "Enter" && !isLoading && handleSendMessage()
-                  }
-                  placeholder="Escribe un mensaje..."
-                  className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2  text-black"
-                  disabled={isLoading}
-                />
-                <button
-                  onClick={() => handleSendMessage()}
-                  disabled={isLoading || !message.trim()}
-                  className={`px-4 py-2 bg-gray-600 text-white rounded-lg transition-colors ${
-                    isLoading || !message.trim()
-                      ? "opacity-50 cursor-not-allowed"
-                      : "hover:bg-gray-400"
-                  } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
-                  aria-label="Enviar mensaje"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
+              {/* Condición para el primer mensaje del bot */}
+              {isFirstMessage && (
+                <div className="flex flex-col space-y-4">
+                  <div className="bg-gray-200 p-3 rounded-lg">
+                    <p className="text-gray-800 text-sm">
+                      ¡Hola! Por favor selecciona una de las siguientes opciones, para poder ayudarte:
+                    </p>
+                  </div>
+                  <div className="flex space-x-4">
+                    <button
+                      onClick={() => handleOptionSelect("Restaurantes")}
+                      className="px-2 py-2 bg-gray-500 hover:bg-gray-400 text-white rounded-lg"
+                    >
+                      Restaurantes
+                    </button>
+                    <button
+                      onClick={() => handleOptionSelect("Menú")}
+                      className="px-2 py-2 bg-gray-500 hover:bg-gray-400 text-white rounded-lg"
+                    >
+                      Menú
+                    </button>
+                    <button
+                      onClick={() => handleOptionSelect("Ubicación Restaurantes")}
+                      className="px-2 py-2 bg-gray-500 hover:bg-gray-400 text-white rounded-lg"
+                    >
+                      Ubicación Restaurantes
+                    </button>
+                  </div>
+                </div>
+              )}
+              {/* Si no es el primer mensaje, mostrar el input del usuario */}
+              {!isFirstMessage && (
+                <div className="flex space-x-2">
+                  <input
+                    type="text"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    onKeyUp={(e) =>
+                      e.key === "Enter" && !isLoading && handleSendMessage()
+                    }
+                    placeholder="Escribe un mensaje..."
+                    className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 text-black"
+                    disabled={isLoading}
+                  />
+                  <button
+                    onClick={() => handleSendMessage()}
+                    disabled={isLoading || !message.trim()}
+                    className={`px-4 py-2 bg-gray-600 text-white rounded-lg transition-colors ${
+                      isLoading || !message.trim()
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-gray-400"
+                    } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
+                    aria-label="Enviar mensaje"
                   >
-                    <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
-                  </svg>
-                </button>
-              </div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                    </svg>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
