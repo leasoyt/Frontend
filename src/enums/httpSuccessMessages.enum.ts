@@ -10,7 +10,7 @@ enum HttpSuccessMessagesEnum {
     RANKING_UP_SUCCESS = "Usuario mejorado de rango con éxito",
     USER_UPDATE_SUCCESS = "Usuario actualizado con éxito",
     PASSWORD_UPDATE_SUCCESS = "Contraseña actualizada con éxito",
-    REGISTRATION_SUCCESS = "Registro exitoso",
+    REGISTRATION_SUCCESS = "Registrado correctamente",
     LOGIN_SUCCESS = "Sesión iniciada con éxito",
 
 }
