@@ -47,7 +47,7 @@ const Suggestions: React.FC = () => {
     fetchRestaurants();
   }, []);
 
-  console.log('restaurnrs',restaurants);
+  console.log('restaurantes',restaurants);
   
   // Filtrar restaurantes según el término de búsqueda
   const filteredRestaurants = restaurants.filter((restaurant) => {
