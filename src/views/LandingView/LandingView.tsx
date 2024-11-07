@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-
 import { ButtonVerPrecios } from "@/components/ButtonVerPrecios/ButtonVerPrecios";
 import Link from "next/link";
 import React, { useEffect, useState, useCallback, useRef } from "react";
@@ -11,7 +10,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
 import ChatComponent from "@/components/chat/chatbot";
 import { useRouter } from "next/navigation";
-import { IUserSession } from "@/interfaces/Interfaces.types";
+import { IUser } from "@/interfaces/user.interface";
 
 const LandingView: React.FC = () => {
   const router = useRouter();
@@ -20,71 +19,111 @@ const LandingView: React.FC = () => {
     isLoading: authLoading,
     error: authError,
   } = useUser();
-  const [session, setSession] = useLocalStorage("userSession", {
-    token: "",
-    user: null,
-  });
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  // const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const [userData, setUserData] = useState<IUserSession | null>(null);
+  // const [userData, setUserData] = useState<IUserSession | null>(null);
+  const [iuser, setUser] = useLocalStorage("userSession", "");
+  const user: Partial<IUser> = iuser.user;
+  const [disable, setDisable] = useState(true);
 
-
-  const checkUserSession = useCallback(async () => {
-    // console.log('hola');
-
-    if (authUser && !session.token) {
-      try {
-        const response = await fetch("/api/auth/token");
-        const data = await response.json();
-        console.log('token', data.token);
-
-        if (data.token) {
-          setSession({ token: data.token, user: authUser });
-        }
-      } catch (error) {
-        console.error("Error al obtener el token:", error);
+  useEffect(() => {
+    if (!authLoading && authUser) {
+      if (!iuser.toke) {
+        window.location.href = "/api/auth/logout";
       }
     }
-    setIsUserLoggedIn(!!authUser || !!session.user);
-  }, [authUser, session.token, session.user]);
 
+  }, [authUser, authLoading]);
+
+
+  useEffect(() => {
+    if(user) {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
+  }, [user]);
+  // const checkUserSession = useCallback(async () => {
+  //   // console.log('hola');
+
+  //   if (authUser && !session.token) {
+  //     try {
+
+  //       const { email, name, sub, picture } = authUser;
+
+  //       const response: Response = await fetch(`${API_URL}/auth-zero/loginOrRegister`, {
+  //         method: "POST",
+  //         headers: {
+  //           'Content-Type': 'application/json'
+  //         },
+
+  //         body: JSON.stringify({
+  //           email,
+  //           name,
+  //           sub,
+  //           picture,
+  //         })
+  //       });
+
+  //       const data = await response.json();
+  //       console.log('token', data.token);
+
+
+
+
+  //         // setSession({ token: data.token, user: authUser });
+  //       }
+
+  //       if(restId) {
+  //         localStorage.removeItem("restaurant");
+  //       }
+
+  //       if (data.user.role === UserRole.MANAGER) {
+  //         const id = await fetchManagerData();
+
+  //         setRestId(id);
+  //       }
+
+  //     } catch (error) {
+  //       console.error("Error al obtener el token:", error);
+  //     }
+
+  //   }
+
+  //   setIsUserLoggedIn(!!authUser || !!session.user);
+  // }, [authUser, session.token, session.user]);
 
   const handleLogout = useCallback(async () => {
-    setIsLoggingOut(true);
-    localStorage.clear();
+    if (!authLoading && authUser) {
+      window.location.href = "/api/auth/logout";
+    } else if (iuser?.token) {
 
-    if (authUser) {
       try {
-        window.location.href = "/api/auth/logout";
+        setIsLoggingOut(true);
+        localStorage.clear();
+        router.push("/login");
+
       } catch (error) {
-        console.error("Error al cerrar sesión de Auth0:", error);
+
+        console.error("Error al cerrar sesión:", error);
         router.push("/");
       }
-    } else {
-      try {
-        router.push("/login");
-      } catch (error) {
-        console.error("Error al cerrar sesión local:", error);
-      }
+
     }
 
     setIsLoggingOut(false);
-  }, [authUser, router]);
+  }, [router]);
 
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.localStorage) {
-      const aux = JSON.parse(localStorage.getItem("userSession")!);
-      setUserData(aux);
+      // const aux = JSON.parse(localStorage.getItem("userSession")!);
+      // setUserData(aux);
     }
 
-    if (!authLoading) {
-      checkUserSession()
-    }
-  }, [authLoading]);
+  }, []);
 
-
-  if (authLoading) return <div>Loading...</div>;
+  // if (authLoading) return <div>Loading...</div>;
   return (
     <>
       <Navbar />
@@ -102,7 +141,7 @@ const LandingView: React.FC = () => {
         <h2 className="text-2xl font-semibold text-center mt-4 text-black italic">
           Software para restaurantes, bares y cafés
         </h2>
-        {!userData?.token ?
+        {disable ?
           (
             <div className="mt-4 flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
               <Link href="/login">
@@ -111,21 +150,21 @@ const LandingView: React.FC = () => {
                 </button>
               </Link>
               <Link href="/register">
-                <button className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto">
+                <div className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto">
                   Registrarse
-                </button>
+                </div>
               </Link>
             </div>
           )
           :
           (
-            <button
+            <div
               onClick={handleLogout}
-              disabled={isLoggingOut}
-              className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto m-5"
+              // disabled={isLoggingOut}
+              className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto m-5 cursor-pointer"
             >
               {isLoggingOut ? "Cerrando sesión..." : "Cerrar Sesión"}
-            </button>
+            </div>
           )
         }
 
@@ -180,3 +219,7 @@ const LandingView: React.FC = () => {
 };
 
 export default LandingView;
+
+function fetchManagerData() {
+  throw new Error("Function not implemented.");
+}
