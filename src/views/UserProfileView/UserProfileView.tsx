@@ -8,7 +8,7 @@ interface UserProfileProps {
     name: string;
     email: string;
     country: string;
-    profile_image: string;
+    
   } | null;
 }
 
@@ -74,10 +74,10 @@ const UserProfileView: React.FC<UserProfileProps> = ({ user }) => {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="border text-gray-500 rounded p-1 w-full mt-1"
+                className="border text-gray-500  rounded p-1 w-full mt-1"
               />
             ) : (
-              <p className="text-lg  font-semibold">{user.name}</p>
+              <p className="text-lg text-gray-800  font-semibold">{user.name}</p>
             )}
           </div>
           <div>
@@ -89,10 +89,10 @@ const UserProfileView: React.FC<UserProfileProps> = ({ user }) => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="border text-gray-500 rounded p-1 w-full mt-1"
+                className="border text-gray-500  rounded p-1 w-full mt-1"
               />
             ) : (
-              <p className="text-lg  font-semibold">{user.email}</p>
+              <p className="text-lg  text-gray-800  font-semibold">{user.email}</p>
             )}
           </div>
           <div>
@@ -107,7 +107,7 @@ const UserProfileView: React.FC<UserProfileProps> = ({ user }) => {
                 className="border text-gray-500 rounded p-1 w-full mt-1"
               />
             ) : (
-              <p className="text-lg font-semibold">{user.country}</p>
+              <p className="text-lg text-gray-800  font-semibold">{user.country}</p>
             )}
           </div>
           <button
