@@ -1,5 +1,6 @@
 "use client";
 import { API_URL } from "@/config/config";
+import { UserRole } from "@/enums/role.enum";
 import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
 import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
 import { fetchRestaurantData } from "@/helpers/manager/fetch-restaurant-data";
@@ -47,10 +48,13 @@ const LoadingScreen: React.FC = () => {
                             }));
     
                             setSession({ token: data.token, user: data.user });
-    
+                            
+                        if(data.user.role === UserRole.MANAGER) {
                             const id = await fetchRestaurantData();
-    
                             setRestId(id);
+
+                        }
+                        
                             window.location.href = "/"
                         }
     
