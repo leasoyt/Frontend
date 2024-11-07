@@ -259,14 +259,9 @@ const RegisterView: React.FC = () => {
               >
                 {isSubmitting ? "Registrando..." : "Registrarse"}
               </button>
-              <Link href="/api/auth/login">
-                <button
-                  type="button"
-                  className="w-44 bg-gray-700 text-white font-medium py-2 rounded-lg hover:bg-gray-800 ml-4"
-                >
-                  Registrarse con Auth0
-                </button>
-              </Link>
+              <a href="/api/auth/login" className="w-44 bg-gray-700 text-white font-medium py-2 rounded-lg hover:bg-gray-800 ml-4 inline-block text-center">
+  Registrarse con Auth0
+</a>
             </form>
           </div>
           :
