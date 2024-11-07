@@ -96,6 +96,7 @@ const Configuracion = () => {
       <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
         <div className="bg-white shadow-lg rounded-lg max-w-md w-full p-6 text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Configuración del Usuario</h1>
+          <UserProfileView user={user} />
         </div>
       </div>
       <Footer />
