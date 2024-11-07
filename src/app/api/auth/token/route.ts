@@ -1,4 +1,3 @@
-// app/api/auth/token/route.ts
 import { getAccessToken } from '@auth0/nextjs-auth0';
 import { NextResponse } from 'next/server';
 
