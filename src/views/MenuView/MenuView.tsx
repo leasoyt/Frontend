@@ -16,6 +16,7 @@ import { UpdateProduct } from '@/helpers/manager/update-product';
 import { IUpdateStock } from '@/interfaces/Interfaces.types';
 import { fetchWithAuth } from '@/helpers/token-expire.interceptor';
 import { API_URL } from '@/config/config';
+import { Pages } from '@/enums/pages.enum';
 
 const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
   const [loading, setLoading] = useState(true);
@@ -119,7 +120,7 @@ const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
               "Content-type": "application/json",
             }
           });
-          window.location.href = "/manager/productos";
+          window.location.href = Pages.manager.PRODUCTS.BASE;
         } catch (error) {
           AuthErrorHelper(error);
         }

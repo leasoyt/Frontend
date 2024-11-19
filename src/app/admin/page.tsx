@@ -11,6 +11,7 @@ import { ErrorHelper } from '@/helpers/errors/error-helper';
 import { IUser } from '@/interfaces/user.interface';
 import { UserRole } from '@/enums/role.enum';
 import { useEffect, useState } from 'react';
+import { Pages } from '@/enums/pages.enum';
 
 const AdminDashboard = () => {
   const [iuser, setUser] = useLocalStorage("userSession", "");
@@ -21,27 +22,34 @@ const AdminDashboard = () => {
   useEffect(() => {
     if (user === null || user === undefined || !(user.role === UserRole.ADMIN)) {
       setIsAllowed(false);
-      swalNotifyError(new ErrorHelper(HttpMessagesEnum.INSUFFICIENT_PERMISSIONS, "")).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = "/pageUser";
-        }
-      });
+      // swalNotifyError(new ErrorHelper(HttpMessagesEnum.INSUFFICIENT_PERMISSIONS, "")).then((result) => {
+      //   if (result.isConfirmed) {
+      //     window.location.href = Pages.SEARCH;
+      //   }
+      // });
+      if(!isAllowed) {
+        window.location.href = Pages.SEARCH;
+      }
     }
-  }, [user]);
+  }, [user, isAllowed]);
+
+  if (isAllowed) return (<Unauthorized />);
 
   return (
     <>
-      {isAllowed ? (
-        <div className="flex flex-col md:flex-row h-screen bg-white">
-          <AdminSidebar setSection={setSection} />
-          <div className="flex-1 p-6 overflow-y-auto">
-            {section === 'restaurants' && <RestaurantList />}
-            {section === 'users' && <UserList />}
-          </div>
-        </div>
-      ) : (
-        <Unauthorized />
-      )}
+      {
+        isAllowed ?
+          (
+            <div className="flex flex-col md:flex-row h-screen bg-white">
+              <AdminSidebar setSection={setSection} />
+              <div className="flex-1 p-6 overflow-y-auto">
+                {section === 'restaurants' && <RestaurantList />}
+                {section === 'users' && <UserList />}
+              </div>
+            </div>
+          ) :
+          null
+      }
     </>
   );
 };

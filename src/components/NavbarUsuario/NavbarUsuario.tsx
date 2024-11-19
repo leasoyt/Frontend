@@ -1,4 +1,5 @@
 "use client";
+import { Pages } from "@/enums/pages.enum";
 import { UserRole } from "@/enums/role.enum";
 import { swalNotifySuccess } from "@/helpers/swal/swal-notify-success";
 import { IUser } from "@/interfaces/user.interface";
@@ -46,11 +47,7 @@ const NavbarUsuario = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        divRef.current &&
-        event.target instanceof Node &&
-        !divRef.current.contains(event.target)
-      ) {
+      if (divRef.current && event.target instanceof Node && !divRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
       }
     };
@@ -62,7 +59,7 @@ const NavbarUsuario = () => {
   }, []);
 
   return (
-    
+
     <nav className="bg-white p-4">
       <div className="container mx-auto flex justify-between items-center mt-6 max-w-5xl">
         {/* Logo */}
@@ -135,7 +132,7 @@ const NavbarUsuario = () => {
                 {user && user.role === UserRole.CONSUMER && (
                   <li>
                     <Link
-                      href="/registerRestaurant"
+                      href={Pages.register.RESTAURANT}
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
                     >
                       Registra tu negocio
@@ -147,7 +144,7 @@ const NavbarUsuario = () => {
                     user.role === UserRole.WAITER) && (
                     <li>
                       <Link
-                        href="/manager/productos"
+                        href={Pages.manager.PRODUCTS.BASE}
                         className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
                       >
                         Mi negocio
@@ -166,24 +163,24 @@ const NavbarUsuario = () => {
                 )}
                 <li>
                   <Link
-                    href="/pageUser"
+                    href={Pages.SEARCH}
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
                   >
                     Restaurantes
                   </Link>
                 </li>
-                
+
                 <li>
                   <Link
-                    href="/atencionAlCliente"
+                    href={Pages.CUSTOMER_SERVICE}
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
                   >
-                    Atención Al Cliente
+                    Atención al Cliente
                   </Link>
                 </li>
                 <li>
                   <Link
-                    href="/configuracion"
+                    href={Pages.user.CONFIG}
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
                   >
                     Configuracion

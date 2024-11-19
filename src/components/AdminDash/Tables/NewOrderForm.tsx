@@ -45,11 +45,7 @@ const NewOrderForm: React.FC<{
   };
 
   const handleOutProduct = (event: MouseEvent) => {
-    if (
-      otherDivRef.current &&
-      !otherDivRef.current.contains(event.target as Node) &&
-      !isHandlingProductClick
-    ) {
+    if (otherDivRef.current && !otherDivRef.current.contains(event.target as Node) && !isHandlingProductClick) {
       setIsDishOpen(false);
     }
     setIsHandlingProductClick(false);

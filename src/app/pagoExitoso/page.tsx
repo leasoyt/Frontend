@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
+import { Pages } from "@/enums/pages.enum";
 
 const PagoCompletado: React.FC = () => {
   const router = useRouter();
@@ -25,7 +26,7 @@ const PagoCompletado: React.FC = () => {
       setMessage(`¡Pago exitoso! Gracias por tu compra. ID de aprobación: ${preapprovalId}`);
       setIsSuccess(true);
       const timeout = setTimeout(() => {
-        router.push("/manager/reservas/reservas");
+        router.push(Pages.manager.PRODUCTS.BASE);
       }, 3000);
 
       return () => clearTimeout(timeout);
