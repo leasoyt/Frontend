@@ -1,12 +1,7 @@
-import {
-  IErrorsProps,
-  IloginProps,
-  IRegisterErrors,
-  IRegisterProps,
-} from "@/interfaces/Interfaces.types";
+import { IloginProps, IRegisterProps, IRestaurantRegisterProps } from "@/interfaces/Interfaces.types";
 
 export function validateLoginForm(values: IloginProps) {
-  const errors: IErrorsProps = {}; // creo un objeto para almacenar errores
+  const errors: Partial<IloginProps> = {}; // creo un objeto para almacenar errores
   if (values.email && !/\S+@\S+\.\S+/.test(values.email)) {
     //si el valor existe pero no cumple  con el formato de un correo electronico valido
     errors.email = "El email no es valido";
@@ -23,7 +18,7 @@ export function validateLoginForm(values: IloginProps) {
 }
 
 export function validateRegisterForm(values: IRegisterProps) {
-  const errors: IRegisterErrors = {};
+  const errors: Partial<IRegisterProps> = {};
   if (values.email && !/\S+@\S+\.\S+/.test(values.email)) {
     errors.email = "El email no es valido";
   }
@@ -53,5 +48,27 @@ export function validateRegisterForm(values: IRegisterProps) {
   ) {
     errors.profileImage = "La URL de la imagen no es válida";
   }
+  return errors;
+}
+
+export function validateRestaurantForm(values: IRestaurantRegisterProps) {
+  const errors: Partial<IRestaurantRegisterProps> = {};
+
+  if (!values.name) {
+    errors.name = "El nombre es obligatorio";
+  } else if (values.name.length < 3 || values.name.length > 30) {
+    errors.name = "El nombre debe ser entre 3 y 30 caracteres";
+  }
+
+  if (!values.address) {
+    errors.address = "La direccion es obligatoria";
+  } else if (values.address.length < 5 || values.address.length > 40) {
+    errors.address = "La direccion debe ser entre 6 y 40 caracteres"
+  }
+
+  if(values.description.length > 120) {
+    errors.description = "La descripcion no puede contener mas 500 caracteres"
+  }
+
   return errors;
 }

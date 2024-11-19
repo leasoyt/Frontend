@@ -7,7 +7,6 @@ import React, { useEffect, useState } from 'react'
 
 const ProductsByCategory: React.FC<MenuIdProps> = ({ params }) => {
   const { categoryId } = params;
-  // let category: IMenu | null;
   const [category, setCategory] = useState<IMenu | null>();
 
   useEffect(() => {
@@ -39,7 +38,11 @@ const ProductsByCategory: React.FC<MenuIdProps> = ({ params }) => {
         category !== null && category !== undefined ?
           (<MenuView categories={category} />)
           :
-          (<h1 className="flex-1 flex items-center justify-center mb-4 text-lg font-light text-gray-500">Selecciona una categoria para empezar</h1>)
+          (
+            <h1 className="flex-1 flex items-center justify-center mb-4 text-lg font-light text-gray-500">
+              Selecciona o crea una categoria para empezar
+            </h1>
+          )
       }
     </>
   )

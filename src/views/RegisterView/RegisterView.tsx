@@ -1,23 +1,19 @@
 "use client";
 import { register } from "@/helpers/auth-helpers/auth.helper";
 import { validateRegisterForm } from "@/helpers/auth-helpers/validate";
-import { IRegisterErrors, IRegisterProps } from "@/interfaces/Interfaces.types";
+import { IRegisterProps } from "@/interfaces/Interfaces.types";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
-import Link from "next/link";
 import { swalNotifyError } from "@/helpers/swal/swal-notify-error";
 import { swalNotifyUnknownError } from "@/helpers/swal/swal-notify-unknown-error";
 import { ErrorHelper } from "@/helpers/errors/error-helper";
 import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
-import { IUser } from "@/interfaces/user.interface";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
 const RegisterView: React.FC = () => {
-  const router = useRouter();
   const initalState = {
     name: "",
     email: "",
@@ -28,11 +24,10 @@ const RegisterView: React.FC = () => {
   const { user, isLoading, error } = useUser();
 
   const [userData, setUserData] = useState<IRegisterProps>(initalState);
-  const [errors, setErrors] = useState<IRegisterErrors>(initalState);
+  const [errors, setErrors] = useState<Partial<IRegisterProps>>(initalState);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [iuser, setUser] = useLocalStorage("userSession", "");
-  // const user: Partial<IUser> = iuser.user;
   const [isAllowed, setIsAllowed] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
 

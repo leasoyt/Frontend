@@ -1,16 +1,13 @@
 "use client";
 import { login } from "@/helpers/auth-helpers/auth.helper";
 import { validateLoginForm } from "@/helpers/auth-helpers/validate";
-import { IErrorsProps, IloginProps } from "@/interfaces/Interfaces.types";
+import { IloginProps } from "@/interfaces/Interfaces.types";
 import React, { useEffect, useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // Importa los iconos
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Navbar from "@/components/Navbar/Navbar";
-import { useRouter } from "next/navigation";
 import Footer from "@/components/Footer/Footer";
 import { swalNotifySuccess } from "@/helpers/swal/swal-notify-success";
-import { swalNotifyError } from "@/helpers/swal/swal-notify-error";
 import { ErrorHelper } from "@/helpers/errors/error-helper";
-import { swalNotifyUnknownError } from "@/helpers/swal/swal-notify-unknown-error";
 import { fetchRestaurantData as fetchManagerData } from "@/helpers/manager/fetch-restaurant-data";
 import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
 import { UserRole } from "@/enums/role.enum";
@@ -19,14 +16,14 @@ import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
 import { swalNotifyCustomError } from "@/helpers/swal/swal-custom-error";
 
 const LoginView: React.FC = () => {
-  const router = useRouter();
+
   const initialState = {
     email: "",
     password: "",
   };
 
   const [userData, setUserData] = useState<IloginProps>(initialState);
-  const [errors, setErrors] = useState<IErrorsProps>(initialState);
+  const [errors, setErrors] = useState<Partial<IloginProps>>(initialState);
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false); // Estado para el mensaje de "Logueándose..."
   const [restId, setRestId] = useLocalStorage("restaurant", "");
@@ -58,7 +55,6 @@ const LoginView: React.FC = () => {
 
       window.location.href = "/pageUser";
     } catch (error) {
-      console.log(error);
       if (error instanceof ErrorHelper && error.message === HttpMessagesEnum.USER_DELETED) {
         swalNotifyCustomError(HttpMessagesEnum.USER_DELETED, "No se pudo logear");
       } else {
@@ -131,7 +127,7 @@ const LoginView: React.FC = () => {
             disabled={isSubmitting || Object.values(errors).some(error => error)}
             className="w-44 bg-gray-600 text-white font-medium py-2 rounded-lg hover:bg-gray-800"
           >
-            {isSubmitting ? "Logueándose..." : "Ingresar"}
+            {isSubmitting ? "Cargando..." : "Ingresar"}
           </button>
         </form>
       </div>
