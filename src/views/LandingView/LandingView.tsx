@@ -2,7 +2,7 @@
 "use client";
 import { ButtonVerPrecios } from "@/components/ButtonVerPrecios/ButtonVerPrecios";
 import Link from "next/link";
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
@@ -11,6 +11,7 @@ import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
 import ChatComponent from "@/components/chat/chatbot";
 import { useRouter } from "next/navigation";
 import { IUser } from "@/interfaces/user.interface";
+import { Pages } from "@/enums/pages.enum";
 
 const LandingView: React.FC = () => {
   const router = useRouter();
@@ -149,7 +150,7 @@ const LandingView: React.FC = () => {
                   Iniciar Sesión
                 </button>
               </Link>
-              <Link href="/register">
+              <Link href={Pages.register.USER}>
                 <div className="bg-black text-white py-2 px-4 rounded w-full sm:w-auto">
                   Registrarse
                 </div>
@@ -188,7 +189,7 @@ const LandingView: React.FC = () => {
               Reducí tiempos de espera al incorporar tu Monitor de Cocina
               (Kitchen Display System).
             </p>
-            <Link href="/funcionalidades">
+            <Link href={Pages.FUNCTIONALITIES}>
               <button className="bg-black text-white py-2 px-4 rounded mt-4">
                 Funcionalidades
               </button>

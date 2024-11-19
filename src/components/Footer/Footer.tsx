@@ -1,3 +1,4 @@
+import { Pages } from '@/enums/pages.enum';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -23,7 +24,7 @@ const Footer: React.FC = () => {
             <ul className='flex gap-x-8 text-xs text-gray-500 flex-col lg:flex-row gap-y-6 text-center lg:text-start'>
               <Link href="#" className='hover:text-black'>Productos & Servicios</Link>
               <Link href="#" className='hover:text-black'>Recursos</Link>
-              <Link href="/contacto" className='hover:text-black'>Contacto</Link>
+              <Link href={Pages.CONTACT} className='hover:text-black'>Contacto</Link>
               <Link href="#" className='hover:text-black'>Acerca de</Link>
             </ul>
             <div className='flex items-center gap-x-5'>

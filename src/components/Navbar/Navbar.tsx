@@ -3,43 +3,11 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { IUserSession } from '@/interfaces/Interfaces.types';
-
-// interface NavbarProps {
-//   isLoggedInProp?: boolean;
-// }
+import { Pages } from '@/enums/pages.enum';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [userData, setUserData] = useState<IUserSession | null>(null);
-
-  // const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para verificar si el usuario está logueado
-
-  // useEffect(() => {
-  //   const checkLoginStatus = () => {
-  //     if (typeof window !== "undefined" && window.localStorage) {
-  //       const userSession = localStorage.getItem("userSession");
-  //       return !!userSession;
-  //     }
-  //     return false;
-  //   };
-
-  //   if (isLoggedInProp !== undefined) {
-  //     // Si se proporciona isLoggedInProp, úsalo
-  //     setIsLoggedIn(isLoggedInProp);
-
-  //     // Si isLoggedInProp es true, asegúrate de que localStorage esté actualizado
-  //     if (isLoggedInProp && !checkLoginStatus()) {
-  //       localStorage.setItem("userSession", JSON.stringify({ isLoggedIn: true }));
-  //     } else if (!isLoggedInProp && checkLoginStatus()) {
-  //       // Si isLoggedInProp es false pero localStorage indica que está logueado, limpia localStorage
-  //       localStorage.removeItem("userSession");
-  //     }
-  //   } else {
-  //     // Si no se proporciona isLoggedInProp, usa localStorage
-  //     setIsLoggedIn(checkLoginStatus());
-  //   }
-  // }, [isLoggedInProp]);
-
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.localStorage) {
@@ -76,7 +44,7 @@ const Navbar: React.FC = () => {
         <ul className={`flex flex-col md:flex-row md:space-x-6 ${isOpen ? 'block' : 'hidden'} md:flex`}>
           <li className="mt-2 md:mt-0">
             <Link
-              href="/contacto"
+              href={Pages.CONTACT}
               className="italic text-black text-[24px] hover:underline active:scale-110 transition-transform duration-200"
             >
               Contacto
@@ -84,7 +52,7 @@ const Navbar: React.FC = () => {
           </li>
           <li className="mt-2 md:mt-0">
             <Link
-              href="/resenas"
+              href={Pages.OUR_REVIEWS}
               className="italic text-black text-[24px] hover:underline active:scale-110 transition-transform duration-200"
             >
               Reseñas
@@ -92,7 +60,7 @@ const Navbar: React.FC = () => {
           </li>
           <li className="mt-2 md:mt-0">
             <Link
-              href="/funcionalidades"
+              href={Pages.FUNCTIONALITIES}
               className="italic text-black text-[24px] hover:underline active:scale-110 transition-transform duration-200"
             >
               Funcionalidades
@@ -100,7 +68,7 @@ const Navbar: React.FC = () => {
           </li>
           <li className="mt-2 md:mt-0">
             <Link
-              href="/precios"
+              href={Pages.PLANS}
               className="italic text-black text-[24px] hover:underline active:scale-110 transition-transform duration-200"
             >
               Precios
@@ -111,7 +79,7 @@ const Navbar: React.FC = () => {
             (
               <li className="mt-2 md:mt-0">
                 <Link
-                  href="/pageUser"
+                  href={Pages.SEARCH}
                   className="italic text-black text-[24px] hover:underline active:scale-110 transition-transform duration-200"
                 >
                   Mi Cuenta

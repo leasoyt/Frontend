@@ -13,6 +13,7 @@ import { useEffect, useState } from "react"
 import Unauthorized from "../unauthorized";
 import { UserRole } from "@/enums/role.enum";
 import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
+import { Pages } from "@/enums/pages.enum";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [restId, setRestId] = useLocalStorage("restaurant", "");
@@ -28,7 +29,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       swalNotifyError(new ErrorHelper(HttpMessagesEnum.INSUFFICIENT_PERMISSIONS, "")).then((result) => {
 
         if (result.isConfirmed) {
-          window.location.href = "/pageUser";
+          window.location.href = Pages.SEARCH;
         }
       });
 

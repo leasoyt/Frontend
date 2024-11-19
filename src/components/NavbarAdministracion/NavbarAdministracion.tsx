@@ -1,3 +1,4 @@
+import { Pages } from '@/enums/pages.enum'
 import Link from 'next/link'
 import React from 'react'
 
@@ -10,7 +11,7 @@ const NavbarAdministracion = () => {
       <ul className="py-2">
         <li>
           <Link
-            href="/manager/administracion/meseros"
+            href={Pages.manager.EMPLOYEES.WAITERS}
             className="block px-4 py-2 text-gray-800 hover:bg-gray-200 transition-colors duration-200"
           >
             Meseros
@@ -18,7 +19,7 @@ const NavbarAdministracion = () => {
         </li>
         <li>
           <Link
-            href="/manager/administracion/new"
+            href={Pages.manager.EMPLOYEES.NEW}
             className="block px-4 py-2 text-gray-800 hover:bg-gray-200 transition-colors duration-200"
           >
             Registrar

@@ -1,6 +1,7 @@
 import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
 import { ErrorHelper } from "./error-helper";
 import { swalNotifyError } from "../swal/swal-notify-error";
+import { Pages } from "@/enums/pages.enum";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function AuthErrorHelper(error: any) {
@@ -8,7 +9,7 @@ export function AuthErrorHelper(error: any) {
 
         swalNotifyError(new ErrorHelper(HttpMessagesEnum.INSUFFICIENT_PERMISSIONS, "")).then((result) => {
           if (result.isConfirmed) {
-            window.location.href = "/pageUser";
+            window.location.href = Pages.SEARCH;
 
           }
         });
@@ -30,7 +31,7 @@ export function AuthErrorHelper(error: any) {
         swalNotifyError(new ErrorHelper(HttpMessagesEnum.NOT_ALLOWED_HERE, "")).then((result) => {
           if (result.isConfirmed) {
             console.log("first");
-            window.location.href = "/pageUser";
+            window.location.href = Pages.SEARCH;
 
           }
         });

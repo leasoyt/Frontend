@@ -14,6 +14,7 @@ import { UserRole } from "@/enums/role.enum";
 import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
 import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
 import { swalNotifyCustomError } from "@/helpers/swal/swal-custom-error";
+import { Pages } from "@/enums/pages.enum";
 
 const LoginView: React.FC = () => {
 
@@ -53,7 +54,7 @@ const LoginView: React.FC = () => {
         setRestId(id);
       }
 
-      window.location.href = "/pageUser";
+      window.location.href = Pages.SEARCH;
     } catch (error) {
       if (error instanceof ErrorHelper && error.message === HttpMessagesEnum.USER_DELETED) {
         swalNotifyCustomError(HttpMessagesEnum.USER_DELETED, "No se pudo logear");
