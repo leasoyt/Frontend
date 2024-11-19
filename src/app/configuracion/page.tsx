@@ -1,10 +1,11 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import NavbarUsuario from "@/components/NavbarUsuario/NavbarUsuario";
 import Footer from "@/components/Footer/Footer";
 import UserProfileView from "../../views/UserProfileView/UserProfileView";
 import { API_URL } from "@/config/config";
+import { fetchWithAuth } from "@/helpers/token-expire.interceptor";
+import { swalNotifyCustomError } from "@/helpers/swal/swal-custom-error";
 
 interface User {
   id: string; // Agrega el ID para identificar al usuario en la actualización
@@ -66,10 +67,10 @@ const Configuracion = () => {
     
     // Opcional: enviar una solicitud al backend para actualizar el perfil del usuario con la nueva URL
     try {
-      const response = await fetch(`${API_URL}/user/updateProfileImage`, {
+
+      const response = await fetchWithAuth(`${API_URL}/user/updateProfileImage`, {
         method: "PATCH",
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ userId: user.id, profile_image: newImageUrl }),
@@ -80,10 +81,12 @@ const Configuracion = () => {
       }
 
       // Actualizar el estado del usuario en el frontend
-      setUser((prevUser) => prevUser ? { ...prevUser, profile_image: newImageUrl } : prevUser);
+      setUser((prevUser: any) => prevUser ? { ...prevUser, profile_image: newImageUrl } : prevUser);
+
     } catch (error) {
-      console.error("Error al actualizar la imagen de perfil:", error);
-      setError("Hubo un problema al actualizar la imagen de perfil.");
+      // console.error("Error al actualizar la imagen de perfil:", error);
+      swalNotifyCustomError("Error al actualiar la imagen");
+      // setError("Hubo un problema al actualizar la imagen de perfil.");
     }
   };
 

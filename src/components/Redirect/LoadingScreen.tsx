@@ -2,7 +2,6 @@
 import { API_URL } from "@/config/config";
 import { UserRole } from "@/enums/role.enum";
 import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
-import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
 import { fetchRestaurantData } from "@/helpers/manager/fetch-restaurant-data";
 import { swalNotifyCustomError } from "@/helpers/swal/swal-custom-error";
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -17,19 +16,19 @@ const LoadingScreen: React.FC = () => {
     useEffect(() => {
 
         const handle = async () => {
-            if(!isLoading) {
+            if (!isLoading) {
                 if (user) {
                     try {
                         setMessage("Fetching...");
-    
+
                         const { email, name, sub, picture } = user;
-    
+
                         const response: Response = await fetch(`${API_URL}/auth-zero/loginOrRegister`, {
                             method: "POST",
                             headers: {
                                 'Content-Type': 'application/json'
                             },
-    
+
                             body: JSON.stringify({
                                 email,
                                 name,
@@ -37,35 +36,36 @@ const LoadingScreen: React.FC = () => {
                                 picture,
                             })
                         });
-    
+
                         const data = await response.json();
-    
+
                         if (data.token) {
-    
+
                             localStorage.setItem("userSession", JSON.stringify({
                                 token: data.token,
                                 user: data.user,
                             }));
-    
-                            setSession({ token: data.token, user: data.user });
-                            
-                        if(data.user.role === UserRole.MANAGER) {
-                            const id = await fetchRestaurantData();
-                            setRestId(id);
 
-                        }
-                        
+                            setSession({ token: data.token, user: data.user });
+
+                            if (data.user.role === UserRole.MANAGER) {
+                                const id = await fetchRestaurantData();
+                                setRestId(id);
+
+                            }
+
                             window.location.href = "/"
                         }
-    
+
                     } catch (error) {
                         console.log(error);
+                        
                     }
-    
+
                 } else {
                     await swalNotifyCustomError("Error!", "No se pudo iniciar sesion con auth0").then((result) => {
-                        
-                        if(result.isConfirmed) {
+
+                        if (result.isConfirmed) {
                             window.location.href = "/";
                         }
                     });

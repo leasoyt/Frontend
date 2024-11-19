@@ -2,7 +2,7 @@
 import Footer from '@/components/Footer/Footer';
 import NavbarUsuario from '@/components/NavbarUsuario/NavbarUsuario';
 import Suggestions from '@/components/Suggestions/Suggestion';
-import { CategoryButtonProps, IUserSession, OptionCardProps, PromoCardProps, SuggestionCardProps } from '@/interfaces/Interfaces.types';
+import { CategoryButtonProps, IUserSession } from '@/interfaces/Interfaces.types';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 

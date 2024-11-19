@@ -7,21 +7,31 @@ import { createRestaurant } from "@/helpers/restaurant-helpers/register-restaura
 import { swalNotifyError } from "@/helpers/swal/swal-notify-error";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { IRestaurant } from "@/interfaces/restaurant.interface";
 import { API_URL } from "@/config/config";
 import Unauthorized from "@/app/unauthorized";
 import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
 import { IUser } from "@/interfaces/user.interface";
 import { UserRole } from "@/enums/role.enum";
 import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
+import { IRestaurantRegisterProps } from "@/interfaces/Interfaces.types";
+import { validateRestaurantForm } from "@/helpers/auth-helpers/validate";
 
 const RegisterRestaurantView: React.FC = () => {
+
+  const initialState: IRestaurantRegisterProps = {
+    name: "",
+    address: "",
+    description: ""
+  };
+
   const router = useRouter();
   const [isAllowed, setIsAllowed] = useState(true);
   const [iuser, setUser] = useLocalStorage("userSession", "");
   const user: Partial<IUser> = iuser.user;
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<Partial<IRestaurantRegisterProps>>(initialState);
 
-  const [formData, setFormData] = useState<Partial<IRestaurant>>({
+  const [formData, setFormData] = useState<IRestaurantRegisterProps>({
     name: "",
     address: "",
     description: "",
@@ -42,7 +52,12 @@ const RegisterRestaurantView: React.FC = () => {
 
     }
 
-  }, [user])
+  }, [user]);
+
+  useEffect(() => {
+    const errors = validateRestaurantForm(formData);
+    setErrors(errors);
+  }, [formData]);
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -59,15 +74,18 @@ const RegisterRestaurantView: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
     if (user.role === UserRole.CONSUMER) {
       try {
+
         const restaurantData = { ...formData };
-        // Si hay una imagen, la subimos al backend
+
         if (imageFile) {
           const formData = new FormData();
-          formData.append("image", imageFile); // 'image' debe coincidir con el nombre en el backend
+          formData.append("image", imageFile);
 
-          // Subimos la imagen al backend
           const uploadResponse = await fetch(`${API_URL}/upload`, {
             method: "POST",
             body: formData,
@@ -84,7 +102,6 @@ const RegisterRestaurantView: React.FC = () => {
           console.log('url', uploadData.url);
 
 
-          // Guardamos la URL de la imagen en los datos del restaurante
           if (uploadData.url) {
             restaurantData.imgUrl = uploadData.url;
           }
@@ -104,9 +121,12 @@ const RegisterRestaurantView: React.FC = () => {
           console.log("Error desconocido " + error);
         }
       }
+
+      setIsSubmitting(false);
+
     } else {
       window.location.href = "/pageUser"
-      swalNotifyError(new ErrorHelper(HttpMessagesEnum.UNAUTHORIZED, ""))
+      //swalNotifyError(new ErrorHelper(HttpMessagesEnum.UNAUTHORIZED, ""))
     }
 
   };
@@ -132,7 +152,8 @@ const RegisterRestaurantView: React.FC = () => {
               </p>
             </div>
 
-            {/* Sección Derecha */}
+            {/* FORMULARIO */}
+
             <div className="md:w-1/2 bg-white p-8 shadow-lg rounded-lg">
               <h3 className="text-xl font-semibold text-gray-800 mb-4">
                 Ingresá tus datos para empezar
@@ -152,6 +173,13 @@ const RegisterRestaurantView: React.FC = () => {
                     className="w-full border-gray-300 rounded-md shadow-sm p-2 text-black"
                     required
                   />
+                  {
+                    formData.name && errors.name && (
+                      <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
+                        {errors.name}
+                      </span>
+                    )
+                  }
                 </div>
 
                 <div>
@@ -170,6 +198,13 @@ const RegisterRestaurantView: React.FC = () => {
                     className="w-full border-gray-300 rounded-md shadow-sm p-2 text-black"
                     required
                   />
+                  {
+                    formData.address && errors.address && (
+                      <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
+                        {errors.address}
+                      </span>
+                    )
+                  }
                 </div>
 
                 <div>
@@ -178,12 +213,19 @@ const RegisterRestaurantView: React.FC = () => {
                   </label>
                   <textarea
                     name="description"
-                    placeholder="Descripción del negocio"
-                    maxLength={500}
+                    placeholder="(max. 120 caracteres)"
+                    maxLength={120}
                     value={formData.description}
                     onChange={handleChange}
-                    className="w-full border-gray-300 rounded-md shadow-sm p-2 text-black"
+                    className="w-full border-gray-300 rounded-md shadow-sm p-2 text-black placeholder:text-xs"
                   />
+                  {
+                    formData.description && errors.description && (
+                      <span className="text-sm text-red-600" style={{ fontSize: "12px" }}>
+                        {errors.description}
+                      </span>
+                    )
+                  }
                 </div>
 
                 <div>
@@ -202,9 +244,10 @@ const RegisterRestaurantView: React.FC = () => {
 
                 <button
                   type="submit"
+                  disabled={isSubmitting || Object.values(errors).some(error => error)}
                   className="w-full bg-gray-600 text-white font-medium py-2 rounded-lg hover:bg-gray-800"
                 >
-                  CREAR CUENTA GRATIS
+                  {isSubmitting ? "Cargando..." : "Registrar"}
                 </button>
               </form>
             </div>
