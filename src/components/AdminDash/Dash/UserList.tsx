@@ -2,7 +2,7 @@
 
 // pages/admin/components/UserList.tsx
 import { useEffect, useState } from 'react';
-import { API_URL } from "../../config/config";
+import { API_URL } from "../../../config/config";
 import { IUser } from '@/interfaces/user.interface';
 
 const UserList = () => {

@@ -5,13 +5,13 @@ import Link from "next/link";
 import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import Navbar from "@/components/Navbar/Navbar";
-import Footer from "@/components/Footer/Footer";
+import Footer from "@/components/General/Footer/Footer";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
-import ChatComponent from "@/components/chat/chatbot";
 import { useRouter } from "next/navigation";
 import { IUser } from "@/interfaces/user.interface";
 import { Pages } from "@/enums/pages.enum";
+import ChatComponent from "@/components/General/Chat/Chatbot";
 
 const LandingView: React.FC = () => {
   const router = useRouter();

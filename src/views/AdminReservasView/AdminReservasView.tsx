@@ -1,5 +1,5 @@
 "use client";
-import ReservationsColumns from '@/components/AdminDash/Reservation/Reservations'
+import ReservationsColumns from '@/components/ManagerDash/Reservation/Reservations'
 import { useLocalStorage } from '@/helpers/auth-helpers/useLocalStorage';
 import React, { useEffect, useState } from 'react'
 

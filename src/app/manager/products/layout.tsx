@@ -1,4 +1,4 @@
-import NavbarAdminMenu from "@/components/AdminDash/Menu/NavbarAdminMenu"
+import NavbarAdminMenu from "@/components/ManagerDash/Menu/NavbarAdminMenu"
 
 export default function DashboardLayout({
     children, // will be a page or nested layout

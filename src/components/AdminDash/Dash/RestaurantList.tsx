@@ -1,9 +1,9 @@
 "use client";
 // pages/admin/components/RestaurantList.tsx
 import { useEffect, useState } from "react";
-import { API_URL } from "../../config/config";
+import { API_URL } from "../../../config/config";
 import { IRestaurant } from "@/interfaces/restaurant.interface";
-import SuggestionCard from "../SuggestionCard/SuggestionCard";
+import SuggestionCard from "../../Suggestions/SuggestionCard";
 
 const RestaurantList = () => {
   const [restaurants, setRestaurants] = useState<IRestaurant[]>([]);

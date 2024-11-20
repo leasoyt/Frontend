@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { IRestaurant } from '@/interfaces/restaurant.interface';
 import NavbarUsuario from '../../../src/components/NavbarUsuario/NavbarUsuario';
-import Footer from '@/components/Footer/Footer';
+import Footer from '@/components/General/Footer/Footer';
 import { getRestaurantById } from "../../../src/helpers/restaurant-helpers/get-restaurant"//'@/helpers/restaurant.helper'; // Importar tu función helper
 import '../../../src/app/globals.css'; // Asegúrate de que este archivo contenga Tailwind CSS
 import { IMenu_Category } from '@/interfaces/menu.interface';

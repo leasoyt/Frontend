@@ -1,17 +1,12 @@
 'use client';
-
-import AdminSidebar from '@/components/AdminSidebar/AdminSidebar';
-import RestaurantList from '@/components/RestaurantList/RestaurantList';
-import UserList from '@/components/UserList/UserList';
-import Unauthorized from '../unauthorized';
+import AdminSidebar from '@/components/AdminDash/SideBar/AdminSidebar';
+import RestaurantList from '@/components/AdminDash/Dash/RestaurantList';
+import UserList from '@/components/AdminDash/Dash/UserList';
 import { useLocalStorage } from '@/helpers/auth-helpers/useLocalStorage';
-import { swalNotifyError } from '@/helpers/swal/swal-notify-error';
-import { HttpMessagesEnum } from '@/enums/httpMessages.enum';
-import { ErrorHelper } from '@/helpers/errors/error-helper';
 import { IUser } from '@/interfaces/user.interface';
 import { UserRole } from '@/enums/role.enum';
 import { useEffect, useState } from 'react';
-import { Pages } from '@/enums/pages.enum';
+import Unauthorized from '@/components/General/Unauthorized/Unauthorized';
 
 const AdminDashboard = () => {
   const [iuser, setUser] = useLocalStorage("userSession", "");
@@ -22,14 +17,6 @@ const AdminDashboard = () => {
   useEffect(() => {
     if (user === null || user === undefined || !(user.role === UserRole.ADMIN)) {
       setIsAllowed(false);
-      // swalNotifyError(new ErrorHelper(HttpMessagesEnum.INSUFFICIENT_PERMISSIONS, "")).then((result) => {
-      //   if (result.isConfirmed) {
-      //     window.location.href = Pages.SEARCH;
-      //   }
-      // });
-      if(!isAllowed) {
-        window.location.href = Pages.SEARCH;
-      }
     }
   }, [user, isAllowed]);
 
@@ -48,7 +35,7 @@ const AdminDashboard = () => {
               </div>
             </div>
           ) :
-          null
+          <Unauthorized />
       }
     </>
   );

@@ -2,7 +2,7 @@ import { Pages } from '@/enums/pages.enum'
 import Link from 'next/link'
 import React from 'react'
 
-const NavbarAdministracion = () => {
+const MeserosSideBar = () => {
   return (
     <div className="ml-2 sm:ml-6 mt-1 w-full sm:w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
       <div className='bg-slate-700 flex justify-center px-4 py-2'>
@@ -31,4 +31,4 @@ const NavbarAdministracion = () => {
   )
 }
 
-export default NavbarAdministracion
+export default MeserosSideBar

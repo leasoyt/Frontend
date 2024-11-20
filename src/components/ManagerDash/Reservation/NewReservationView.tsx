@@ -1,5 +1,3 @@
-import NewReservForm from '@/components/NewReservation/NewReservForm'
-import Image from 'next/image'
 import React from 'react'
 
 const NewReservationView = () => {

@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Navbar from "@/components/Navbar/Navbar";
-import Footer from "@/components/Footer/Footer";
+import Footer from "@/components/General/Footer/Footer";
 import { swalNotifyError } from "@/helpers/swal/swal-notify-error";
 import { swalNotifyUnknownError } from "@/helpers/swal/swal-notify-unknown-error";
 import { ErrorHelper } from "@/helpers/errors/error-helper";

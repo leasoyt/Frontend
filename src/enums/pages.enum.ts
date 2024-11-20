@@ -1,6 +1,7 @@
 export class Pages {
     static readonly REGISTER = "/register";
     static readonly USER = "/user";
+    static readonly LOGIN = "/login";
     static readonly MANAGER = "/manager";
     static readonly FUNCTIONALITIES = "/functionalities";
     static readonly OUR_REVIEWS = "/reviews";
@@ -8,6 +9,7 @@ export class Pages {
     static readonly SEARCH = "/search";
     static readonly CONTACT = "/contact-us";
     static readonly CUSTOMER_SERVICE = "/customer-service";
+    static readonly SUCCESS_PAYMENT = "/success-payment"
 
     static readonly user = {
         CONFIG: `${this.USER}/settings`,
@@ -37,6 +39,12 @@ export class Pages {
             BASE: `${this.MANAGER}/reservations`,
             NEW: `${this.MANAGER}/reservations/new`,
             LIST: `${this.MANAGER}/reservations/list`,
+        },
+
+        SUBSCRIPTION: {
+            BASE: `${this.MANAGER}/subscription`,
+            PAYMENT: `${this.MANAGER}/subscription/payment`,
+            PLAN: `${this.MANAGER}/subscription/plan`,
         }
     }
 }

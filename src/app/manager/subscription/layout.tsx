@@ -1,4 +1,4 @@
-import NavbarAdminCuenta from "@/components/NavbarAdminCuenta/NavbarAdminCuenta"
+import SideBarSubscription from "@/components/ManagerDash/Subscription/SideBarSubscription"
 
 export default function DashboardLayout({
     children, // will be a page or nested layout
@@ -8,7 +8,7 @@ export default function DashboardLayout({
   
     return (
       <section className="sticky top-0 flex">
-        <NavbarAdminCuenta/>
+        <SideBarSubscription/>
           {children}
       </section>
     )

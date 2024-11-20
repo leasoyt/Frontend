@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { swalNotifySuccess } from '@/helpers/swal/swal-notify-success'
 import { Pages } from '@/enums/pages.enum'
 
-const NavbarAdmin = () => {
+const NavbarManager = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -130,13 +130,18 @@ const NavbarAdmin = () => {
               <div ref={divRef} className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
                 <ul className="py-2">
                   <li>
-                    <Link href="/manager/cuenta/pagos" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200">
-                      Suscripcion
+                    <Link href={Pages.manager.SUBSCRIPTION.PAYMENT} className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200">
+                      Subscripcion
                     </Link>
                   </li>
                   <li>
                     <Link href={Pages.manager.CONFIG} className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200">
                       Configuracion
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href={Pages.SEARCH} className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200">
+                      Volver a Perfil
                     </Link>
                   </li>
                   <li>
@@ -160,4 +165,4 @@ const NavbarAdmin = () => {
   )
 }
 
-export default NavbarAdmin
+export default NavbarManager

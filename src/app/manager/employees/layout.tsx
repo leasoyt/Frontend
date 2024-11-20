@@ -1,4 +1,4 @@
-import NavbarAdministracion from "@/components/NavbarAdministracion/NavbarAdministracion";
+import MeserosSideBar from "@/components/ManagerDash/Meseros/MeserosSideBar";
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
@@ -8,7 +8,7 @@ export default function DashboardLayout({
   return (
     <section className="flex flex-col md:flex-row min-h-screen">
       <div className=" sticky top-0 z-10">
-        <NavbarAdministracion />
+        <MeserosSideBar />
       </div>
       {children}
     </section>

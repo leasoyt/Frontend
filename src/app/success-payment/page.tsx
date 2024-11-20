@@ -34,7 +34,7 @@ const PagoCompletado: React.FC = () => {
       setMessage(`Hubo un error con tu pago. Por favor, inténtalo de nuevo.`);
       setIsSuccess(false);
       const timeout = setTimeout(() => {
-        router.push("/manager/cuenta/planes");
+        router.push(Pages.manager.SUBSCRIPTION.PLAN);
       }, 3000);
 
       return () => clearTimeout(timeout);
