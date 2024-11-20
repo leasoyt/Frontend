@@ -1,6 +1,6 @@
 "use client";
-import MeserosMapping from '@/components/AdminDash/Meseros/MeserosMapping';
-import NewMeseroForm from '@/components/AdminDash/Waiter/NewMeseroForm'
+import MeserosMapping from '@/components/ManagerDash/Meseros/MeserosMapping';
+import NewMeseroForm from '@/components/ManagerDash/Waiter/NewMeseroForm'
 import { API_URL } from '@/config/config';
 import { HttpMessagesEnum } from '@/enums/httpMessages.enum';
 import { useLocalStorage } from '@/helpers/auth-helpers/useLocalStorage';

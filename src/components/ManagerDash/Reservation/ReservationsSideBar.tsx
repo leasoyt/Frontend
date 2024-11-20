@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-const NavbarAdminReservas = () => {
+const ReservationsSideBar = () => {
     return (
         <div className="ml-6 mt-1 w-full max-w-xs sm:max-w-sm md:max-w-md bg-white border border-gray-300 rounded-lg shadow-lg z-10">
             <div className='bg-slate-700 flex justify-center'>
@@ -24,4 +24,4 @@ const NavbarAdminReservas = () => {
     )
 }
 
-export default NavbarAdminReservas
+export default ReservationsSideBar

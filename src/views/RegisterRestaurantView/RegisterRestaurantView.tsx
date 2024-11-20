@@ -1,6 +1,5 @@
 "use client";
-
-import Footer from "@/components/Footer/Footer";
+import Footer from "@/components/General/Footer/Footer";
 import NavbarUsuario from "@/components/NavbarUsuario/NavbarUsuario";
 import { ErrorHelper } from "@/helpers/errors/error-helper";
 import { createRestaurant } from "@/helpers/restaurant-helpers/register-restaurant";
@@ -8,7 +7,6 @@ import { swalNotifyError } from "@/helpers/swal/swal-notify-error";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { API_URL } from "@/config/config";
-import Unauthorized from "@/app/unauthorized";
 import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
 import { IUser } from "@/interfaces/user.interface";
 import { UserRole } from "@/enums/role.enum";
@@ -16,6 +14,7 @@ import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
 import { IRestaurantRegisterProps } from "@/interfaces/Interfaces.types";
 import { validateRestaurantForm } from "@/helpers/auth-helpers/validate";
 import { Pages } from "@/enums/pages.enum";
+import Unauthorized from "@/components/General/Unauthorized/Unauthorized";
 
 const RegisterRestaurantView: React.FC = () => {
 
@@ -35,13 +34,11 @@ const RegisterRestaurantView: React.FC = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [formData, setFormData] = useState<IRestaurantRegisterProps>(initialState);
 
-  
   useEffect(() => {
 
     setLoading(false);
     if (user === null && user === undefined || user.role !== UserRole.CONSUMER) {
       setIsAllowed(false);
-      window.location.href = Pages.SEARCH;
     }
 
   }, [user]);
@@ -107,23 +104,17 @@ const RegisterRestaurantView: React.FC = () => {
 
         router.push("/login");
       } catch (error) {
+        setIsSubmitting(false);
         if (error instanceof ErrorHelper) {
           swalNotifyError(error);
         } else {
           console.log("Error desconocido " + error);
         }
       }
-
-      setIsSubmitting(false);
-
-    } else {
-      window.location.href = Pages.SEARCH
-      swalNotifyError(new ErrorHelper(HttpMessagesEnum.UNAUTHORIZED, ""))
     }
-
   };
 
-  if (!isAllowed && !loading) return (<Unauthorized/>);
+  if (!isAllowed && !loading) return (<Unauthorized />);
 
   return (
     <>
@@ -250,7 +241,7 @@ const RegisterRestaurantView: React.FC = () => {
             <Footer />
           </>
           :
-          null
+          <Unauthorized />
       }
     </>
   );

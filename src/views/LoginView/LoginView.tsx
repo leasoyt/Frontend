@@ -5,7 +5,7 @@ import { IloginProps } from "@/interfaces/Interfaces.types";
 import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Navbar from "@/components/Navbar/Navbar";
-import Footer from "@/components/Footer/Footer";
+import Footer from "@/components/General/Footer/Footer";
 import { swalNotifySuccess } from "@/helpers/swal/swal-notify-success";
 import { ErrorHelper } from "@/helpers/errors/error-helper";
 import { fetchRestaurantData as fetchManagerData } from "@/helpers/manager/fetch-restaurant-data";
@@ -56,13 +56,13 @@ const LoginView: React.FC = () => {
 
       window.location.href = Pages.SEARCH;
     } catch (error) {
+      setIsSubmitting(false);
+      
       if (error instanceof ErrorHelper && error.message === HttpMessagesEnum.USER_DELETED) {
         swalNotifyCustomError(HttpMessagesEnum.USER_DELETED, "No se pudo logear");
       } else {
         AuthErrorHelper(error);
       }
-    } finally {
-      setIsSubmitting(false);
     }
   };
 

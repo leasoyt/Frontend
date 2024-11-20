@@ -1,4 +1,4 @@
-import NewMeseroForm from '@/components/AdminDash/Waiter/NewMeseroForm';
+import NewMeseroForm from '@/components/ManagerDash/Waiter/NewMeseroForm';
 import React from 'react'
 
 const New = () => {

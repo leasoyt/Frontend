@@ -1,5 +1,5 @@
 'use client'
-import Footer from '@/components/Footer/Footer';
+import Footer from '@/components/General/Footer/Footer';
 import NavbarUsuario from '@/components/NavbarUsuario/NavbarUsuario';
 import Suggestions from '@/components/Suggestions/Suggestion';
 import { CategoryButtonProps, IUserSession } from '@/interfaces/Interfaces.types';

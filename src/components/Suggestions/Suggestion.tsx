@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import SuggestionCard from "../SuggestionCard/SuggestionCard";
+import SuggestionCard from "./SuggestionCard";
 import { useEffect, useState } from "react";
 import { IRestaurant } from "../../interfaces/restaurant.interface";
 import { API_URL } from "../../config/config";

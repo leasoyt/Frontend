@@ -1,6 +1,6 @@
 'use client'; // Esta declaración es necesaria para componentes que dependen del cliente
 
-import Footer from '@/components/Footer/Footer';
+import Footer from '@/components/General/Footer/Footer';
 import Navbar from '@/components/Navbar/Navbar';
 import Image from 'next/image';
 import React from 'react';

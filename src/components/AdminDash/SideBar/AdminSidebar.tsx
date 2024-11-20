@@ -2,8 +2,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-
-
 interface AdminSidebarProps {
     setSection: (section: 'restaurants' | 'users') => void;
 }

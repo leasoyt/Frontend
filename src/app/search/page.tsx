@@ -1,4 +1,4 @@
-import ChatComponent from "@/components/chat/chatbot";
+import ChatComponent from "@/components/General/Chat/Chatbot";
 import UserView from "@/views/UserView/UserView";
 import React from "react";
 

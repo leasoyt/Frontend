@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import NavbarUsuario from "@/components/NavbarUsuario/NavbarUsuario";
-import Footer from "@/components/Footer/Footer";
+import Footer from "@/components/General/Footer/Footer";
 import UserProfileView from "../../../views/UserProfileView/UserProfileView";
 import { API_URL } from "@/config/config";
 import { fetchWithAuth } from "@/helpers/token-expire.interceptor";

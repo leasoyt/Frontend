@@ -2,6 +2,7 @@ import RegisterRestaurantView from '@/views/RegisterRestaurantView/RegisterResta
 import React from 'react'
 
 const restaurantRegister = () => {
+
   return (
       <RegisterRestaurantView />
   )
