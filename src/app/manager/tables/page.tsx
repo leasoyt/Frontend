@@ -1,7 +1,7 @@
 "use client";
 import AddTableButton from '@/components/ManagerDash/Tables/AddTableButton'
 import TablesBoard from '@/components/ManagerDash/Tables/TablesBoard'
-import { useLocalStorage } from '@/helpers/auth-helpers/useLocalStorage';
+import { useLocalStorage } from '@/scripts/auth/useLocalStorage';
 import React, { useEffect, useState } from 'react'
 
 const Mesas = () => {

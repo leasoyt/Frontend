@@ -6,13 +6,13 @@ import { ClickEvent, ViewTableProps } from "@/interfaces/Interfaces.types";
 import { IOrder, IOrderB, OrderedDish } from "@/interfaces/order.interface";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import TableOrderView from "./TableOrderView";
-import { swalNotifyUnknownError } from "@/helpers/swal/swal-notify-unknown-error";
+import { swalNotifyUnknownError } from "@/scripts/swal/swal-notify-unknown-error";
 import NewOrderForm from "./NewOrderForm";
-import { fetchWithAuth } from "@/helpers/token-expire.interceptor";
 import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
-import { swalNotifySuccess } from "@/helpers/swal/swal-notify-success";
-import { swalNotifyConfirmation } from "@/helpers/swal/swal-notify-confirm";
-import { swalNotifyCustomError } from "@/helpers/swal/swal-custom-error";
+import { swalNotifySuccess } from "@/scripts/swal/swal-notify-success";
+import { swalNotifyConfirmation } from "@/scripts/swal/swal-notify-confirm";
+import { swalNotifyCustomError } from "@/scripts/swal/swal-custom-error";
+import { fetchWithAuth } from "@/scripts/token-expire.interceptor";
 
 const ViewTablePopUp: React.FC<ViewTableProps & {
     table_number: number,

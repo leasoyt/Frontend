@@ -7,7 +7,7 @@ import Image from "next/image";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/General/Footer/Footer";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
+import { useLocalStorage } from "@/scripts/auth/useLocalStorage";
 import { useRouter } from "next/navigation";
 import { IUser } from "@/interfaces/user.interface";
 import { Pages } from "@/enums/pages.enum";

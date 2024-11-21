@@ -4,16 +4,16 @@ import { useEffect, useState } from 'react';
 import { IRestaurant } from '@/interfaces/restaurant.interface';
 import NavbarUsuario from '../../../src/components/NavbarUsuario/NavbarUsuario';
 import Footer from '@/components/General/Footer/Footer';
-import { getRestaurantById } from "../../../src/helpers/restaurant-helpers/get-restaurant"//'@/helpers/restaurant.helper'; // Importar tu función helper
+import { getRestaurantById } from "../../../src/scripts/user/get-restaurant"//'@/helpers/restaurant.helper'; // Importar tu función helper
 import '../../../src/app/globals.css'; // Asegúrate de que este archivo contenga Tailwind CSS
 import { IMenu_Category } from '@/interfaces/menu.interface';
 import { IDish } from '@/interfaces/dishes.interface';
-import { createReservation } from '@/helpers/reservation/reservation';
+import { createReservation } from '@/scripts/user/reservation/reservation';
 import Swal from 'sweetalert2';
-import { useLocalStorage } from '@/helpers/auth-helpers/useLocalStorage';
+import { useLocalStorage } from '@/scripts/auth/useLocalStorage';
 import { IUser } from '@/interfaces/user.interface';
 import isDateAfterTomorrow from '@/utils/afterTomorrow';
-import { swalNotifyCustomError } from '@/helpers/swal/swal-custom-error';
+import { swalNotifyCustomError } from '@/scripts/swal/swal-custom-error';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 
 

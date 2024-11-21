@@ -2,7 +2,7 @@
 import AdminSidebar from '@/components/AdminDash/SideBar/AdminSidebar';
 import RestaurantList from '@/components/AdminDash/Dash/RestaurantList';
 import UserList from '@/components/AdminDash/Dash/UserList';
-import { useLocalStorage } from '@/helpers/auth-helpers/useLocalStorage';
+import { useLocalStorage } from '@/scripts/auth/useLocalStorage';
 import { IUser } from '@/interfaces/user.interface';
 import { UserRole } from '@/enums/role.enum';
 import { useEffect, useState } from 'react';

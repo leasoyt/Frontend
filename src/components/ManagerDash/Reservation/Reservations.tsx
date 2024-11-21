@@ -4,11 +4,11 @@ import { API_URL } from '../../../config/config';
 import ReserveColumn from './ReserveColumn';
 import { IReservation } from '@/interfaces/reservation.interface';
 import { HttpMessagesEnum } from '@/enums/httpMessages.enum';
-import { fetchWithAuth } from '@/helpers/token-expire.interceptor';
 import { ErrorHelper, verifyError } from '@/helpers/errors/error-helper';
 import { AuthErrorHelper } from '@/helpers/errors/auth-error-helper';
-import { swalNotifyConfirmation } from '@/helpers/swal/swal-notify-confirm';
-import { swalNotifySuccess } from '@/helpers/swal/swal-notify-success';
+import { swalNotifyConfirmation } from '@/scripts/swal/swal-notify-confirm';
+import { swalNotifySuccess } from '@/scripts/swal/swal-notify-success';
+import { fetchWithAuth } from '@/scripts/token-expire.interceptor';
 
 const ReservationsColumns: React.FC<{ id: string }> = ({ id }) => {
     const [reservations, setReservations] = useState<IReservation[]>([]);

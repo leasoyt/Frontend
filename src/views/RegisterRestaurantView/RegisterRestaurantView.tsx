@@ -2,19 +2,19 @@
 import Footer from "@/components/General/Footer/Footer";
 import NavbarUsuario from "@/components/NavbarUsuario/NavbarUsuario";
 import { ErrorHelper } from "@/helpers/errors/error-helper";
-import { createRestaurant } from "@/helpers/restaurant-helpers/register-restaurant";
-import { swalNotifyError } from "@/helpers/swal/swal-notify-error";
+import { swalNotifyError } from "@/scripts/swal/swal-notify-error";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { API_URL } from "@/config/config";
-import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
+import { useLocalStorage } from "@/scripts/auth/useLocalStorage";
 import { IUser } from "@/interfaces/user.interface";
 import { UserRole } from "@/enums/role.enum";
 import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
 import { IRestaurantRegisterProps } from "@/interfaces/Interfaces.types";
-import { validateRestaurantForm } from "@/helpers/auth-helpers/validate";
+import { validateRestaurantForm } from "@/scripts/auth/validate";
 import { Pages } from "@/enums/pages.enum";
 import Unauthorized from "@/components/General/Unauthorized/Unauthorized";
+import { createRestaurant } from "@/scripts/user/register-restaurant";
 
 const RegisterRestaurantView: React.FC = () => {
 

@@ -1,6 +1,6 @@
 import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
 import { ErrorHelper } from "./error-helper";
-import { swalNotifyError } from "../swal/swal-notify-error";
+import { swalNotifyError } from "../../scripts/swal/swal-notify-error";
 import { Pages } from "@/enums/pages.enum";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

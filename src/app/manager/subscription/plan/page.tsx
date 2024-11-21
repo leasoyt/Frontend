@@ -1,9 +1,9 @@
-import AdminCuentaPlanesView from '@/views/AdminCuentaPlanesView/AdminCuentaPlanesView'
+import ManagerPlansView from '@/views/ManagerDashViews/Subscription/ManagerPlansView'
 import React from 'react'
 
 const page = () => {
   return (
-    <AdminCuentaPlanesView/>
+    <ManagerPlansView/>
   )
 }
 

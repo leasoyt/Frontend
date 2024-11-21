@@ -1,16 +1,16 @@
 "use client";
-import { register } from "@/helpers/auth-helpers/auth.helper";
-import { validateRegisterForm } from "@/helpers/auth-helpers/validate";
+import { register } from "@/scripts/auth/auth.helper";
+import { validateRegisterForm } from "@/scripts/auth/validate";
 import { IRegisterProps } from "@/interfaces/Interfaces.types";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/General/Footer/Footer";
-import { swalNotifyError } from "@/helpers/swal/swal-notify-error";
-import { swalNotifyUnknownError } from "@/helpers/swal/swal-notify-unknown-error";
+import { swalNotifyError } from "@/scripts/swal/swal-notify-error";
+import { swalNotifyUnknownError } from "@/scripts/swal/swal-notify-unknown-error";
 import { ErrorHelper } from "@/helpers/errors/error-helper";
-import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
+import { useLocalStorage } from "@/scripts/auth/useLocalStorage";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
 const RegisterView: React.FC = () => {

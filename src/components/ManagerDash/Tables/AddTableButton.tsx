@@ -3,9 +3,9 @@ import { useState } from "react";
 import AddTablePopUp from "./AddTablePopUp";
 import { API_URL } from "@/config/config";
 import { SetStateBoolean } from "@/interfaces/Interfaces.types";
-import { fetchWithAuth } from "@/helpers/token-expire.interceptor";
-import { swalNotifyError } from "@/helpers/swal/swal-notify-error";
+import { swalNotifyError } from "@/scripts/swal/swal-notify-error";
 import { ErrorHelper } from "@/helpers/errors/error-helper";
+import { fetchWithAuth } from "@/scripts/token-expire.interceptor";
 
 const AddTableButton: React.FC<SetStateBoolean & { id: string }> = ({ setParentState, id }) => {
     const [showPopup, setShowPopup] = useState<boolean>(false);

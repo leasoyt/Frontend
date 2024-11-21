@@ -4,8 +4,8 @@ import NavbarUsuario from "@/components/NavbarUsuario/NavbarUsuario";
 import Footer from "@/components/General/Footer/Footer";
 import UserProfileView from "../../../views/UserProfileView/UserProfileView";
 import { API_URL } from "@/config/config";
-import { fetchWithAuth } from "@/helpers/token-expire.interceptor";
-import { swalNotifyCustomError } from "@/helpers/swal/swal-custom-error";
+import { swalNotifyCustomError } from "@/scripts/swal/swal-custom-error";
+import { fetchWithAuth } from "@/scripts/token-expire.interceptor";
 
 interface User {
   id: string; // Agrega el ID para identificar al usuario en la actualización

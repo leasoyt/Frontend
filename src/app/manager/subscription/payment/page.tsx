@@ -1,9 +1,9 @@
-import AdminCuentaPagosView from '@/views/AdminCuentaPagosView/AdminCuentaPagosView'
+import ManagerPaymentView from '@/views/ManagerDashViews/Subscription/ManagerPaymentView'
 import React from 'react'
 
 const pagos = () => {
   return (
-    <AdminCuentaPagosView/>
+    <ManagerPaymentView/>
   )
 }
 
