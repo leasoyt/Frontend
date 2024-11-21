@@ -1,8 +1,8 @@
 "use client";
 import { AuthErrorHelper } from '@/helpers/errors/auth-error-helper';
-import { getMenuById } from '@/helpers/menu-helper/get-menuByCategory';
+import { getCategoryById as getCategoryById } from '@/scripts/manager/category-byid';
 import { IMenu, MenuIdProps } from '@/interfaces/menu.interface'
-import MenuView from '@/views/MenuView/MenuView';
+import MenuView from '@/views/ManagerDashViews/Menu/MenuView';
 import React, { useEffect, useState } from 'react'
 
 const ProductsByCategory: React.FC<MenuIdProps> = ({ params }) => {
@@ -14,7 +14,7 @@ const ProductsByCategory: React.FC<MenuIdProps> = ({ params }) => {
     const fetchThis = async () => {
       try {
         if (!(categoryId === undefined) && !(categoryId === null)) {
-          const data = await getMenuById(categoryId);
+          const data = await getCategoryById(categoryId);
           setCategory(data);
 
         } else {

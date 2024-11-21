@@ -1,11 +1,11 @@
 "use client";
 import { API_URL } from '@/config/config';
 import { AuthErrorHelper } from '@/helpers/errors/auth-error-helper';
-import { fetchWithAuth } from '@/helpers/token-expire.interceptor';
 import { ICategory } from '@/interfaces/category.interface';
 import { IDish } from '@/interfaces/dishes.interface';
 import { IMenu_Category } from '@/interfaces/menu.interface';
 import { OrderedDish } from '@/interfaces/order.interface';
+import { fetchWithAuth } from '@/scripts/token-expire.interceptor';
 import React, { useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
 
 const NewOrderForm: React.FC<{

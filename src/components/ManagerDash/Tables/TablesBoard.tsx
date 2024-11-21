@@ -6,9 +6,9 @@ import TableObject from "./TableObject";
 import { API_URL } from "@/config/config";
 import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
 import ViewTablePopUp from "./ViewTablePopUp";
-import { fetchWithAuth } from "@/helpers/token-expire.interceptor";
 import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
 import { ErrorHelper } from "@/helpers/errors/error-helper";
+import { fetchWithAuth } from "@/scripts/token-expire.interceptor";
 
 const TablesBoard: React.FC<{
     updateBoard: boolean,

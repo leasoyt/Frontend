@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { swalNotifySuccess } from '@/helpers/swal/swal-notify-success'
+import { swalNotifySuccess } from '@/scripts/swal/swal-notify-success'
 import { Pages } from '@/enums/pages.enum'
 
 const NavbarManager = () => {

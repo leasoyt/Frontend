@@ -2,8 +2,8 @@
 "use client";
 import Footer from "@/components/General/Footer/Footer"
 import NavbarManager from "@/components/ManagerDash/NavbarManager"
-import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
-import { fetchRestaurantData } from "@/helpers/manager/fetch-restaurant-data";
+import { useLocalStorage } from "@/scripts/auth/useLocalStorage";
+import { fetchRestaurantData } from "@/scripts/manager/fetch-restaurant-data";
 import { IUser } from "@/interfaces/user.interface";
 import React from "react";
 import { useEffect, useState } from "react"

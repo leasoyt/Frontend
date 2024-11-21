@@ -1,7 +1,7 @@
 "use client";
 import { Pages } from "@/enums/pages.enum";
 import { UserRole } from "@/enums/role.enum";
-import { swalNotifySuccess } from "@/helpers/swal/swal-notify-success";
+import { swalNotifySuccess } from "@/scripts/swal/swal-notify-success";
 import { IUser } from "@/interfaces/user.interface";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Image from "next/image";

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TableStatus } from '@/enums/table.enum';
-import { TablesBoardTriggerData, TableWithSetState } from '@/interfaces/Interfaces.types';
+import { TableWithSetState } from '@/interfaces/Interfaces.types';
 
 const TableObject: React.FC<TableWithSetState
     & { setNumberParentState: React.Dispatch<React.SetStateAction<number>> }> =

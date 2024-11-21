@@ -1,4 +1,4 @@
-import NavbarAdminMenu from "@/components/ManagerDash/Menu/NavbarAdminMenu"
+import MenuSidebar from "@/components/ManagerDash/Menu/MenuSidebar"
 
 export default function DashboardLayout({
     children, // will be a page or nested layout
@@ -8,7 +8,7 @@ export default function DashboardLayout({
 
     return (
       <section className="sticky top-0 flex">
-        <NavbarAdminMenu/>
+        <MenuSidebar/>
           {children}
       </section>
     )

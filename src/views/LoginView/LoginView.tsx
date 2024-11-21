@@ -1,19 +1,19 @@
 "use client";
-import { login } from "@/helpers/auth-helpers/auth.helper";
-import { validateLoginForm } from "@/helpers/auth-helpers/validate";
+import { login } from "@/scripts/auth/auth.helper";
+import { validateLoginForm } from "@/scripts/auth/validate";
 import { IloginProps } from "@/interfaces/Interfaces.types";
 import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/General/Footer/Footer";
-import { swalNotifySuccess } from "@/helpers/swal/swal-notify-success";
+import { swalNotifySuccess } from "@/scripts/swal/swal-notify-success";
 import { ErrorHelper } from "@/helpers/errors/error-helper";
-import { fetchRestaurantData as fetchManagerData } from "@/helpers/manager/fetch-restaurant-data";
-import { useLocalStorage } from "@/helpers/auth-helpers/useLocalStorage";
+import { fetchRestaurantData as fetchManagerData } from "@/scripts/manager/fetch-restaurant-data";
+import { useLocalStorage } from "@/scripts/auth/useLocalStorage";
 import { UserRole } from "@/enums/role.enum";
 import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
 import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
-import { swalNotifyCustomError } from "@/helpers/swal/swal-custom-error";
+import { swalNotifyCustomError } from "@/scripts/swal/swal-custom-error";
 import { Pages } from "@/enums/pages.enum";
 
 const LoginView: React.FC = () => {

@@ -1,4 +1,4 @@
-import NewReservationView from '@/components/ManagerDash/Reservation/NewReservationView'
+import NewReservationView from '@/views/ManagerDashViews/Reservations/NewReservationView'
 import React from 'react'
 
 const NewReservation = () => {

@@ -2,12 +2,12 @@ import { API_URL } from "@/config/config";
 import { HttpMessagesEnum } from "@/enums/httpMessages.enum";
 import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
 import { ErrorHelper } from "@/helpers/errors/error-helper";
-import { swalNotifyConfirmation } from "@/helpers/swal/swal-notify-confirm";
-import { swalNotifyError } from "@/helpers/swal/swal-notify-error";
-import { swalNotifySuccess } from "@/helpers/swal/swal-notify-success";
-import { fetchWithAuth } from "@/helpers/token-expire.interceptor";
+import { swalNotifyConfirmation } from "@/scripts/swal/swal-notify-confirm";
+import { swalNotifyError } from "@/scripts/swal/swal-notify-error";
+import { swalNotifySuccess } from "@/scripts/swal/swal-notify-success";
 import { ClickEvent } from "@/interfaces/Interfaces.types";
 import { IOrder } from "@/interfaces/order.interface";
+import { fetchWithAuth } from "@/scripts/token-expire.interceptor";
 
 const TableOrderView: React.FC<{
     order: IOrder,

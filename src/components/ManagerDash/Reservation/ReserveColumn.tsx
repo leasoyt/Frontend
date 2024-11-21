@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { IReservation } from "@/interfaces/reservation.interface";
 import { getDividedDate } from "@/utils/getDividedDate";
-import { fetchWithAuth } from "@/helpers/token-expire.interceptor";
 import { API_URL } from "@/config/config";
 import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
+import { fetchWithAuth } from "@/scripts/token-expire.interceptor";
 
 const ReserveColumn: React.FC<IReservation & {toDelete: (id: string) => void}> = ({
   id,
