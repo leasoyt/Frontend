@@ -10,6 +10,7 @@ export class Pages {
     static readonly CONTACT = "/contact-us";
     static readonly CUSTOMER_SERVICE = "/customer-service";
     static readonly SUCCESS_PAYMENT = "/success-payment"
+    static readonly ADMIN = "/admin";
 
     static readonly user = {
         CONFIG: `${this.USER}/settings`,

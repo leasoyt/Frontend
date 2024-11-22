@@ -66,7 +66,7 @@ const NavbarManager = () => {
             </li>
           </ul>
         </div>
-        <div className="relative pl-24">
+        <div ref={divRef} className="relative pl-24">
           <button
             //ref={}
             className="flex items-center border border-gray-300 px-4 py-2 rounded-full text-black bg-white shadow-md hover:shadow-lg transition-shadow duration-300"
@@ -127,8 +127,13 @@ const NavbarManager = () => {
           {
             isDropdownOpen &&
             (
-              <div ref={divRef} className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
                 <ul className="py-2">
+                  <li>
+                    <Link href={Pages.SEARCH} className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200">
+                      Mi Perfil
+                    </Link>
+                  </li>
                   <li>
                     <Link href={Pages.manager.SUBSCRIPTION.PAYMENT} className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200">
                       Subscripcion
@@ -137,11 +142,6 @@ const NavbarManager = () => {
                   <li>
                     <Link href={Pages.manager.CONFIG} className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200">
                       Configuracion
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href={Pages.SEARCH} className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200">
-                      Volver a Perfil
                     </Link>
                   </li>
                   <li>

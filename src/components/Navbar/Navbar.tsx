@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { IUserSession } from '@/interfaces/Interfaces.types';
 import { Pages } from '@/enums/pages.enum';
+import DropDownButton from '../NavbarUsuario/DropDownButton';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,7 +64,7 @@ const Navbar: React.FC = () => {
               href={Pages.FUNCTIONALITIES}
               className="italic text-black text-[24px] hover:underline active:scale-110 transition-transform duration-200"
             >
-              Funcionalidades
+              Negocios
             </Link>
           </li>
           <li className="mt-2 md:mt-0">
@@ -75,19 +76,15 @@ const Navbar: React.FC = () => {
             </Link>
           </li>
 
-          {userData?.token ?
-            (
-              <li className="mt-2 md:mt-0">
-                <Link
-                  href={Pages.SEARCH}
-                  className="italic text-black text-[24px] hover:underline active:scale-110 transition-transform duration-200"
-                >
-                  Mi Cuenta
-                </Link>
-              </li>
-            )
-            :
-            null
+          {
+            userData?.token ?
+              (
+                <li className="mt-2 md:mt-0">
+                  <DropDownButton showLoginIfNoUser={true} />
+                </li>
+              )
+              :
+              null
           }
 
         </ul>
