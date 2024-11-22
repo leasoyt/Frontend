@@ -25,7 +25,6 @@ const Configuracion = () => {
       const token = userSession?.token;
 
       if (!token) {
-        setError("No se encontró un token de autenticación.");
         setLoading(false);
         return;
       }

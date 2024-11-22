@@ -4,7 +4,6 @@ import { IRestaurant } from '@/interfaces/restaurant.interface'; // Asegúrate d
 
 
 const SuggestionCard: React.FC<{ restaurant: IRestaurant }> = ({ restaurant })  => {
-console.log('restaurant',restaurant);
   
    // Verifica si imgUrl es un string o un File
    let imageUrl: string = "";
