@@ -27,7 +27,7 @@ export async function fetchWithAuth(url: string | URL | globalThis.Request, opti
         }
 
     } else {
-        throw new ErrorHelper(HttpMessagesEnum.NOT_ALLOWED_HERE, "");
+        throw new ErrorHelper(HttpMessagesEnum.NOT_ALLOWED_HERE, "403");
     }
 
 }

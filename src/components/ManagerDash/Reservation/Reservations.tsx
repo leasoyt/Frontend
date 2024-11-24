@@ -53,10 +53,6 @@ const ReservationsColumns: React.FC<{ id: string }> = ({ id }) => {
             try {
                 const response = await fetchWithAuth(`${API_URL}/reservation/restaurant/${id}`, { method: "GET" });
 
-                // if (!!response) {
-                //     throw new ErrorHelper(verifyError(response.message), response.status);
-                // }
-
                 setReservations(response || []);
             } catch (error) {
                 if (error instanceof ErrorHelper) {

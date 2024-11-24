@@ -7,6 +7,7 @@ export class ErrorHelper extends Error {
         super(message);
         this.name = "ErrorHelper";
         this.error = exception;
+        this.exception = exception
     }
 }
 
