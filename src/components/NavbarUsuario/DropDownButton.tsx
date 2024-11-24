@@ -15,6 +15,7 @@ const DropDownButton: React.FC<{ showLoginIfNoUser?: boolean }> = ({ showLoginIf
     const divRef = useRef<HTMLDivElement>(null);
     const { user: authUser } = useUser();
     const [actual, setActual] = useState("");
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const offStyle = "block px-4 py-2 text-gray-400 hover:bg-gray-100 transition-colors duration-200 pointer-events-none";
     const onStyle = "block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200";
 
@@ -47,15 +48,43 @@ const DropDownButton: React.FC<{ showLoginIfNoUser?: boolean }> = ({ showLoginIf
     };
 
     useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (divRef.current && event.target instanceof Node && !divRef.current.contains(event.target)) {
-                setIsDropdownOpen(false);
+
+        const mouseOut = (event: MouseEvent) => {
+            if (divRef.current && event.target instanceof Node && !divRef.current.contains(event.relatedTarget as Node)) {
+                timeoutRef.current = setTimeout(() => {
+                    setIsDropdownOpen(false);
+                }, 2000);
             }
         };
 
-        document.addEventListener("mousedown", handleClickOutside);
+        const clickOut = (event: MouseEvent) => {
+            if (divRef.current && !divRef.current.contains(event.target as Node)) {
+                setIsDropdownOpen(false);
+            }
+        }
+
+        const mouseEnter = () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+                timeoutRef.current = null;
+            }
+        };
+
+        const element = divRef.current;
+        console.log(element);
+        if (element) {
+            element.addEventListener("mouseout", mouseOut);
+            element.addEventListener("mouseover", mouseEnter);
+        }
+        document.addEventListener("mousedown", clickOut);
+
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
+            if (element) {
+                element.removeEventListener("mouseout", mouseOut);
+                element.removeEventListener("mouseover", mouseEnter);
+            }
+            document.removeEventListener("mousedown", clickOut);
+            
         };
     }, []);
 
@@ -78,7 +107,7 @@ const DropDownButton: React.FC<{ showLoginIfNoUser?: boolean }> = ({ showLoginIf
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                     <circle cx="12" cy="7" r="4"></circle>
                 </svg>
-                <span className="font-semibold">{showLoginIfNoUser === true && user === null ? "Iniciar" : "Mi Perfil"}</span>
+                <span className="font-semibold">Mi Perfil</span>
 
                 <span className="ml-2">
                     {isDropdownOpen ? (
@@ -114,103 +143,107 @@ const DropDownButton: React.FC<{ showLoginIfNoUser?: boolean }> = ({ showLoginIf
             {isDropdownOpen ?
                 showLoginIfNoUser === true && user === null ?
                     (
-                        <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
-                            <ul className="py-2">
-                                <li>
-                                    <Link
-                                        href={Pages.LOGIN}
-                                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
-                                    >
-                                        Iniciar Sesion
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href={Pages.register.USER}
-                                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
-                                    >
-                                        Crear cuenta
-                                    </Link>
-                                </li>
-                            </ul>
+                        <div className="absolute right-0 max-w-fit max-h-fit">
+                            <div className="mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+                                <ul className="py-2">
+                                    <li>
+                                        <Link
+                                            href={Pages.LOGIN}
+                                            className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
+                                        >
+                                            Iniciar Sesion
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            href={Pages.register.USER}
+                                            className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
+                                        >
+                                            Crear cuenta
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     )
                     :
                     (
-                        <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
-                            <ul className="py-2">
-                                {user && user.role === UserRole.CONSUMER && (
-                                    <li>
-                                        <Link
-                                            href={Pages.register.RESTAURANT}
-                                            aria-disabled={actual === Pages.register.RESTAURANT}
-                                            className={actual === Pages.register.RESTAURANT ? offStyle : onStyle}
-                                        >
-                                            Registra tu negocio
-                                        </Link>
-                                    </li>
-                                )}
-                                {user &&
-                                    (user.role === UserRole.MANAGER ||
-                                        user.role === UserRole.WAITER) && (
+                        <div className="absolute right-0 max-w-fit max-h-fit">
+                            <div className="mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+                                <ul className="py-2">
+                                    {user && user.role === UserRole.CONSUMER && (
                                         <li>
                                             <Link
-                                                href={Pages.manager.PRODUCTS.BASE}
-                                                className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
+                                                href={Pages.register.RESTAURANT}
+                                                aria-disabled={actual === Pages.register.RESTAURANT}
+                                                className={actual === Pages.register.RESTAURANT ? offStyle : onStyle}
                                             >
-                                                Mi negocio
+                                                Registra tu negocio
                                             </Link>
                                         </li>
                                     )}
-                                {user && user.role === UserRole.ADMIN && (
+                                    {user &&
+                                        (user.role === UserRole.MANAGER ||
+                                            user.role === UserRole.WAITER) && (
+                                            <li>
+                                                <Link
+                                                    href={Pages.manager.PRODUCTS.BASE}
+                                                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
+                                                >
+                                                    Mi negocio
+                                                </Link>
+                                            </li>
+                                        )}
+                                    {user && user.role === UserRole.ADMIN && (
+                                        <li>
+                                            <Link
+                                                href={Pages.ADMIN}
+                                                aria-disabled={actual === Pages.ADMIN}
+                                                className={actual === Pages.ADMIN ? offStyle : onStyle}
+                                            >
+                                                Administracion
+                                            </Link>
+                                        </li>
+                                    )}
                                     <li>
                                         <Link
-                                            href={Pages.ADMIN}
-                                            aria-disabled={actual === Pages.ADMIN}
-                                            className={actual === Pages.ADMIN ? offStyle : onStyle}
+                                            href={Pages.SEARCH}
+                                            aria-disabled={actual === Pages.SEARCH}
+                                            className={actual === Pages.SEARCH ? offStyle : onStyle}
                                         >
-                                            Administracion
+                                            Restaurantes
                                         </Link>
                                     </li>
-                                )}
-                                <li>
-                                    <Link
-                                        href={Pages.SEARCH}
-                                        aria-disabled={actual === Pages.SEARCH}
-                                        className={actual === Pages.SEARCH ? offStyle : onStyle}
-                                    >
-                                        Restaurantes
-                                    </Link>
-                                </li>
 
-                                <li>
-                                    <Link
-                                        href={Pages.CUSTOMER_SERVICE}
-                                        aria-disabled={actual === Pages.CUSTOMER_SERVICE}
-                                        className={actual === Pages.CUSTOMER_SERVICE ? offStyle : onStyle}
-                                    >
-                                        Atención al Cliente
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href={Pages.user.CONFIG}
-                                        aria-disabled={actual === Pages.user.CONFIG}
-                                        className={actual === Pages.user.CONFIG ? offStyle : onStyle}
-                                    >
-                                        Configuracion
-                                    </Link>
-                                </li>
+                                    <li>
+                                        <Link
+                                            href={Pages.CUSTOMER_SERVICE}
+                                            aria-disabled={actual === Pages.CUSTOMER_SERVICE}
+                                            className={actual === Pages.CUSTOMER_SERVICE ? offStyle : onStyle}
+                                        >
+                                            Atención al Cliente
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            href={Pages.user.CONFIG}
+                                            aria-disabled={actual === Pages.user.CONFIG}
+                                            className={actual === Pages.user.CONFIG ? offStyle : onStyle}
+                                        >
+                                            Configuracion
+                                        </Link>
+                                    </li>
 
-                                <li>
-                                    <button
-                                        onClick={handleLogout}
-                                        className="w-full text-left block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
-                                    >
-                                        Cerrar Sesión
-                                    </button>
-                                </li>
-                            </ul>
+                                    <li>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="w-full text-left block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
+                                        >
+                                            Cerrar Sesión
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
 
                     )

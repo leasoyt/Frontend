@@ -1,12 +1,12 @@
 import React from 'react';
 import PreciosButtons from "../../components/PreciosButtons/PreciosButtons";
-import Navbar from '@/components/Navbar/Navbar';
+import NavbarLanding from '@/components/Navbar/Navbar';
 import Footer from '@/components/General/Footer/Footer';
 
 const Precios = () => {
   return (
     <>
-      <Navbar />
+      <NavbarLanding />
       <div className="bg-gray-100 min-h-screen flex flex-col items-center p-10">
         <h2 className="text-3xl font-semibold text-center mt-4 text-black italic">
           Precios

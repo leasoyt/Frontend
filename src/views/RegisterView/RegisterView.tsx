@@ -5,7 +5,7 @@ import { IRegisterProps } from "@/interfaces/Interfaces.types";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import Navbar from "@/components/Navbar/Navbar";
+import NavbarLanding from "@/components/Navbar/Navbar";
 import Footer from "@/components/General/Footer/Footer";
 import { swalNotifyError } from "@/scripts/swal/swal-notify-error";
 import { swalNotifyUnknownError } from "@/scripts/swal/swal-notify-unknown-error";
@@ -96,7 +96,7 @@ const RegisterView: React.FC = () => {
 
   return (
     <>
-      <Navbar />
+      <NavbarLanding />
       {
         isAllowed ?
           <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-center">

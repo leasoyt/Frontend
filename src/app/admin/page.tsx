@@ -7,6 +7,7 @@ import { IUser } from '@/interfaces/user.interface';
 import { UserRole } from '@/enums/role.enum';
 import { useEffect, useState } from 'react';
 import Unauthorized from '@/components/General/Unauthorized/Unauthorized';
+import DropDownButton from '@/components/NavbarUsuario/DropDownButton';
 
 const AdminDashboard = () => {
   const [iuser, setUser] = useLocalStorage("userSession", "");
@@ -15,13 +16,14 @@ const AdminDashboard = () => {
   const [section, setSection] = useState<'restaurants' | 'users'>('restaurants');
 
   useEffect(() => {
-    if (user === null || user === undefined || !(user.role === UserRole.ADMIN)) {
+    if (user === null || user === undefined || user.role !== UserRole.ADMIN) {
       setIsAllowed(false);
     }
-  }, [user, isAllowed]);
+  }, [user]);
 
-  if (isAllowed) return (<Unauthorized />);
+  if (!isAllowed) return (<Unauthorized />);
 
+  //TODO CAMBIAR LAS SECCIONES DE ABAJO POR PAGINAS
   return (
     <>
       {
@@ -30,11 +32,20 @@ const AdminDashboard = () => {
             <div className="flex flex-col md:flex-row h-screen bg-white">
               <AdminSidebar setSection={setSection} />
               <div className="flex-1 p-6 overflow-y-auto">
+                <nav className="bg-white p-4">
+                  <div className="container mx-auto flex justify-end items-center mt-6 max-w-5xl">
+                    {/* Profile Dropdown */}
+                    <DropDownButton showLoginIfNoUser={true} />
+                  </div>
+
+                  <hr className="w-4/5 mx-auto mt-4 border-2" />
+                </nav>
                 {section === 'restaurants' && <RestaurantList />}
                 {section === 'users' && <UserList />}
               </div>
             </div>
-          ) :
+          )
+          :
           <Unauthorized />
       }
     </>

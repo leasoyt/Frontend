@@ -1,7 +1,7 @@
 'use client'; // Esta declaración es necesaria para componentes que dependen del cliente
 
 import Footer from '@/components/General/Footer/Footer';
-import Navbar from '@/components/Navbar/Navbar';
+import NavbarLanding from '@/components/Navbar/Navbar';
 import Image from 'next/image';
 import React from 'react';
 import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
@@ -32,7 +32,7 @@ const renderStars = (rating: number) => {
 const ClientResenas = () => {
   return (
     <>
-    <Navbar/>
+    <NavbarLanding/>
 
     <div className= "bg-white ">
     <>

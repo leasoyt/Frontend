@@ -6,7 +6,7 @@ import { IUserSession } from '@/interfaces/Interfaces.types';
 import { Pages } from '@/enums/pages.enum';
 import DropDownButton from '../NavbarUsuario/DropDownButton';
 
-const Navbar: React.FC = () => {
+const NavbarLanding: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [userData, setUserData] = useState<IUserSession | null>(null);
 
@@ -75,18 +75,9 @@ const Navbar: React.FC = () => {
               Precios
             </Link>
           </li>
-
-          {
-            userData?.token ?
-              (
-                <li className="mt-2 md:mt-0">
-                  <DropDownButton showLoginIfNoUser={true} />
-                </li>
-              )
-              :
-              null
-          }
-
+          <li className="mt-2 md:mt-0">
+            <DropDownButton showLoginIfNoUser={true} />
+          </li>
         </ul>
       </div>
 
@@ -95,4 +86,4 @@ const Navbar: React.FC = () => {
   );
 };
 
-export default Navbar;
+export default NavbarLanding;

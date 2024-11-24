@@ -4,7 +4,7 @@ import { validateLoginForm } from "@/scripts/auth/validate";
 import { IloginProps } from "@/interfaces/Interfaces.types";
 import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import Navbar from "@/components/Navbar/Navbar";
+import NavbarLanding from "@/components/Navbar/Navbar";
 import Footer from "@/components/General/Footer/Footer";
 import { swalNotifySuccess } from "@/scripts/swal/swal-notify-success";
 import { ErrorHelper } from "@/helpers/errors/error-helper";
@@ -22,7 +22,7 @@ const LoginView: React.FC = () => {
     email: "",
     password: "",
   };
-
+//TODO AGREGAR BOTON DE CREAR CUENTA POR AQUI
   const [userData, setUserData] = useState<IloginProps>(initialState);
   const [errors, setErrors] = useState<Partial<IloginProps>>(initialState);
   const [showPassword, setShowPassword] = useState(false);
@@ -73,7 +73,7 @@ const LoginView: React.FC = () => {
 
   return (
     <>
-      <Navbar />
+      <NavbarLanding />
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-center">
         <h1 className="text-5xl font-bold text-gray-900 mb-8 font-serif ">
           Rest0
