@@ -8,9 +8,9 @@ import { IUser } from "@/interfaces/user.interface";
 import React from "react";
 import { useEffect, useState } from "react"
 import { UserRole } from "@/enums/role.enum";
-import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
 import Unauthorized from "@/components/General/Unauthorized/Unauthorized";
 import { Pages } from "@/enums/pages.enum";
+import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [restId, setRestId] = useLocalStorage("restaurant", "");

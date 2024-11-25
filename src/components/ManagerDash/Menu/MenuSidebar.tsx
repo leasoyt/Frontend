@@ -8,9 +8,9 @@ import React, { useEffect, useState } from 'react'
 import NewCategoryPopUp from './NewCategoryPopUp';
 import { ICategory } from '@/interfaces/category.interface';
 import CategoriesMaping from './CategoriesMaping';
-import { AuthErrorHelper } from '@/helpers/errors/auth-error-helper';
 import { swalNotifySuccess } from '@/scripts/swal/swal-notify-success';
 import { fetchWithAuth } from '@/scripts/token-expire.interceptor';
+import { AuthErrorHelper } from '@/helpers/errors/auth-error-helper';
 
 const MenuSidebar = () => {
   const [restId, setRestId] = useLocalStorage("restaurant", "");

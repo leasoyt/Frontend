@@ -7,8 +7,8 @@ import { fetchWithAuth } from "@/scripts/token-expire.interceptor";
 import { swalNotifyError } from "@/scripts/swal/swal-notify-error";
 import { swalNotifyUnknownError } from "@/scripts/swal/swal-notify-unknown-error";
 import { ErrorHelper } from "@/helpers/errors/error-helper";
-import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
 import { swalNotifyConfirmation } from "@/scripts/swal/swal-notify-confirm";
+import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
 
 const RestaurantList = () => {
   const [restaurants, setRestaurants] = useState<IRestaurant[]>([]);

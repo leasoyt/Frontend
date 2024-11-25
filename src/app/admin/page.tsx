@@ -31,11 +31,13 @@ const AdminDashboard = () => {
           (
             <div className="flex flex-col md:flex-row h-screen bg-white">
               <AdminSidebar setSection={setSection} />
-              <div className="flex-1 p-6 overflow-y-auto">
+              <div className="flex-1 px-6 pb-6 overflow-y-auto">
                 <nav className="bg-white p-4">
                   <div className="container mx-auto flex justify-end items-center mt-6 max-w-5xl">
-                    {/* Profile Dropdown */}
-                    <DropDownButton showLoginIfNoUser={true} />
+                    <div className="mr-32">
+                      {/* Profile Dropdown */}
+                      <DropDownButton showLoginIfNoUser={true} />
+                    </div>
                   </div>
 
                   <hr className="w-4/5 mx-auto mt-4 border-2" />

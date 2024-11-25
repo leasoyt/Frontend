@@ -7,52 +7,105 @@ import { IRestaurant } from "../../interfaces/restaurant.interface";
 import { API_URL } from "../../config/config";
 import { swalNotifyError } from "@/scripts/swal/swal-notify-error";
 import { ErrorHelper, verifyError } from "@/helpers/errors/error-helper";
+import LoadingCircle from "../General/LoadingCircle";
+import { fetchWithError } from "@/scripts/error.interceptor";
+import { swalNotifyUnknownError } from "@/scripts/swal/swal-notify-unknown-error";
+import IQueryRestaurant from "@/interfaces/query-restaurants.interface";
+import { IQueryParams, ZodQueryParams } from "@/interfaces/query-params.interface";
+import { Pages } from "@/enums/pages.enum";
+import { merge } from "@/scripts/merge";
 
 const Suggestions: React.FC = () => {
+  const default_params: IQueryParams = {
+    page: 1,
+    limit: 8,
+    search: "",
+    rating: 0
+  }
+
   const [restaurants, setRestaurants] = useState<IRestaurant[]>([]);
   const [rating, setRating] = useState(0);
   const [vrating, setVrating] = useState(0);
   const [disableRating, setDisableRating] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [paging, setPaging] = useState<Omit<IQueryRestaurant, "restaurants">>();
+  const [params, setParams] = useState<IQueryParams>(default_params);
 
   const voidStar = "w-6 h-6 fill-transparent stroke-amber-500 cursor-pointer";
   const fullStar = "w-6 h-6 fill-amber-500 stroke-amber-500 cursor-pointer";
 
-  useEffect(() => {
-    const fetchRestaurants = async () => {
-      setLoading(true);
+  const fetchRestaurats = async () => {
+    setLoading(true);
 
-      try {
+    try {
+      const queryString = new URLSearchParams(window.location.search);
+      const queryParams: unknown = Object.fromEntries(queryString.entries());
+      let actual_params: IQueryParams
+
+      if (ZodQueryParams.safeParse(queryParams).success) {
+        setParams(queryParams as IQueryParams);
+        actual_params = queryParams as IQueryParams;
+
         const url = new URL(`${API_URL}/restaurant/query`);
-        url.searchParams.append("page", "1");
-        url.searchParams.append("limit", "100");
-        const response = await fetch(url.toString());
+        url.searchParams.append("page", `${actual_params.page || default_params.page}`);
+        url.searchParams.append("limit", `${actual_params.limit || default_params.limit}`);
+        url.searchParams.append("search", `${actual_params.search || default_params.search}`);
+        url.searchParams.append("rating", `${actual_params.rating || default_params.rating}`);
 
-        const data = await response.json();
+        const response: IQueryRestaurant = await fetchWithError(url.toString(), {
+          method: "GET"
+        });
 
-        if (!response.ok) {
-          throw new ErrorHelper(verifyError(data.error), data.status);
-        }
-
-        const filteredRestaurants = data.restaurants.filter((restaurant: IRestaurant) =>
-          restaurant.was_deleted === false
-        );
-
-        setRestaurants(filteredRestaurants || [])
-      } catch (error) {
-        if (error instanceof ErrorHelper) {
-          swalNotifyError(error);
-        }
+        const { restaurants, ...rest } = response;
+        setRestaurants(restaurants);
+        setPaging(rest);
+      } else {
+        console.log("El objeto no cumple la estructura");
       }
 
-      setLoading(false);
-    };
+    } catch (error) {
 
-    fetchRestaurants();
+      if (error instanceof ErrorHelper) {
+        swalNotifyError(error);
+      } else {
+        swalNotifyUnknownError(error);
+      }
+
+    } finally {
+      setLoading(false);
+
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      fetchRestaurats();
+    }
   }, []);
 
   const handleSearch = () => {
+    const searchParams = new URLSearchParams({
+      page: params.page.toString(),
+      limit: params.limit.toString(),
+      search: params.search?.toString() || "",
+      rating: params.rating?.toString() || "0",
+    });
 
+    window.location.href = `${Pages.SEARCH}?${searchParams.toString()}`;
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleSearch();
+    }
+  };
+
+  const changeParams = (params_: Partial<IQueryParams>) => {
+
+    const merged: IQueryParams = merge(params, params_);
+    console.log(merged);
+    setParams(merged);
   };
 
   const moveStar = (_rating: number) => {
@@ -64,34 +117,14 @@ const Suggestions: React.FC = () => {
     if (_rating > vrating || _rating < vrating) {
       setVrating(_rating);
       setDisableRating(true);
+      changeParams({ rating: _rating });
+
     } else if (_rating === vrating) {
       setVrating(0);
       setDisableRating(false);
+
     }
   };
-
-  // const filteredRestaurants = restaurants.filter((restaurant) => {
-  //   // Si no se ha especificado ningún término de búsqueda o rating, mostramos todo
-  //   const matchesSearch = restaurant.name.toLowerCase().includes(searchTerm.toLowerCase());
-  //   const matchesRating = rating !== null
-  //     ? (restaurant.rating ?? 0) >= rating
-  //     : true;
-  //   return matchesSearch && matchesRating;
-  // });
-
-  // if (loading) return <div>Cargando...</div>;
-
-  // const noResultsMessage = () => {
-  //   if (!searchTerm && rating === null) {
-  //     return "No se encontraron resultados";
-  //   }
-
-  //   const filters = [];
-  //   if (searchTerm) filters.push(`la búsqueda "${searchTerm}"`);
-  //   if (rating !== null) filters.push(`rating mayor o igual a ${rating}`);
-
-  //   return `No se encontraron resultados para ${filters.join(" y ")}`;
-  // };
 
   return (
     <div className="max-w-5xl p-4">
@@ -103,9 +136,9 @@ const Suggestions: React.FC = () => {
           <input
             type="text"
             placeholder="Buscar"
-            // value={value}
-            // onChange={(e) => setValue(e.target.value)}
-            // onKeyDown={handleKeyDown}
+            value={params.search}
+            onChange={(e) => changeParams({ search: e.target.value })}
+            onKeyDown={handleKeyDown}
             className="font-serif px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent rounded-full bg-gray-100 text-black shadow-md w-96 text-center"
           />
           <div
@@ -166,22 +199,33 @@ const Suggestions: React.FC = () => {
       <h1 className="text-2xl font-semibold text-black font-serif m-5 w-fit">Resultados</h1>
 
       {/* Display filtered results */}
-      {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {
-          filteredRestaurants.length > 0 ?
+          restaurants.length > 0 ?
             (
-              filteredRestaurants.map((restaurant) => (
+              restaurants.map((restaurant) => (
                 <Link href={`/restaurant/${restaurant.id}`} key={restaurant.id}>
 
                   <SuggestionCard restaurant={restaurant} />
                 </Link>
               ))
-            ) : (
-
-              <p className="text-black text-center col-span-full">{noResultsMessage()}</p>
             )
+            :
+            loading ?
+              (
+                <div className="w-32 h-32">
+                  Cargando...
+                  <LoadingCircle />
+                </div>
+              )
+              :
+              (
+                <p className="text-black text-center col-span-full">
+                  No se encontraron resultados.
+                </p>
+              )
         }
-      </div> */}
+      </div>
     </div>
   );
 };
