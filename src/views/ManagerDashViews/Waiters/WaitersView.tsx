@@ -4,10 +4,10 @@ import NewMeseroForm from '@/components/ManagerDash/Waiter/NewMeseroForm'
 import { API_URL } from '@/config/config';
 import { HttpMessagesEnum } from '@/enums/httpMessages.enum';
 import { useLocalStorage } from '@/scripts/auth/useLocalStorage';
-import { AuthErrorHelper } from '@/helpers/errors/auth-error-helper';
 import { ErrorHelper } from '@/helpers/errors/error-helper';
 import React, { useEffect, useState } from 'react'
 import { fetchWithAuth } from '@/scripts/token-expire.interceptor';
+import { AuthErrorHelper } from '@/helpers/errors/auth-error-helper';
 
 const WaitersView = () => {
   const [restId, setRestId] = useLocalStorage("restaurant", "");

@@ -1,7 +1,7 @@
 import { IDish, SoftDish } from "@/interfaces/dishes.interface";
 import { API_URL } from "@/config/config";
-import { AuthErrorHelper } from "../../helpers/errors/auth-error-helper";
 import { fetchWithAuth } from "../token-expire.interceptor";
+import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
 
 export async function updateProduct(dish: Partial<IDish>) {
     const built_dish = {

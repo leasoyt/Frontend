@@ -7,7 +7,6 @@ import { IMenu_Category } from '@/interfaces/menu.interface';
 import { swalNotifyConfirmation } from '@/scripts/swal/swal-notify-confirm';
 import AddProductPopUp from '@/components/ManagerDash/Products/AddProductPopUp';
 import { IDish, SoftDish } from '@/interfaces/dishes.interface';
-import { AuthErrorHelper } from '@/helpers/errors/auth-error-helper';
 import { postProduct } from '@/scripts/manager/product-post';
 import { filterRepeatedFields } from '@/helpers/object-repeated-filter';
 import UpdateStock from '@/components/ManagerDash/Menu/UpdateStock';
@@ -17,6 +16,7 @@ import { IUpdateStock } from '@/interfaces/Interfaces.types';
 import { API_URL } from '@/config/config';
 import { Pages } from '@/enums/pages.enum';
 import { fetchWithAuth } from '@/scripts/token-expire.interceptor';
+import { AuthErrorHelper } from '@/helpers/errors/auth-error-helper';
 
 const MenuView: React.FC<{ categories: IMenu_Category }> = ({ categories }) => {
   const [loading, setLoading] = useState(true);

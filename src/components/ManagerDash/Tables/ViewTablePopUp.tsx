@@ -8,11 +8,11 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import TableOrderView from "./TableOrderView";
 import { swalNotifyUnknownError } from "@/scripts/swal/swal-notify-unknown-error";
 import NewOrderForm from "./NewOrderForm";
-import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
 import { swalNotifySuccess } from "@/scripts/swal/swal-notify-success";
 import { swalNotifyConfirmation } from "@/scripts/swal/swal-notify-confirm";
 import { swalNotifyCustomError } from "@/scripts/swal/swal-custom-error";
 import { fetchWithAuth } from "@/scripts/token-expire.interceptor";
+import { AuthErrorHelper } from "@/helpers/errors/auth-error-helper";
 
 const ViewTablePopUp: React.FC<ViewTableProps & {
     table_number: number,

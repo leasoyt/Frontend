@@ -34,7 +34,7 @@ const LandingView: React.FC = () => {
     <>
       <NavbarLanding />
       <ChatComponent />
-      <div className="bg-gray-100 min-h-screen flex flex-col items-center">
+      <div className="bg-white min-h-screen flex flex-col items-center">
         <div className="min-h-screen">
           <div className="pt-4 text-3xl font-semibold text-center mt-4 text-black italic pb-16">¿Que vas a pedir hoy?</div>
           <div className="flex justify-center mb-4">
@@ -64,22 +64,27 @@ const LandingView: React.FC = () => {
         </div>
 
         <div className="bg-neutral-200 mt-16 p-10 w-full">
-          <div className="text-3xl font-semibold text-center mt-4 text-black italic w-11/12 pb-16">Registra tu Negocio</div>
+          <div className="text-3xl font-semibold text-center mt-4 text-black italic w-11/12 pb-16">Para Negocios</div>
           <section className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="text-gray-900">No se</div>
-            <div className="flex flex-col items-center">
-              <h2 className="text-3xl font-semibold text-gray-900 font-serif">
-                Software para restaurantes, bares y cafés
-              </h2>
-              <div className="flex justify-center p-10">
-                <Image
-                  src="https://i.pinimg.com/564x/5b/33/dd/5b33dde1543afe4a2eb6619e18ca2085.jpg"
-                  alt="photo"
-                  className="rounded-2xl"
-                  width={500}
-                  height={300}
-                />
-              </div>
+            <div className="text-center md:text-left">
+              <h3 className="uppercase text-sm text-gray-600 italic font-medium">
+                Rapida Administracion
+              </h3>
+              <h4 className="text-3xl font-semibold text-gray-900 font-serif">
+                Lleva tu negocio a nuevos limites y clientes con el sistema de pedidos y reservas
+              </h4>
+              <p className="mt-2 text-gray-600 font-serif">
+                Administra pedidos y reservas de tus clientes totalmente en linea.
+              </p>
+            </div>
+            <div>
+              <Image
+                src="https://i.pinimg.com/564x/5b/33/dd/5b33dde1543afe4a2eb6619e18ca2085.jpg"
+                alt="image0"
+                className="rounded-3xl h-80 sm:h-80 mx-auto my-auto"
+                width={500}
+                height={300}
+              />
             </div>
             <Image
               src="https://i.pinimg.com/564x/ca/ec/73/caec73a701135c04bca7b6637fd946c8.jpg"

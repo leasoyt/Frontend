@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from "react";
 const DropDownButton: React.FC<{ showLoginIfNoUser?: boolean }> = ({ showLoginIfNoUser }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [user, setUser] = useState<IUser | null>(null);
-    const [loading, setLoading] = useState(false); //TODO AGREGAR LOADING SCREEN
+    const [loading, setLoading] = useState(false); //TODO AGREGAR LOADING SCREEN COMPONENT
     const divRef = useRef<HTMLDivElement>(null);
     const { user: authUser } = useUser();
     const [actual, setActual] = useState("");

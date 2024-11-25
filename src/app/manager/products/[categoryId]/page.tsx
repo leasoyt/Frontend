@@ -1,9 +1,9 @@
 "use client";
-import { AuthErrorHelper } from '@/helpers/errors/auth-error-helper';
 import { getCategoryById as getCategoryById } from '@/scripts/manager/category-byid';
 import { IMenu, MenuIdProps } from '@/interfaces/menu.interface'
 import MenuView from '@/views/ManagerDashViews/Menu/MenuView';
 import React, { useEffect, useState } from 'react'
+import { AuthErrorHelper } from '@/helpers/errors/auth-error-helper';
 
 const ProductsByCategory: React.FC<MenuIdProps> = ({ params }) => {
   const { categoryId } = params;
